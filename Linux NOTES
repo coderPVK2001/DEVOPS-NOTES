@@ -1,0 +1,63 @@
+<====================== LINUX  NOTES ==========================>
+
+For practising in linux ways:-
+i)	Insatall linux OS 
+ii)	Use oracle virtual box on chrome 
+----------------------------------------------------------------------------------------------------------------------------------
+iii)	Use aws ec2 instance ( connect local system to aws linux server using ssh client)
+Go to ec2 service  AMI (linux )  instance type (t2.micro free tier) (750 hours free one month)    create key pair ( add name  type RSA  fomat .pem   click create key pair)   allow SSH traffic check the tickbox   LAUNCH INSTANCe
+
+Note :- don’t forget to close ec2 
+
+Downloaded .pes/key pair  file store it in folder and add in C/D drive 
+
+Open git bash on that file
+
+In instances of aws you should click connect using ssh and add 3rd  point(it will alter the file permissions in system) command and last point command in git bash .  
+
+Type yes  yes next  now will connect to server
+
+
+
+Linux commands :-
+
+Note :- linux is opensource so everyone modifies it and launches their own OS 
+For eg: - kali linux, aws linux,   redhat linux,…
+
+Whoami  to see current user logged in 
+
+Date 
+
+Cal
+
+Cal 2025
+
+Pwd - current working directory
+
+Mkdir   make directory 
+
+Ls  listing folders
+
+Ls -r  rev order
+
+Ls -l  (long listing) for detailed folder details in asc order 
+
+Ls -lr  In rev order
+
+Ls -la  will give all hidden folders as well
+
+Rmdir “foldername”  remove empty folder only 
+
+Cd ~   to return to root folder 
+
+Cd ..  to take one folder back
+
+Clear 
+
+38 psa 
+
+
+
+
+
+
