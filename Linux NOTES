@@ -32,29 +32,76 @@ Cal
 
 Cal 2025
 
-Pwd - current working directory
+Pwd  --> current working directory
 
-Mkdir   make directory 
+Mkdir  --> make directory 
 
-Ls  listing folders
+Ls --> listing folders
 
-Ls -r  rev order
+Ls -r --> rev order
 
-Ls -l  (long listing) for detailed folder details in asc order 
+Ls -l --> (long listing) for detailed folder details in asc order 
 
-Ls -lr  In rev order
+Ls -lr --> In rev order
 
-Ls -la  will give all hidden folders as well
+Ls -la --> will give all hidden folders as well
 
-Rmdir “foldername”  remove empty folder only 
+Rmdir “foldername” --> remove empty folder only 
 
-Cd ~   to return to root folder 
+Cd ~ --> to return to root folder 
 
-Cd ..  to take one folder back
+Cd .. --> to take one folder back
 
 Clear 
 
-38 psa 
+rmdir -rf "folder name"  ==> recursively forcabely remove folder even if content present in it
+
+rm 'filename' ==> for deleting particular file
+
+touch "filename"  ==> creates new file
+
+4th video
+
+---------------- MOVE OR RENAME --------------------------
+
+mv ==> used to rename or move the file
+mv 'old filename' 'new filename'  ==> rename
+mv 'filename' 'full path'   ==> moving the file to another location
+
+-------------   CREATE READ WRITE --------------------------
+
+cat ==> used to create, write or read the file 
+
+cat 'filename' --> display content
+cat >  'filename'   & click ctrl +C  ==> will create new file
+cat >> 'filename'  & start writing content & after finished writing click ctrl +C  ==> will help to write content inside file
+
+cat -n 'filename'  ==> will display content with line no.s 
+
+Note:- for duplicate filename, cat file will fully replace the old file and old content will be vanished whereas  
+                    while using touch file wont gets fully replaced instead it will only change/update the time of creation
+
+tac 'filename'  ==> will display content in rev order
+
+--------------------- COPY CONTENTS --------------------------
+
+cp 'old filename' 'new filename' ==> for copying files from one file to another file
+
+cat 'filename1' 'filename2' > 'filename3'   ==> copying 2 files and merging it into single file
+
+----------------------- HEAD TAIL -------------------------------
+
+head 'filenam' --> prints first 10 lines 
+head -(number) 'filename'         --> print only given no of lines 
+head -n -(number) 'filename' 
+  
+tail 'filenaem' --> prints last 10 lines 
+
+------------------- SEARCHING ----------------------------------------
+
+GREP ( Global Regular Expression) 
+
+
 
 
 
