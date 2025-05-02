@@ -1,0 +1,71 @@
+<=======================================  AWS ============================================> 
+
+A) EC2 (Elastic Compute Cloud) ====>
+Virtual servers in the cloud.
+Scalable computing capacity.
+Users can provision, manage, and terminate instances as needed.
+
+1. AMI (Amazon Machine Image)
+A template used to create EC2 instances.
+Includes OS, applications, and settings.
+
+2. Key Pair
+A secure way to access EC2 instances.
+Consists of a public key (stored by AWS) and a private key (kept by the user).
+used to connect local system to ec2 server/instances
+
+3. Security Groups
+-Virtual firewalls that control inbound and outbound traffic for EC2 instances.
+-can restrict which urls will be allowed and which would be restricted
+
+4. EBS :- Elastic Block Store
+-Durable block storage for EC2 instances.
+-can increase volume once storage gets exceeded
+-snapshots ==> immediate copies 
+
+5.loadbalancer :-
+
+6.Autoscaling :-
+-Automatically adjusts the number of EC2 instances in response to demand.
+--for eg :- in flipkart,autoscaling increases size of server to 1000 during sales time and reduces size of server to 100/200 after sale gets end.
+
+B) s3 :- for storage --> images,video, 
+
+C) RDS :- for mysql,PostgreSQL database
+
+D) Dynamo DB :- for NoSQL database
+
+E) IAM ( Identtity & Access management ):- 
+- create subaccounts with restrictions for users .
+- users will have limited access to permitted services
+--Manages users and their permissions to AWS resources securely.
+
+iam , vpc , elastic beanstalk, cloud watch, sns , aws lambdas, efs ecs , eks , routes3 , cloud front
+
+F) vpc( virtual private cloud) :-
+same as IP address
+Like your own little network with walls—you decide who gets in and out.
+
+🔐 Example: You run sensitive apps inside a VPC so the public can’t access them directly.
+
+G) elastic beanstalk:-
+-use to automate the process like ec2 all configurations will be done
+-- billing will be continuos even if you are not using app at night. 
+=Think of it like a chef who cooks your app.
+=You just give your code (e.g., a Python or Java app), and Elastic Beanstalk sets everything up—servers, storage, scaling—for you.
+
+🧑‍🍳 Example: You upload your website code, and it runs on the internet without you touching servers.
+
+
+F) aws lambda:- 
+- similar to elastic'
+- here, it is pay as you use ; for eg: - how much request you get in your server that much billling will be generated
+
+G) cloudwatch :- 
+- if servers load get 90-95 % it will give alert to admin of app /user 
+--used for monitoring purpose 
+-Monitoring service for AWS resources and applications, offering logging and alerts.
+📊 Example: Your website gets super slow—CloudWatch can alert you and show why.
+
+H) SNS (Simple Notification Service) :-
+-Pub/sub messaging service for sending notifications and messages between services.
