@@ -1,0 +1,23 @@
+DEVOPS TOOLS 
+
+i) maven
+In java we cannot deploy project directly on server instead jar file is deoloyed 
+In intellij,maven clean , after click install it will generate jar file in target folder .
+
+ii) Sonarqube -->
+-used for reviewing the code and find the bugs 
+-automate process for reviewing
+
+iii) Jfrog and nexus --> maintain the versions of project like project versions / java versions / jar files
+
+iv) Terraform --> automates creation of ec2 /server
+
+v) Grafanana and prometheous : used for monitoring of hardware 
+
+vi) ELK (Elastic search , Logstash , Kibana)  used for monitoring of software logs
+
+vii) Kubernetes :- helps to manage docker images
+
+viii) docker
+
+
