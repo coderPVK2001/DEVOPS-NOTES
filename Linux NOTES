@@ -97,9 +97,43 @@ head -n -(number) 'filename'
   
 tail 'filenaem' --> prints last 10 lines 
 
-------------------- SEARCHING ----------------------------------------
+------------------- SEARCHING ----------------------------------------\
 
 GREP ( Global Regular Expression) 
+
+NOTE :-
+-grep is case sensitive
+-order of -i -n doesn't matter here
+-you can use it at the end also it will work
+
+grep 'search anything' 'filename'  --> it is case sensitive so will search only that much matching words
+
+grep -i 'anything' 'filename'      --> for removing case sensitivity and searching
+
+grep -i -n 'anything' 'filename'   --> for searching with line number as well
+
+grep -i -n 'anything' 'filename' * --> for searching word/char in all files in current directory
+
+grep -i -n -v 'anything' 'filename' --> for searching other than matching word/char // same as not operator (-v )
+
+Q. If you want to saarch from only first 5 lines of one file if there are 100s of lines of code 
+-->
+head -5 'filename' | grep 'anything' -i -n    
+Note:- above  | called as pipe 
+
+----------------------WORD COUNT ------------------------------------------------
+
+wc 'filename'     --> will give output in [lines] [words] [bytes/chars] filename
+
+wc -l 'filename'  --> to fetch only lines
+
+wc -w 'filename'  --> to fetch only words
+
+wc -m 'filename'  --> to fetch only chars/bytes
+
+
+
+
 
 
 
