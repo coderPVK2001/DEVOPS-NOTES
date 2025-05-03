@@ -132,6 +132,67 @@ wc -w 'filename'  --> to fetch only words
 wc -m 'filename'  --> to fetch only chars/bytes
 
 
+==========================EDITOR =============================================
+
+#### VI EDITOR ######
+
+vi 'filename'  --> will create new file in editor (in linux notepad calle as editor)
+
+for editing inside file press 'i' mode ==> INSERT mode
+click esc for coming out of insert mode
+
+:wq              --> for save and quit
+
+
+###### SED EDITOR ####################
+
+SED stands for Stream Editor.
+
+-It is primarily used for text processing (substitution, deletion, printing, and insertion).
+-Allows performing operations on files without opening them.
+-A highly versatile and powerful command in Linux.
+
+SED Operations
+
+<========== Substitution ========>
+
+1. Replace the first occurrence of the keyword hello with welcome:
+
+sed 's/hello/welcome/' 'filename'
+
+2. Replace the second occurrence of the keyword hello with welcome:
+
+sed 's/hello/welcome/2' 'filename'
+
+4. Replace all occurrences of the keyword hello with welcome:
+
+sed 's/hello/welcome/g' 'filename'
+
+5. Substitute and save changes directly into the original file:
+
+sed -i 's/ho11.0/welcome/g' 'filename'
+
+<============ Deletion =============>
+
+1. Delete the 1st line of a file:
+
+sed -i '1d' 'filename'
+
+2. Delete the fourth line of a file:
+
+sed -i '4d' 'filename'
+
+3. Delete the last line of a file:
+
+sed -i '$d' 'filename'
+
+4. Delete the content from 2nd to 6th line
+
+sed -i '2,6d' 'filename'
+
+5. Delete all the content from file
+
+sed -i '1,$d' 'filename'
 
 
 
