@@ -142,6 +142,9 @@ for editing inside file press 'i' mode ==> INSERT mode
 click esc for coming out of insert mode
 
 :wq              --> for save and quit
+:w               --> for only save
+:q               --> Quit (if no changes were made)
+:q!              --> Quit without saving 
 
 
 ###### SED EDITOR ####################
@@ -155,6 +158,8 @@ SED stands for Stream Editor.
 SED Operations
 
 <========== Substitution ========>
+
+Note :- use -i command for saving the file otherwise will make changes temporarily
 
 1. Replace the first occurrence of the keyword hello with welcome:
 
@@ -171,6 +176,16 @@ sed 's/hello/welcome/g' 'filename'
 5. Substitute and save changes directly into the original file:
 
 sed -i 's/ho11.0/welcome/g' 'filename'
+
+6. for adding/concat some content in 2nd line .
+
+sed -i '2s/$/ dont welcome you/' 'filename'
+
+for replacing whole 2nd line with given content.
+
+sed -i '2c\This is my new second line' 'filename'
+
+Note :- 2s 2c called as substitute and change command
 
 <============ Deletion =============>
 
@@ -193,6 +208,102 @@ sed -i '2,6d' 'filename'
 5. Delete all the content from file
 
 sed -i '1,$d' 'filename'
+
+<===================INSERTION AND PRINTING THE DATA =================>
+
+1.print data from line 2 to 6th line
+
+sed -n '2,6p' 'filename'
+
+2. insert new line in 2nd line add data to it 
+
+sed '2i\hello world2' a.txt
+
+Note:- use \ backslash here for adding 
+
+3. add data to last line .
+
+sed -i '$a\last line finisher3' a.txt  //$a stands for last line append
+
+
+
+**********************************************************************************************************
+************************ USER MANAGEMENT *****************************************************************
+**********************************************************************************************************
+
+Chapter 1: User Management
+
+Linux is a multi-user operating system where multiple users can access a single machine and perform multitasking simultaneously.
+
+Key Notes
+The default user in Amazon Linux VM is ec2-user, which has sudo privileges.
+
+When a user account is created, a home directory for the user is also created.
+
+Examples:
+
+ec2-user => /home/ec2-user
+
+alice => /home/alice
+
+
+User Management Commands ===============>
+
+1. Create a user
+sudo useradd 'username'
+
+2.Set or update a password for a user
+sudo passwd 'username'
+
+3.Display all users
+cat /etc/passwd
+
+4.for searching particular user
+grep 'username' /etc/passwd
+
+5.Switch to a different user account
+su 'username'
+
+after switching pwd will show admin dir and we dont have permission for ls out there 
+so change the directory by using command:-
+cd ~  OR  cd /home/username
+
+Note : exit command for logout of user and return to admin user i.e ec2-user
+
+6. delete user
+
+sudo userdel 'username'   //it deletes only username but not directory home/username
+
+7. del user with their working directory
+
+sudo userdel 'username' --remove
+
+8. change/update the existing password for user.
+
+sudo passwd 'username'    //same as 2nd command
+
+
+Chapter 2: Working with User Groups ===================>
+
+When a user is created, a corresponding group is automatically created with the same name. User groups help manage permissions efficiently.
+
+Commands for Group Management
+
+1.Display all groups
+cat /etc/group  
+Note :- there are already built in users in group and u will see permissions out there :- x:100
+
+2.Create a group
+sudo groupadd developers
+
+3.Add a user to a group
+sudo usermod -aG groupname username
+
+
+
+
+
+
 
 
 
