@@ -300,6 +300,66 @@ sudo groupadd developers
 sudo usermod -aG groupname username
 
 
+///////////////////////////////////////////////////////////////////
+
+
+
+1. Modify the following files:
+
+   * sudoers
+   * sshd_config
+
+2. **Sudoers File**
+   The sudoers file controls which users can execute commands as superusers.
+
+   * Open the file:
+     `sudo visudo`
+
+   * Add the following line:
+     `uname ALL=(ALL:ALL) ALL`
+
+   * Save and exit: CTRL + X + Y + Enter
+
+3. **Enable Password Authentication**
+   Right? Yes or no?
+
+   * Open the sshd\_config file:
+     `sudo vi /etc/ssh/sshd_config`
+   * Change the value of PasswordAuthentication to yes.
+   * Restart the SSH service:
+     `sudo systemctl restart sshd`
+
+4. **Connect to the VM**
+   Use the following command to connect:
+   `ssh alice@<public-ip>`
+
+public ip you will get from ec2 instance ipv4 address
+
+***for seeing the user groups :--------------->
+
+Command: id ec2-user
+
+Output:
+
+1000(ec2-user): The primary group for the user.
+
+4(adm): The adm group allows access to administrative logs, such as /var/log/syslog or /var/log/messages.
+
+10(wheel): The wheel group typically grants administrative privileges, such as the ability to use sudo.
+
+190(systemd-journal): This group allows access to systemd's journal logs, e.g., using journalctl.
+
+Log Locations:
+
+Debian-based systems (Ubuntu): Use /var/log/syslog.
+
+Red Hat-based systems (CentOS, RHEL, Amazon Linux): Use /var/log/messages
+
+
+
+
+
+
 
 
 
