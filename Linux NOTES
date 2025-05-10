@@ -255,8 +255,13 @@ sudo useradd 'username'
 2.Set or update a password for a user
 sudo passwd 'username'
 
+NOTE :--- for switching use ---> su 'username'
+          for ls it will show permission denied so use command "cd ~ "  bcoz it will be in root user directory 
+          try cd home/ec2-user   // use in other non root user it will show permission denied 
+
 3.Display all users
 cat /etc/passwd
+Note :- /etc/passwd: This is the file that stores user account information on a Linux system.
 
 4.for searching particular user
 grep 'username' /etc/passwd
@@ -282,6 +287,14 @@ sudo userdel 'username' --remove
 
 sudo passwd 'username'    //same as 2nd command
 
+9. To return to root user ec2-user .
+
+exit 
+
+OR 
+
+before only set password for it :- sudo passwd ec2-user
+
 
 Chapter 2: Working with User Groups ===================>
 
@@ -293,11 +306,18 @@ Commands for Group Management
 cat /etc/group  
 Note :- there are already built in users in group and u will see permissions out there :- x:100
 
+best way which i think is ==>
+use commands :-  cd ~  --> cd ..  --> ls
+Note :- (will open home directory)  here u will see list of users 
+
 2.Create a group
 sudo groupadd developers
 
 3.Add a user to a group
 sudo usermod -aG groupname username
+
+4. to see no of users in that group 
+sudo lid -g 'groupname'
 
 
 ///////////////////////////////////////////////////////////////////
@@ -309,16 +329,23 @@ sudo usermod -aG groupname username
    * sudoers
    * sshd_config
 
-2. **Sudoers File**
-   The sudoers file controls which users can execute commands as superusers.
+2. **Sudoers File**  see lec 8
 
-   * Open the file:
+What is the sudoers file in Linux?
+The sudoers file is a critical configuration file that controls which users can run commands as a superuser (root).
+
+   * a) Open the file:
      `sudo visudo`
 
-   * Add the following line:
-     `uname ALL=(ALL:ALL) ALL`
+   *b) Add the following line below :  // given the permission of sudo users 
+      Allow root to run any commands anywhere
+      root    ALL=(ALL)       ALL
+      
+      `uname ALL=(ALL:ALL) ALL`  //add this //add extra users below this now...
 
-   * Save and exit: CTRL + X + Y + Enter
+   *c) Save and exit: CTRL + X + Y + Enter
+
+By default, password authentication is disabled in Linux virtual machines (VMs) for security reasons. To enable it: follow below step
 
 3. **Enable Password Authentication**
    Right? Yes or no?
