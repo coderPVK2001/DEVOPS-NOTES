@@ -520,6 +520,9 @@ find [directory] [options] [search criteria]
 2️⃣ Common Use Cases
 1. Find a File by Name
 
+sudo find 'path' -name 'file name' 
+
+eg:- 
 sudo find /home -name "f1.txt"
 ✅ Effect: Searches for f1.txt inside the /home directory.
 
@@ -546,8 +549,116 @@ sudo find /home -mtime 1 -print
 sudo find /home -mtime +30 -delete
 ✅ Effect: Deletes files inside /home that haven’t been modified in the last 30 days.
 
+###################################################
+Working with ZIP Files in Linux
+The zip command in Linux is used to compress files and directories into a .zip archive, while the unzip command is used to extract them.
+###################################################
+
+1️⃣ Creating a ZIP File
+Syntax:
+zip [zip-new file-name] [files/directories]
+
+Example: Compressing Multiple Files
+
+# Create empty text files
+touch file1.txt file2.txt file3.txt
+
+# Create a ZIP archive containing all `.txt` files   =========================
+zip my_archive.zip *.txt
+✅ Effect: Compresses all .txt files into my_archive.zip.
+
+2️⃣ Extracting a ZIP File   ==================================================
+Syntax:
+unzip [zip-file-name]
+
+Example: Unzipping a File
+unzip my_archive.zip
+✅ Effect: Extracts my_archive.zip into the current directory.
+
+3️⃣ Additional ZIP Options ===================================================
+
+1. Create a ZIP Archive of a Directory
+zip -r "folder.zip" "old_folder"
+✅ Effect: Compresses old_folder and all its contents recursively into folder.zip 
+
+2. List Contents of a ZIP File   ++++++++++++++++++++++++++++++++++++++++++
+unzip -l my_archive.zip
+✅ Effect: Displays a list of files inside my_archive.zip.
+
+3. Extract ZIP to a Specific Directory
+unzip my_archive.zip -d /path/to/destination
+✅ Effect: Extracts files to /path/to/destination.
+
+4. Delete Files from a ZIP Archive (Without Extracting)
+zip -d my_archive.zip file2.txt
+✅ Effect: Removes file2.txt from my_archive.zip.
+
+5. Password-Protect a ZIP File
+zip -e secure_data.zip secret_file.txt
+✅ Effect: Compresses secret_file.txt into secure_data.zip with password protection.
+
+4️⃣ Summary
+zip [zip-file.zip] [files] → Compress files into a ZIP archive.
+unzip [zip-file.zip] → Extracts a ZIP file.
+zip -r [zip-file.zip] [directory] → Compresses a directory recursively.
+unzip -l [zip-file.zip] → Lists the contents of a ZIP file.
+
+################################################
+Networking Commands
+#################################################
+
+1) ping : To check connectivityping url/ip address  
+eg :- ping www.google.com // it will run constantly so press ctrl+c  to stop it
+
+ping -c 5 google.com // will run 5 times of count
 
 
+2) wget : Used to download files from the internet wget <url>
+eg :- 
+https://www.python.org/ftp/python/3.13.3/python-3.13.3-amd64.exe  //copy link address from online wherever you see link is for downloading something and paste it in terminal
+==>
+wget https://www.python.org/ftp/python/3.13.3/python-3.13.3-amd64.exe
+
+
+3) curl : Used to send HTTP requests to a server curl https://zenquotes.io/api/random
+          To get the response in JSON format 
+
+curl  https://restcountries.com/v3.1/name/deutschland  //without pretty
+
+curl  https://restcountries.com/v3.1/name/deutschland | jq   // for response in pretty format
+
+4) ifconfig : To get the IP address of the machine ifconfig
+
+######################################################################
+Package Managers in Linux  || INSTALLATION/UNINSTALL OF ANY SOFTWARES
+######################################################################
+
+Package: A package is a software application or tool.Examples: git, maven, java, python, etc.
+
+Package Managers are used to install, update, and manage software packages on Linux machines.They are specific to the Linux distribution:
+
+Amazon Linux / Red Hat Linux / CentOS: yum
+
+Ubuntu / Debian: apt
+
+Common Commands:
+
+Check if Git client is installed:git --version
+
+Install Git client software: sudo yum install git (For Ubuntu/Debian: sudo apt install git)
+
+Check Git installation path:whereis git
+
+1) Install git :- 
+sudo yum install git 
+
+sudo yum install git -y //for avoiding confirmation message 
+
+2) To Unstall git:
+sudo yum remove git -y
+
+3) To Uninstall Maven:
+sudo yum remove maven -y
 
 
 
