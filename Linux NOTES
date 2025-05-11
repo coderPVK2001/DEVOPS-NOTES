@@ -660,7 +660,64 @@ sudo yum remove git -y
 3) To Uninstall Maven:
 sudo yum remove maven -y
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+Steps to Set Up an HTTPD Webserver
+
+1. Install the HTTPD Webserver:
+   sudo yum install httpd -y
+
+2. Check the Status of the Webserver:
+   sudo service httpd status
+
+3. Start the HTTPD Webserver:
+   sudo service httpd start
+
+Note
+The httpd webserver runs on the HTTP protocol, which uses port number 80.
+
+Enable HTTP Protocol in EC2 VM Security Group
+To access the webserver, ensure that the HTTP protocol is enabled in the EC2 security group inbound traffic on port 80.
+
+////////////////////////////////////////////////////////////////
+
+START STOP RELOAD RESTART SERVICES ONCE INSTALLED LIKE TOMCAT, GLASSFISH ,HTTPD SERVERS ....
+
+/////////////////////////////////////////////////////////////////
+
+See the image uploaded in github ??????????
+
+Here is the extracted text from the image:
+
+---
+
+**What is systemctl in Linux?**
+
+`systemctl` is a command-line utility used to manage and control system services on Linux systems that use the `systemd` initialization system. It is one of the primary tools for administering services, enabling you to start, stop, restart, enable, disable, and check the status of services.
+
+`systemctl` plays a critical role in managing processes and services during the boot process and while the system is running. It interacts with the `systemd` daemon, which is responsible for handling service dependencies, monitoring services, and ensuring system stability.
+
+**Key Features of systemctl**
+
+Steps to Set Up an HTTPD Webserver
+
+Install the HTTPD Webserver:
+sudo yum install httpd -y
+
+Check the Status of the Webserver:
+sudo service httpd status
+
+Start the HTTPD Webserver:
+sudo service httpd start
+
+stop the server :- 
+sudo systemctl stop httpd
+
+Note
+The httpd webserver runs on the HTTP protocol, which uses port number 80.
+
+Enable HTTP Protocol in EC2 VM Security Group
+To access the webserver, ensure that the HTTP protocol is enabled in the EC2 security group inbound traffic on port 80.
 
 
 
