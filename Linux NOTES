@@ -719,6 +719,73 @@ The httpd webserver runs on the HTTP protocol, which uses port number 80.
 Enable HTTP Protocol in EC2 VM Security Group
 To access the webserver, ensure that the HTTP protocol is enabled in the EC2 security group inbound traffic on port 80.
 
+????????????????????????????????????????????????????????????????????????????????????????
+============== HARD LINK & SOFT LINK ===================================================
+????????????????????????????????????????????????????????????????????????????????????/???
+
+🔹 Hard Link :- 
+
+-A hard link is another name for the same file data.
+-Both the original and the hard link point to the same data.
+-If the original is deleted, the hard link still works.
+for eg :- if a.txt is deleted then also we can access it by b.txt (backup file) 
+
+Note:- inode numbers is unique number for backup area 
+
+steps :- 
+
+i) create a original file .
+--> 
+touch a.txt
+
+ii)create a hard link .
+-->
+ln a.txt b.txt   // if b.txt is not created then it will create automatically and link the file 
+                 // b will have same content as a.txt 
+
+++for taking backup of one file in one destination to another destination.
+-->
+ln "path1" "path2"                    // dont forget to use quotes ""
+
+++++++++++++++ for folder to folder harlink .
+==>
+cp -al "/Users/prajwal/Documents/devops" "/Users/prajwal/Documents/backup_devops"
+
+where,
+cp: standard copy command
+-a: archive mode (preserves permissions, timestamps, symlinks, etc.)
+-l: create hard links instead of copying file data
+
+iii) To confirm check the inode numbers 
+-->
+ls -li 
+
+CONS of hardlink ==>
+
+❗Why "hardlink" It’s NOT a Real Backup:
+--->
+
+-Both files point to the same data.
+-Changing one changes the other.
+-Deleting one is okay — the other still works — but if the data gets corrupted, both are affected.
+
+🔸 cp → Real Backup
+-Makes a separate copy of the file.
+-Safe from changes or deletion.
+✅ Use this for backup.
+
+🔹 Soft Link (Symbolic Link)
+-A soft link is like a shortcut to another file.
+-It can link across different file systems.
+-If the original file is deleted, the soft link is broken (becomes a dead link).
+
+
+
+
+
+
+
+
 
 
 
