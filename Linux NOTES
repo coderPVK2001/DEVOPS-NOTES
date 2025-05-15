@@ -321,7 +321,8 @@ sudo lid -g 'groupname'
 
 
 ///////////////////////////////////////////////////////////////////
-
+how to login without using key pair ???
+////////////////////////////////////////////////////////////////////
 
 
 1. Modify the following files:
@@ -643,11 +644,11 @@ Ubuntu / Debian: apt
 
 Common Commands:
 
-Check if Git client is installed:git --version
+** Check if Git client is installed:git --version
 
-Install Git client software: sudo yum install git (For Ubuntu/Debian: sudo apt install git)
+** Install Git client software: sudo yum install git (For Ubuntu/Debian: sudo apt install git)
 
-Check Git installation path:whereis git
+** Check Git installation path:whereis git
 
 1) Install git :- 
 sudo yum install git 
@@ -747,9 +748,9 @@ ln a.txt b.txt   // if b.txt is not created then it will create automatically an
 -->
 ln "path1" "path2"                    // dont forget to use quotes ""
 
-++++++++++++++ for folder to folder harlink .
+++++++++++++++ for folder to folder hardlink .
 ==>
-cp -al "/Users/prajwal/Documents/devops" "/Users/prajwal/Documents/backup_devops"
+cp -al "/Users/prajwal/Documents/devops" "/Users/prajwal/Documents/backup_devops"          //will create devops folder in backup_devops
 
 where,
 cp: standard copy command
@@ -759,6 +760,11 @@ cp: standard copy command
 iii) To confirm check the inode numbers 
 -->
 ls -li 
+
+iv) remove the original file and see the backup file content 
+-->
+rm -rf a.txt 
+cat b.txt (backup file --> same inode number and same content of original file will be present here...)
 
 CONS of hardlink ==>
 
@@ -778,6 +784,40 @@ CONS of hardlink ==>
 -A soft link is like a shortcut to another file.
 -It can link across different file systems.
 -If the original file is deleted, the soft link is broken (becomes a dead link).
+
+/home/ec2-user  <== consider this is our desktop directory 
+
+
+🔗 Steps to Create a Soft Link
+1. Create a file
+-->
+echo "Hello Linux" > original.txt
+
+2. Create a soft link
+-->
+ln -s original.txt softlink.txt
+
+3. Check the link
+-->
+ls -l
+You’ll see something like:
+
+softlink.txt -> original.txt
+4. Use the soft link
+-->
+cat softlink.txt
+# Output: Hello Linux
+
+5. Delete the original
+-->
+rm original.txt
+cat softlink.txt
+# Error: No such file or directory
+📌 Now the soft link is broken, because it pointed to the original.
+
+
+
+
 
 
 
