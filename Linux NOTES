@@ -263,6 +263,10 @@ NOTE :--- for switching use ---> su 'username'
 cat /etc/passwd
 Note :- /etc/passwd: This is the file that stores user account information on a Linux system.
 
+best way which i think is ==>
+use commands :-  cd ~  --> cd ..  --> ls
+Note :- (will open home directory)  here u will see list of users 
+
 4.for searching particular user
 grep 'username' /etc/passwd
 
@@ -298,27 +302,53 @@ before only set password for it :- sudo passwd ec2-user
 
 Chapter 2: Working with User Groups ===================>
 
+NOTE:-
 When a user is created, a corresponding group is automatically created with the same name. User groups help manage permissions efficiently.
 
 Commands for Group Management
 
 1.Display all groups
 cat /etc/group  
-Note :- there are already built in users in group and u will see permissions out there :- x:100
-
-best way which i think is ==>
-use commands :-  cd ~  --> cd ..  --> ls
-Note :- (will open home directory)  here u will see list of users 
+Note :- there are already built in users in group and u will see permissions out there :- x:1000  //ec2-user:x:1000:         → group 'ec2-user' with GID 1000
 
 2.Create a group
 sudo groupadd developers
 
-3.Add a user to a group
+3 Delete a group**  
+  sudo groupdel <group-name>  
+
+4 Rename a group**  
+  sudo groupmod -n <new-group-name> <old-group-name> 
+
+5.Add a user to a group
 sudo usermod -aG groupname username
 
-4. to see no of users in that group 
+where,
+usermod	Command used to modify user accounts (like adding to groups, changing home directories, etc.)
+-a	Append — this option tells usermod to add the user to the group rather than replacing their existing group memberships
+-G	Specifies that the next argument is a list of groups the user will be added to
+
+6. to see no of users in that group 
+getent group <group-name>  //get entries
+
+OR 
+
 sudo lid -g 'groupname'
 
+where ,
+lid	List ID command — shows group or user membership
+-g	Tells lid to operate in group mode
+'groupname'	The name of the group you're querying
+
+7. remove user from group . 
+  sudo gpasswd -d <username> <group-name>  
+
+EXPLANATION WITH EXAMPLE :-
+- consider one a.txt file owner and group only have the permission to open the file and others dont have so by adding user into group it will be easy
+
+- in home directory root user ec2-user cannot able to access other users directory i.e "pvk1" user so i changed permission like given read write execute permission to group and added
+   ec2-user into that group so that he is now able to enter 
+--see image uploaded outside
 
 ///////////////////////////////////////////////////////////////////
 how to login without using key pair ???
