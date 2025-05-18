@@ -1,1 +1,47 @@
 
+Docker notes
+
+Suppose u built app on windows server and try to deploy on linux server there will be compatibility and portability issue if not configured properly
+
+Docker is run in Linux server instead of local system bcoz it takes more storage
+
+So ,if we create docker file and run it anywhere it will 100% run as there will be not compatiblity and portability issue
+
+Multiple servers Rr4 there in production so we can't change environment for each and every server like eg. Java 18 in one env and Java 21 in one env. 
+So docker comes here and these docker files will help to change in multiple servers so don't need to worry about anything
+
+25: architecture Linux vm --> ec2 instance amazon
+
+29. : Kernel acts as bridge between linux  and hardware/software ...
+        Eg. If we type something on keyboard it goes to kernel first and then it will send to linux.
+        Kernel helps to manage hardware,software...
+
+34:- gives diagram to explain
+- ec2 is created with linux  
+- linux OS --> docker engine --> docker container (isolated environment)
+-Docker engine acts as bridge here now between linux and docker container.
+ on top of this docker container have been created and required software are installed.
+ • Docker container/ ONE ISOLATED DOCKER CONTAINER has required environments setup like java mysql and appcode so it will get run by linux OS
+• Linux OS helps to run these container 
+• now same container can be run in diff server or ec2 instance so no compatibility issue will be there
+
+
+Docker file/container contains
+Appcode --> jar file of java project
++ Download Dependencies (same like pom.xml)
+
+In spring boot project docker file created in root folder
+
+
+44 pe diagram dekh samjh jayega 
+Docker file ---> {build} ---> docker image (contains replica of what included in file)
+---> {store the image into} --->  docker hub (list of images stored here) ---> 
+{Pull the image from hub} ---> after pulling container will be created in linux server.
+
+
+
+
+Pros of docker:- 
+• Portability = once u create a container in which softwares like java 8,mysql installed ,it will now run into any OS .
+• installation = helps to install / upgrade any software in multiple no. Of servers.
+
