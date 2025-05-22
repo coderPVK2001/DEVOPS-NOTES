@@ -45,3 +45,163 @@ Pros of docker:-
 • Portability = once u create a container in which softwares like java 8,mysql installed ,it will now run into any OS .
 • installation = helps to install / upgrade any software in multiple no. Of servers.
 
+
+=============================================================================================================================================
+2nd Lecture :-  (add some remaining notes from keep notes also)
+==============================================================================================================================================
+
+
+Installing Docker:
+_________________________
+
+For Amazon Linux use the following commands
+
+Install Docker In Amazon Linux VM
+____________________________
+sudo yum update -y 
+sudo yum install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
+exit
+_____________________________________
+
+For Ubuntu use the following commands
+
+Install Docker In Ubuntu VM
+sudo apt update
+curl -fsSL get.docker.com | /bin/bash
+sudo usermod -aG docker ubuntu 
+exit
+Verify docker installation
+
+Use this command to check version of docker installed
+_____________________________________________________
+docker -v
+
+##############################################################################################
+##############################################################################################
+
+For practise pull the sample image from docker hub repository of pankaj sir academy: docker pull psait/pankajsiracademy:latest
+
+For Practise pull docker official image: docker pull hello-world
+
+###############################################################################################
+###############################################################################################
+
+
+Important Docker Commands
+_______________________________________________________
+docker pull : download docker image from hub
+
+	docker pull [image-name]
+	
+docker run : run docker image - this will create container (Isolated Enviroment to run docker image- This is not a OSs)
+
+	docker run [image-name / image-id]
+
+docker ps :To display docker containers that are running 
+
+	docker ps 
+	
+display stopped containers:
+
+	docker ps -a 
+	
+docker stop :To Stop docker container 
+
+	docker stop [container-id]
+	
+docker start : Start docker container 
+
+	docker start [container-id]
+
+docker rm : will remove stopped docker container 
+
+	docker rm [contianer-id]
+
+docker rmi : Will Remove docker image 
+
+	docker rmi [image-name / image-id]
+	
+
+To remove all stopped containers and un-used docker images we can use below command 
+
+		docker system prune -a
+
+
+How to create Docker Image and run that to access from browser?
+________________________________________________________________
+
+run Docker Image from docker hub using the command
+
+Docker run [image-name] - This command when executed we will not be able to access our container in browser because it requires port mapping.
+
+As Container is running inside linux VM. We will have to map linux vm (host port) to container(Container port) this is called as port mapping. To do this perform the following
+
+Docker run -p host-port:container-port [image-name]
+
+Example: docker run -p 9090:9090 [image-name]
+
+Example: docker run -d -p 9090:9090 [image-name] will run the cintainer in background
+
+Now you can access our application using the url http://public-ip:host-post(linux-vm)
+
+Note
+1. Enable Inbound rule in security group custom ip IPv4 anywhere with host port number.
+2. If you run Multiple Containers in same linux vm then host port number should be different for every container
+____________________________________________________________________________________
+
+Install jekins using docker image name - docker run -d -p 8080:8080 jenkins/jenkins
+Note Enable Inbound rule in security group custom ip 8080 IPv4 anywhere
+
+_______________________________________________________________________________________
+
+
+_____________________________________________________________________________________________________________________
+
+Note Docker will simply our journey to get required softwares in server through single line - 
+
+Example download Sonarqube using docker image. If not use linux command to do the same.
+
+docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube:lts-community
+
+
+Example download nexus using docker image, If not use linux command to do the same.
+
+docker run -d -p 8081:8081 --name nexus sonatype/nexus3
+_______________________________________________________________________________________________________________________
+
+
+
+
+
+=============================================================================================================================================
+3rd Lecture :- 
+==============================================================================================================================================
+
+From -- download required software images
+
+Maintainer -- specify author of docker file
+
+Run -- runs before image creation and during image build process
+
+Cmd -- runs after image creation and when container starts
+Mvn package --> gives jar file
+
+Note ;- if you want to execute command before image creation use "run" and for after image creation use "cmd"
+
+25: how to build image using docker file?
+
+===> CMD command will run only last written words if we use cmd multiple times
+for eg:- from "imagename":"tag"
+         run echo "runn1"
+         run echo "runn2"
+         build "fdlfafasfda123132"
+         cmd echo "hello1"
+         cmd echo "hello1"
+output :- runn1
+          runn2
+          hello1
+
+37 :- best explanation of how jar files running
+
