@@ -40,8 +40,22 @@ But with -d container will be running in the background.
 eg:- 
 run a springboot application but after clicking ctrl+c/exit from git bash app/container will stop running and we will be not able to access springboot application
 
+9) 
+Docker file name should start with capital letter only in any project 
+eg :- Dockerfile
 
+Docker file should be added in root folder of any project
 
+10) 
+Multiple docker builds can be created but with diff tagname; in short multiple images can also be created for same dockerfile
+
+11) 
+TO run executable jar file:--->
+java -jar filename.jar
+
+12) 
+CMD  <---> ENTRYPOINT
+COPY <---> ADD
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -404,7 +418,26 @@ CMD echo 'cmd-2'
 
 Step 2: create docker image using the command
 -> docker build -t pankajsiracademy/image1 .
+   where,
+   docker build               ==> This tells Docker to build a new image from a Dockerfile.
+   -t pankajsiracademy/image1 ==> The -t flag tags the image with a name: pankajsiracademy/image1.
    we have used dot (.) in above command to mention that dockerfile in present in same working directory
+
+//will create a local docker image 
+
+OUTPUT :- 
+
+eg :- 
+ => CACHED [1/3] FROM docker.io/library/openjdk:17@sha256:528707081fdb9562eb819128a9f85ae7fe000e2fbaeaf9f87662e7b3f38cb7d8                                                                                                              0.0s
+ => [2/3] RUN echo 'run-1'                                                                                                                                                                                                      0.3s
+ => [3/3] RUN echo 'run-2'                                                                                                                                                                                                    0.4s
+ => exporting to image                                                                                                                                                                                                                  0.1s
+ => => exporting layers                                                                                                                                                                                                                 0.1s
+ => => writing image sha256:9c2b4a524fd570b5a9e6aa097604b735f3a2f4a8befaa802a40b0eec0837129b                                                                                                                                            0.0s
+ => => naming to docker.io/pvk/image1  
+
+- during building or before image creation we can see all the RUN commands echo getting printed
+- but for cmd to get printed we need to run the image/container
 
 Step 3: To check image created use the command 
 --> docker image
@@ -417,10 +450,14 @@ Step 5: You can again create the image
 
 Step 6: Run your docker image
 --> docker run [image-id]
+OUTPUT :- 
+cmd-2
 
 Note: 
 1. Only last CMD instruction will run
-2. docker run [image-id] echo 'hello world', you will notice now hello world will execute and not the last CMD of docker file
+
+eg2 :- docker run [image-id] echo 'hello world'
+       you will notice now hello world will execute and not the last CMD of docker file
 
 To over come the above said instruction we can use
 
@@ -438,8 +475,12 @@ _________________
 --> COPY instruction will copy the files from source to destination.
 --> It is used to copy application code from host machine to container machine.
 --> Here Source means "HOST Machine" and Destination means "Container machine"
+--> as we are building local docker image which will be created in linum vm server know
 
 Example : COPY target/your-app.jar  /usr/app/
+
+- jar file gets created in target file which is under root directory of java/springboot project
+- copy will create " /usr/app/ " path in docker container if it does not exist 
 
 7. ADD
 _________________
@@ -460,7 +501,6 @@ __________________
 --> If the directory does not exist, Docker will automatically create it
 
 Example: WORKDIR /path/to/directory
-
 
 COPY target/your-app.jar   /usr/app/
 WORKDIR /usr/app/
@@ -502,6 +542,10 @@ for eg:- from "imagename":"tag"
 output :- runn1
           runn2
           hello1
+
+=== see 51:20 FULL REPLAY for above commands =========
+
+
 
 
 
