@@ -128,6 +128,57 @@ To remove all stopped containers and un-used docker images we can use below comm
 
 		docker system prune -a
 
+_______________________________________________________________________________________________________________________
+
+2nd lexc diff notes///
+
+16 aws --> ssh client to aws connectivity with key value pair
+
+Kv file will be created for local system  which should be kept safely.
+
+23 :- docker installation in linux vm 
+         Docker --v  // to check version
+
+25 :- docker hub mein account create karoi
+Docker hub contains public/private images 
+
+27:00   docker image hello world
+
+29:22 :- all commands docker pull,run , container
+
+Docker ps :- list of running containers
+Docker ps -a :- list of containers which got executed and stopped now
+
+Docker run image/imageid
+
+38:40 :---- pankaj sir image with all java ,mysql code into it spring boot project
+
+Note :- one image multiple containers are created but from one container only one image will be there inside it
+- docker engine already has n no of containers so we are using that one container only when docker run is used 
+
+30 docker command s
+
+Docker run is not creating a new container instead docker engine provides existing container. Which helps to run the docker image
+
+48 :-----
+
+Docker start stop 
+Docker ps will give status of container with container id and state
+
+Note :-. Ps will give only running container only
+
+*****Ansible :- we are configuring / installing / managing docker manually in every server so if if there are 100 of server then we don't need manually ;make use of ansible
+
+50: ---- remove image ,container,...
+
+Ssh clients :- git bash ,putty, mobaxterm
+Authentication is required for ssh client like key pair file And connect to linux server
+
+
+
+=============================================================================================================================================
+3rd Lecture :- 
+==============================================================================================================================================
 
 How to create Docker Image and run that to access from browser?
 ________________________________________________________________
@@ -148,10 +199,12 @@ Now you can access our application using the url http://public-ip:host-post(linu
 
 Note
 1. Enable Inbound rule in security group custom ip IPv4 anywhere with host port number.
+   ec2 instance ---> security --> click on security group --> edit inbound rules --> select type [custom tcp] => add port no => source [anywhere IPV4] =>ADDD
 2. If you run Multiple Containers in same linux vm then host port number should be different for every container
 ____________________________________________________________________________________
 
-Install jekins using docker image name - docker run -d -p 8080:8080 jenkins/jenkins
+Install jekins using:-
+docker image name - docker run -d -p 8080:8080 jenkins/jenkins
 Note Enable Inbound rule in security group custom ip 8080 IPv4 anywhere
 
 _______________________________________________________________________________________
@@ -169,14 +222,43 @@ docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube:lts-community
 Example download nexus using docker image, If not use linux command to do the same.
 
 docker run -d -p 8081:8081 --name nexus sonatype/nexus3
-_______________________________________________________________________________________________________________________
 
+MYNOTES /////////////////////////////////////////////////////////
 
+37 :- best explanation of how jar files running
 
+(14 diagram):- Linux vm is host 
+So for reaching the docker container we need to pass through linux vm first.
+So container Port number and application port number should be same.
+
+17:-- port mapping
+
+First connect to host port and then it will internally take you to container port
+
+Http://ip-addresss:host port no
+Eg:-
+Http://127.78.90:8089 //it will connect to linux vm/host
+
+Port forwarding :- once u connect to host port it will take/connect you to CONTAINER
+Port number which is PF
+
+22:- port mapping , forwarding best explanation with figure along with security group of aws .
+Inbound rules we are defining ports which will host vm will accept 
+Note :- host Vm Is entry point .
+In command "-p" stands for Port mapping/forwarding 
+** MULTIPLE HOST PORTS CAN BE MAPPED TO ONE CONTAINER PORT
+
+26:--- see configuration for security group where port is being added 
+
+33:---  detach mode
+Without -d means application is running in foreground eg.if we close gitbash app/container will stop running.
+But with -d container will be running in the background.
+
+37 :-- Jenkins ...
 
 
 =============================================================================================================================================
-3rd Lecture :- 
+4th Lecture :- 
 ==============================================================================================================================================
 
 From -- download required software images
@@ -203,5 +285,5 @@ output :- runn1
           runn2
           hello1
 
-37 :- best explanation of how jar files running
+
 
