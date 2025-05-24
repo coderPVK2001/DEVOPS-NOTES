@@ -57,6 +57,9 @@ java -jar filename.jar
 CMD  <---> ENTRYPOINT
 COPY <---> ADD
 
+13) 
+root file in java contains pom.xml,source,...
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -174,6 +177,31 @@ sudo yum install docker -y
 sudo service docker start
 sudo usermod -aG docker ec2-user
 exit
+
+REASON :- 
+
+sudo yum update -y
+👉 Updates your system to the latest versions.
+Why: So Docker installs smoothly.
+
+sudo yum install docker -y
+👉 Installs Docker on your Linux VM.
+Why: This is the actual Docker software.
+
+sudo service docker start
+👉 Starts Docker service.
+Why:
+= Starts the Docker daemon (background service).
+= Docker won’t work unless the service is running.
+= You can check with: sudo service docker status.
+
+sudo usermod -aG docker ec2-user
+👉 Gives your user permission to run Docker without sudo.
+Why: Convenience — no need to type sudo docker every time.
+
+exit
+👉 Logs out.
+Why: Needed to apply the permission change above.
 _____________________________________
 
 For Ubuntu use the following commands
@@ -545,7 +573,124 @@ output :- runn1
 
 === see 51:20 FULL REPLAY for above commands =========
 
+===========================================================================================================
+===========================================================================================================
+5th lecture [PRACTICAL] 
+===========================================================================================================
+===========================================================================================================
+
+PSA NOTES  ??????????????
 
 
+Now time for practicals guys, Let us do Dockerizing Spring boot application
+___________________________________________________________________________
 
+-> Spring Boot: framework which is used to develop enterprise based applications.
+-> Spring Boot applications will be packaged as a jar file for deployment. 
+-> To run the jar file we will use command :  java -jar <file-name.jar>
+-> To run springboot application jar file we will use tomcat server as "embedded server".
+-> By default spring boot application will run on port number 8080
+
+Step 1: Create Docker File
+
+FROM openjdk:17
+
+COPY target/demo-app.jar  /usr/app/
+
+WORKDIR /usr/app/
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "demo-app.jar"]
+
+
+Step 2: Note (Install maven and git in linux VM first)
+
+1) Clone git repo in docker host machine (linux): git clone <http-url>
+
+2) Point to project root folder: cd <app-name> and run to generate jar: mvn clean package
+
+3) Create docker image and check that: 
+-> docker build -t psait/pankajsiracademy:<tag> .
+(
+Here 
+-> psait is username
+-> repositoryname of docker hub
+-> <tag> can
+  a. prod-v1 or prod-v2v2 for production
+  b. dev-v1 for development environment
+  c. test-v1 for testing environment
+  d. staging-v1 for staging environment
+)
+-> docker images 
+
+4) run docker container: docker run -d -p 8080:8080 --name psa psait/your-app
+
+5)See the image is running or not: docker ps
+
+6) docker logs <container-id>
+
+5) Access application URL in browser: http://public-ip:8080/
+
+
+Steps to push docker image to docker hub
+__________________________________________
+
+-> login into docker hub account from bash
+
+docker login
+Enter username: psait
+Enter password
+
+-> push docker image
+docker push psait/pankajsiracademy:<tag>
+
+
+MYNOTES /////////////////////////////////////////////////
+
+TravelPractise3 ==using for practise
+
+steps:- 
+1. @getmapping in controller and return some message.
+
+2. CREATE new docker file by right click --> new --> file --> Dockerfile
+
+3. use <Finalname>PvkApp</Finalname> under <build>
+   // with above command jar file name willl be given to the jar file otherwise it would have been empty name for jar file
+
+4.Add commands in Docker file
+
+FROM openjdk:17
+COPY target/travel-app.jar  /usr/app/
+WORKDIR /usr/app/
+EXPOSE 8090
+ENTRYPOINT ["java", "-jar", "travel-app.jar"]
+
+5.create local git init and add that full project to github repository:- 
+git init
+git add .
+git commit -m "first commit"
+//above in local
+
+//below is also same
+git branch -M main   //-M → Forcefully rename the current branch (even if main already exists).
+git remote add origin https://github.com/coderPVK2001/TravelDocker.git
+git push -u origin main
+
+6. see git,docker,maven versions in linux VM? are they available or not in linux VM ?
+   if not available so install the above softwares using command :-
+   sudo yum install git -y 
+   sudo yum install maven -y 
+
+mvn -v
+git -v
+docker -v
+
+7. After installing we need to clone our project in linux VM 
+   git clone "url"
+
+8. Go to project folder until you see Dockerfile,pom.xml,src,...  as this is root file  
+
+9. package our application / create a jar file of our application
+   mvn clean package  //will create jar inside target folder
 
