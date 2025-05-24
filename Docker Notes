@@ -1,14 +1,57 @@
 
 Docker notes
 
-Suppose u built app on windows server and try to deploy on linux server there will be compatibility and portability issue if not configured properly
 
-Docker is run in Linux server instead of local system bcoz it takes more storage
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+IMP NOTES:- 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-So ,if we create docker file and run it anywhere it will 100% run as there will be not compatiblity and portability issue
+1) Ssh clients :- git bash ,putty, mobaxterm
+   Authentication is required for ssh client like key pair file And connect to linux server
 
-Multiple servers Rr4 there in production so we can't change environment for each and every server like eg. Java 18 in one env and Java 21 in one env. 
-So docker comes here and these docker files will help to change in multiple servers so don't need to worry about anything
+2)
+Docker ps :- list of running containers
+Docker ps -a :- list of containers which got executed and stopped now
+
+3) 
+If you run Multiple Containers in same linux vm then host port number should be different for every container
+
+4)
+one image multiple containers are created but from one container only one image will be there inside it
+
+5)
+Docker engine already has n no of containers so we are using that one container only when docker run is used 
+Docker run is not creating a new container instead docker engine provides existing container. Which helps to run the docker image
+
+6) 
+*****Ansible :- we are configuring / installing / managing docker manually in every server so if if there are 100 of server then we don't need manually ;make use of ansible
+
+7) 
+In Inbound rules we are defining the ports which will HOST VM(linux, redhat)  will accept 
+Note :- host Vm Is entry point .
+** MULTIPLE HOST PORTS CAN BE MAPPED TO ONE CONTAINER PORT
+
+8) 
+detach mode
+Without -d means application is running in foreground eg.if we close gitbash app/container will stop running.
+But with -d container will be running in the background.
+eg:- 
+run a springboot application but after clicking ctrl+c/exit from git bash app/container will stop running and we will be not able to access springboot application
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+-  Suppose u built app on windows server and try to deploy on linux server there will be compatibility and portability issue if not configured properly
+-  Docker is run in Linux server instead of local system bcoz it takes more storage
+-  So ,if we create docker file and run it anywhere it will 100% run as there will be not compatiblity and portability issue
+-  Multiple servers are there in production so we can't change environment for each and every server like eg. Java 18 in one env and Java 21 in one env. 
+   So docker comes here and these docker files will help to change in multiple servers so don't need to worry about anything
 
 25: architecture Linux vm --> ec2 instance amazon
 
@@ -38,18 +81,72 @@ Docker file ---> {build} ---> docker image (contains replica of what included in
 ---> {store the image into} --->  docker hub (list of images stored here) ---> 
 {Pull the image from hub} ---> after pulling container will be created in linux server.
 
-
-
-
 Pros of docker:- 
 • Portability = once u create a container in which softwares like java 8,mysql installed ,it will now run into any OS .
 • installation = helps to install / upgrade any software in multiple no. Of servers.
+
+PSA NOTES /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Docker
+_____________
+
+-> Resolves Compatibility problem using containerization
+-> Docker will help us to install our software on different server without worrying about compatibility issue
+-> To deploy same application on multiple servers for load balancing we need not manually install technology stack (like Angular 18v, java 17V etc) manually one by one if docker is not used
+-> Software upgrades can be done easily on multiple machines using docker
+
+Note:
+✔ Docker Engine acts as a bridge between the container and the host OS
+✔ Containers don’t have their own kernel, they use the host’s kernel
+✔ Docker Engine manages containers but does not create them—it runs & controls them
+
+
+
+Note:
+
+Linux VM--->Install Docker Engine--->Docker Engine acts as bridge between Linux Kernel and docker Container-->Provides isolated enviroment to run Docker Image.
+
+####################
+#
+# docker container			
+####################
+#
+# dOCKER ENGINE
+####################
+#
+#  lINUX vm
+####################
+
+Docker Architecture:
+________________________________________________________________________
+Docker File: Here we will provide Intructions to create docker image
+Docker Image: Application Package with dependencies of it
+Docker Registry: Its a hub to store docker images
+Docker Container: Isolated environment to run docker image
+
+What is containerization?
+
+containers package an application along with its dependencies (libraries, configuration files, etc.), ensuring that it runs consistently across different computing environments.
+
+#########################          #########################                  ####################                 @@@@@@@@@@@@@@@@@
+Dockerfile														%%%%%%%%
+															Container1
+(Contains instructions     ------>    Docker Image               ------------>  Docker hub/registry   ---------->       %%%%%%%%%
+ to download dependencies   (build)	    (Application Code +   (Store)      (Collection of images)			Container2	
+				      Dependencies to run that)								%%%%%%%%%%
+)
+##########################	   ##########################                 #####################                 @@@@@@@@@@@@@@@@@
+
+															Linux Server
+
+
 
 
 =============================================================================================================================================
 2nd Lecture :-  (add some remaining notes from keep notes also)
 ==============================================================================================================================================
 
+PSA NOTES --->
 
 Installing Docker:
 _________________________
@@ -91,46 +188,38 @@ For Practise pull docker official image: docker pull hello-world
 
 Important Docker Commands
 _______________________________________________________
-docker pull : download docker image from hub
 
-	docker pull [image-name]
+
+1) To download docker image from hub
+   eg :- docker pull [image-name]
 	
-docker run : run docker image - this will create container (Isolated Enviroment to run docker image- This is not a OSs)
+2) To Run docker image - this will create container (Isolated Enviroment to run docker image- This is not a OSs)
+   eg :- docker run [image-name / image-id]
 
-	docker run [image-name / image-id]
-
-docker ps :To display docker containers that are running 
-
-	docker ps 
+3) To display docker containers that are running 
+   eg :- docker ps 
 	
-display stopped containers:
-
-	docker ps -a 
+4) Display stopped containers:
+   eg:- docker ps -a 
 	
-docker stop :To Stop docker container 
-
-	docker stop [container-id]
+5) To Stop docker container 
+   eg:- docker stop [container-id]
 	
-docker start : Start docker container 
+6) Start docker container 
+   eg:- docker start [container-id]
 
-	docker start [container-id]
+7) To remove stopped docker container 
+   eg :- docker rm [contianer-id]
 
-docker rm : will remove stopped docker container 
-
-	docker rm [contianer-id]
-
-docker rmi : Will Remove docker image 
-
-	docker rmi [image-name / image-id]
+8) To  Will Remove docker image 
+   eg :- docker rmi [image-name / image-id]
 	
-
-To remove all stopped containers and un-used docker images we can use below command 
-
-		docker system prune -a
+9) To remove all stopped containers and un-used docker images we can use below command 
+   eg:- docker system prune -a
 
 _______________________________________________________________________________________________________________________
 
-2nd lexc diff notes///
+2nd lec MY  notes//////////////////////////////////////////////////////////////////////////////////////////////////
 
 16 aws --> ssh client to aws connectivity with key value pair
 
@@ -171,31 +260,25 @@ Note :-. Ps will give only running container only
 
 50: ---- remove image ,container,...
 
-Ssh clients :- git bash ,putty, mobaxterm
-Authentication is required for ssh client like key pair file And connect to linux server
-
 
 
 =============================================================================================================================================
-3rd Lecture :- 
+3rd Lecture :-   (How to create Docker Image and run that to access from browser?)
 ==============================================================================================================================================
 
-How to create Docker Image and run that to access from browser?
-________________________________________________________________
+PSA NOTES -->
 
-run Docker Image from docker hub using the command
 
-Docker run [image-name] - This command when executed we will not be able to access our container in browser because it requires port mapping.
+STEPS :::--->
+1) Run Docker Image from docker hub using the command
+   eg:- Docker run [image-name] - This command when executed we will not be able to access our container in browser because it requires port mapping.
 
-As Container is running inside linux VM. We will have to map linux vm (host port) to container(Container port) this is called as port mapping. To do this perform the following
+2) As Container is running inside linux VM. We will have to map linux vm (host port) to container(Container port) this is called as port mapping. To do this perform the following
+   Docker run -p host-port:container-port [image-name]
+   Example: docker run -p 9090:9090 [image-name]
+   Example: docker run -d -p 9090:9090 [image-name]     // will run the container in background
 
-Docker run -p host-port:container-port [image-name]
-
-Example: docker run -p 9090:9090 [image-name]
-
-Example: docker run -d -p 9090:9090 [image-name] will run the cintainer in background
-
-Now you can access our application using the url http://public-ip:host-post(linux-vm)
+3) Now you can access our application using the url :-  http://public-ip:host-post(linux-vm)    //public ip is public IPV4 address 
 
 Note
 1. Enable Inbound rule in security group custom ip IPv4 anywhere with host port number.
@@ -204,7 +287,7 @@ Note
 ____________________________________________________________________________________
 
 Install jekins using:-
-docker image name - docker run -d -p 8080:8080 jenkins/jenkins
+eg :- docker image name - docker run -d -p 8080:8080 jenkins/jenkins
 Note Enable Inbound rule in security group custom ip 8080 IPv4 anywhere
 
 _______________________________________________________________________________________
@@ -215,13 +298,11 @@ ________________________________________________________________________________
 Note Docker will simply our journey to get required softwares in server through single line - 
 
 Example download Sonarqube using docker image. If not use linux command to do the same.
-
-docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube:lts-community
+eg :- docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube:lts-community
 
 
 Example download nexus using docker image, If not use linux command to do the same.
-
-docker run -d -p 8081:8081 --name nexus sonatype/nexus3
+eg : -docker run -d -p 8081:8081 --name nexus sonatype/nexus3
 
 MYNOTES /////////////////////////////////////////////////////////
 
@@ -258,8 +339,145 @@ But with -d container will be running in the background.
 
 
 =============================================================================================================================================
-4th Lecture :- 
+4th Lecture :-  (How to create docker file? Create Docker Image? push that to docker hub?)
 ==============================================================================================================================================
+
+PSA NOTES 
+__________________________________________________________________________
+
+In order to build a docker file as a developer you should know when to use the following keywords.Dockerfile instructions (FROM, CMD, ADD, etc.) are case-sensitive and must be written in uppercase.
+
+1. FROM
+___________
+->The FROM instruction in a Dockerfile specifies the base image for your container or it will be used to specify what softwares should be downloaded to run our app. It is always the first instruction in a Dockerfile because it defines the environment where your application will run
+
+FROM <image>:<tag>
+
+<image> → Name of the base image (e.g., ubuntu, node, python)
+<tag> → (Optional) Specifies the image version
+
+Example:
+
+FROM python:3.9 
+FROM openjdk:17
+FROM tomcat:9.0
+
+2. MAINTAINER 
+______________
+-> The MAINTAINER instruction was used in older Docker versions to specify the author of the Dockerfile.
+Example of old version - MAINTAINER Your Name <your-email@example.com> (This is deprecated)
+
+Example for new version - LABEL maintainer="Your Name <your-email@example.com>"
+
+3. RUN
+__________
+-> The RUN instruction in a Dockerfile is used to execute commands during the image build process. 
+
+Example :
+
+RUN 'git clone <repo-url>'
+
+RUN 'mvn clean package'
+
+Note: If you specify multiple RUN instructions in Dockerfile, then those will execute in sequential manner.
+
+4. CMD
+____________
+-> The CMD instruction in a Dockerfile specifies the default command that runs when the container starts
+
+CMD "java -jar myapp.jar"
+
+Note: when we write multiple CMD instructions in dockerfile, docker will execute only last CMD instruction only.
+
+
+Let us create our first docker file:
+________________________________________
+
+Step 1: vi dockerfile
+
+FROM openjdk:17
+MAINTAINER Pankaj
+RUN echo 'run-1'
+RUN echo 'run-2
+CMD echo 'cmd-1'
+CMD echo 'cmd-2'
+
+Step 2: create docker image using the command
+-> docker build -t pankajsiracademy/image1 .
+   we have used dot (.) in above command to mention that dockerfile in present in same working directory
+
+Step 3: To check image created use the command 
+--> docker image
+
+Step 4: to delete the image
+--> docker rmi image-id
+
+Step 5: You can again create the image
+--> -> docker build -t pankajsiracademy/image1 .
+
+Step 6: Run your docker image
+--> docker run [image-id]
+
+Note: 
+1. Only last CMD instruction will run
+2. docker run [image-id] echo 'hello world', you will notice now hello world will execute and not the last CMD of docker file
+
+To over come the above said instruction we can use
+
+5. ENTRYPOINT
+________________
+ -> Alternative command for CMD but the advantage is we cannot override this command
+
+Example-1 :  CMD "java -jar app.jar"
+
+Example-2 :  ENTRYPOINT ["java", "-jar", "app.jar"]
+
+6. COPY
+_________________
+
+--> COPY instruction will copy the files from source to destination.
+--> It is used to copy application code from host machine to container machine.
+--> Here Source means "HOST Machine" and Destination means "Container machine"
+
+Example : COPY target/your-app.jar  /usr/app/
+
+7. ADD
+_________________
+
+--> ADD instruction will copy the files from source to destination same as COPY, But in addition it can extract your compressed tar file 
+--> Here Source can be host machine
+--> ADD cannot download from HTTP/S3 URLs—this is a misconception. (Be carefull in interviews)
+
+Example:
+ADD target/app.jar  /usr/app/
+
+ADD <http-url>  /usr/app/ (Wrong)
+
+8. WORKDIR
+__________________
+
+--> The WORKDIR instruction sets the working directory (Like cd command )
+--> If the directory does not exist, Docker will automatically create it
+
+Example: WORKDIR /path/to/directory
+
+
+COPY target/your-app.jar   /usr/app/
+WORKDIR /usr/app/
+CMD "java -jar your-app.jar"
+
+9. EXPOSE
+_____________________
+
+-> EXPOSE command is used to specify application is running on which PORT number. Using this you cannot change the port number of application. You are just mentioning that our application is running on the port number 9090.
+-> If our application is running on port number 8081 you are mentioning expose 9090 then it is wrong. 
+-> It is optional to use
+
+Example : EXPOSE 9090
+
+
+
+MYNOTES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 From -- download required software images
 
