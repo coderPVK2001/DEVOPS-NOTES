@@ -61,6 +61,13 @@ COPY <---> ADD
 13) 
 root file in java contains pom.xml,source,...
 
+14) 
+we dont copy jar files directly to github repo as github is used to copy the source code of project and not binaries/jar
+
+15) 
+Naming convention of docker image  :- "username/repository-name"  
+
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -651,6 +658,12 @@ MYNOTES /////////////////////////////////////////////////
 
 TravelPractise3 ==using for practise
 
+using**
+DockerProject1  ==> github repo name
+DevProj         ==> intellij proj name
+devops-app.jar.jar  ---> jar file name given
+
+
 steps:- 
 1. @getmapping in controller and return some message.
 
@@ -673,7 +686,7 @@ git add .
 git commit -m "first commit"
 //above in local
 
-//below is also same
+//below is also same  //add all together
 git branch -M main   //-M → Forcefully rename the current branch (even if main already exists).
 git remote add origin https://github.com/coderPVK2001/TravelDocker.git
 git push -u origin main
@@ -683,6 +696,16 @@ git push -u origin main
    sudo yum install git -y 
    sudo yum install maven -y 
 
+Install Docker In Amazon Linux VM
+____________________________
+Install Docker In Amazon Linux VM
+____________________________
+sudo yum update -y 
+sudo yum install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
+exit
+
 mvn -v
 git -v
 docker -v
@@ -690,8 +713,49 @@ docker -v
 7. After installing we need to clone our project in linux VM 
    git clone "url"
 
-8. Go to project folder until you see Dockerfile,pom.xml,src,...  as this is root file  
+and see pwd also ==> /home/ec2-user 
+
+8. Go to project folder until you see Dockerfile,pom.xml,src,...  as this is "root file"  
+   go inside project folder
 
 9. package our application / create a jar file of our application
    mvn clean package  //will create jar inside target folder
+
+Note:- we dont copy jar files directly to github repo as github is used to copy the source code of project and not binaries/jar
+
+10.  create docker repository .
+
+root folder --> docker build -t pvk2001/demo1:testing .
+
+syntax:- 
+docker build -t "Reponame":<tag> .
+
+where, 
+-> psait is username
+-> repositoryname of docker hub
+-> <tag> can
+  a. prod-v1 or prod-v2v2 for production
+  b. dev-v1 for development environment
+  c. test-v1 for testing environment
+  d. staging-v1 for staging environment
+)
+-> will build docker image
+Note :- dont forget to use "." as it points to current directory files
+
+explanation :- will search for docker file in current directory
+
+11. Run docker image  
+docker run -d -p 8090:8090 pvk2001/demo1:testing
+
+Note: docker run -p 8090:8090 pvk2001/demo1:testing  //first see application is working or not without using detach mode first
+
+
+12 . Docker login 
+add username and password
+
+13. 
+docker push pvk2001/demo1:testing
+
+14. 
+
 
