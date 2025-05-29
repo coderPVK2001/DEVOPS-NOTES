@@ -27,7 +27,7 @@ Docker engine already has n no of containers so we are using that one container 
 Docker run is not creating a new container instead docker engine provides existing container. Which helps to run the docker image
 
 6) 
-*****Ansible :- we are configuring / installing / managing docker manually in every server so if if there are 100 of server then we don't need manually ;make use of ansible
+*****Ansible :- we are configuring / installing / managing docker,maven,git manually in every server so if if there are 100 of server then we don't need manually ;make use of ansible
 
 7) 
 In Inbound rules we are defining the ports which will HOST VM(linux, redhat)  will accept 
@@ -50,7 +50,7 @@ Docker file should be added in root folder of any project
 10) 
 Multiple docker builds can be created but with diff tagname; in short multiple images can also be created for same dockerfile
 
-11) 
+11) ******************************* 
 TO run executable jar file:--->
 java -jar filename.jar
 
@@ -680,6 +680,29 @@ WORKDIR /usr/app/
 EXPOSE 8090
 ENTRYPOINT ["java", "-jar", "travel-app.jar"]
 
+where, below questions should raise in 10th step...
+ENTRYPOINT ["java", "-jar", "travel-app.jar"]
+
+why app doesnt start after build command?
+-The app doesn’t start during the docker build because:
+-The ENTRYPOINT is only saved as part of the image metadata during the build.
+-Docker does not run the ENTRYPOINT during build.
+-Docker remembers what to run later when you execute docker run.
+
+
+COPY explaination:--->
+Docker will create /usr/app/ inside the container if it doesn’t exist. So:
+target/travel-app.jar is from your local machine (outside the container).
+/usr/app/ is where you're putting the file inside the container.
+
+Actually, /usr/app/ is just a custom folder path you defined in the Dockerfile. It doesn't "know" it automatically — you could've written any path like:
+
+optional 2:- 
+COPY target/travel-app.jar /myfolder/  
+
+it will create myfolder as well inside container.
+
+
 5.create local git init and add that full project to github repository:- 
 git init
 git add .
@@ -750,12 +773,33 @@ docker run -d -p 8090:8090 pvk2001/demo1:testing
 Note: docker run -p 8090:8090 pvk2001/demo1:testing  //first see application is working or not without using detach mode first
 
 
+//Till now we were running docker image locally but for all public should access then follow below points===>> 
+
 12 . Docker login 
 add username and password
 
 13. 
 docker push pvk2001/demo1:testing
 
-14. 
 
+summary:- 
 
+1)Create simple controller with message.
+
+2)Set JAR name using <finalName> in pom.xml.
+
+3)Create Dockerfile with required commands.
+
+4)Push project to GitHub.
+
+5)Install Git, Maven, Docker in EC2.
+
+6)Clone project into EC2 and go to root folder.
+
+7)Build project with Maven to get JAR.
+
+8)Build Docker image from JAR.
+
+9)Run container to test app.
+
+10)Push image to Docker Hub to make it publicly accessible.
