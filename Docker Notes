@@ -67,6 +67,9 @@ we dont copy jar files directly to github repo as github is used to copy the sou
 15) 
 Naming convention of docker image  :- "username/repository-name"  
 
+16)*****
+During docker build → App is not started. Docker just prepares everything.
+During docker run → Docker uses the ENTRYPOINT to actually start the app.
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
