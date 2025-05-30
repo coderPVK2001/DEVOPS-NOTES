@@ -1,0 +1,96 @@
+Imp Notes:-  30:33/////
+
+i) stages ----> stage1 --> steps1 -->stage2--> steps2 --> ...
+
+ii)
+
+
+
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#################################
+Build and deployment process
+##################################
+
+1. git clone
+2. mvn clean package / maven clean test build  [ for creating jar file]
+3. create/build docker image
+4. run docker image inside a container
+----------------------------------
+
+
+The above steps where performed by us manually in our docker classes. Question is how can we automate these tasks. Can we do these steps manually to deploy our application in different environments like dev, QA, staging, UAT, production etc?
+
+#############
+Jenkins CI/CD
+#############
+
+-> Jenkins is a popular open-source automation server used for Continuous Integration (CI) and Continuous Deployment (CD) in software development. It helps automate the building, testing, and deployment of applications.
+
+-> Automation – Jenkins automates repetitive tasks like code compilation, testing, and deployment
+
+-> Plugins – It has 1,800+ plugins, integrating with Git, Docker, Kubernetes, Maven, and more
+
+-> Pipeline as Code – Uses Jenkinsfile (written in Groovy) to define CI/CD pipelines.
+
+Jenkins CI/CD Workflow:
+____________________________
+
+-> Developers push code to a repository (GitHub, GitLab, Bitbucket).
+-> Jenkins pulls the latest code and triggers a build using maven.
+-> Artifact is generated (e.g., JAR, Docker image).
+-> Deployment – Jenkins deploys the application to a test/staging/production environment
+-> We can create jenkins pipeline in 2 ways
+
+		1) Declarative Pipeline
+		2) Scripted Pipeline (groovy)
+
+Jenkins Declarative Pipeline Explained
+
+A Jenkins Declarative Pipeline is a structured way to define a CI/CD pipeline using Groovy-based syntax. Let's break down your pipeline step by step.
+
+Pipeline Structure:
+
+pipeline {  
+    agent any  // Runs the pipeline on any available agent (Jenkins node)
+
+    stages {  // Defines different stages of the pipeline
+        stage('git clone') {  // Stage 1: Clone the repository
+            steps {  
+                // Logic for cloning a Git repository
+            }
+        }
+        stage('mvn build') {  // Stage 2: Build the project using Maven
+            steps {  
+                // Logic for running Maven build
+            }
+        }
+        stage('build image') {  // Stage 3: Build a Docker image
+            steps {  
+                // Logic for building a Docker image
+            }
+        }
+    }
+}
+Explanation of Each Section
+1. pipeline {}
+This is the root block that defines the entire CI/CD pipeline.
+
+2. agent any
+Specifies that the pipeline can run on any available Jenkins node (agent)/server.
+
+If you want to run it on a specific node, you can use:
+
+groovy
+
+agent { label 'my-node' }
+
+3. stages {}
+A stage represents a logical step in the pipeline.
+
+Each stage contains steps {} where the actual actions are performed.
+
