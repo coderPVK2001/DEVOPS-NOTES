@@ -1,9 +1,16 @@
 Imp Notes:-  30:33/////
 
-i) stages ----> stage1 --> steps1 -->stage2--> steps2 --> ...
+i) stages ----> stage() --> steps{} --> stage() --> steps{} --> ...
 
 ii)
+sudo apt update
+sudo apt install fontconfig openjdk-17-jre
+java -version
 
+apt or yum are package managers where yum is used for amazon linux server and for ubuntu apt is used fixed.
+
+iii)
+pipeline uses groovy language
 
 
 
@@ -93,4 +100,86 @@ agent { label 'my-node' }
 A stage represents a logical step in the pipeline.
 
 Each stage contains steps {} where the actual actions are performed.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Jenkins Server Setup in Linux VM
+
+Step - 1 : Create Linux VM in AWS
+
+using ubuntu server not amazon linux this time so while choosing AMI select ubuntu...
+
+Create Ubuntu VM using AWS EC2 (t2.medium, because jenkins require minimum 4gb RAM)
+
+Note: Enable 8080 Port Number in Security Group Inbound Rules
+
+
+Step-2 : Install Java using below commands
+
+sudo apt update
+sudo apt install fontconfig openjdk-17-jre
+java -version
+
+Note:- we installing only jre bcoz jdk would have install other unnecessary things as well
+       java is compulsory for jenkins to run bcoz jenkins is built using java only
+
+Step-3 : To Install Jenkins use the below commands
+
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins
+
+where ,
+Step a: Get Jenkins’ security key (for trust).
+Step b: Tell your system where to find Jenkins.
+Step c: Update your system’s package list.
+Step d: Install Jenkins.
+
+Step-4 : Start Jenkins services using below commands
+
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+
+Step-5 : Verify Jenkins setup
+
+sudo systemctl status jenkins
+
+Step-6 : Open jenkins server in browser using VM public ip of linux vm
+
+http://public-ip:8080/
+
+Step-7 : Copy jenkins admin pwd
+
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+Step-8 : Create Admin Account & Install Required Plugins in Jenkins
+____________________________________________________________________
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+My Notes :::====
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+ 
+Now after 8th step you should click --> create a job/ new item  ---> enter name --> choose pipeline --> ok
+after that script blank tab will be there click apply ---> save (will create a pipeline/job) 
+click ---> dashboard --> u will see list of pipelines
+
+To write script and run first build:- 
+select one pipeline from dashboard --> click configure ==>pipeline --> write code  ==> right side drop down list---> select hello world --> apply and save --> build now ==> you will see first hello wolrd got builded using jenkins
+
+To see output :- 
+click on stages/below build u will see ---> console output
+
+To set poll/schedule task when to run jenkins pipeline:- 
+select one pipeline from dashboard --> click configure --> triggers ==> click poll scm --> add now anything wanted
+
+--------------------------------------------------------------------------
+-------------------------------------------------------------------------
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
