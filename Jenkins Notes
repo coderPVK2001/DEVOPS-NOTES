@@ -1,4 +1,4 @@
-Imp Notes:-  30:33/////
+Imp Notes:-  30:33/////    USIng DockerProject1 <======github repo
 
 i) stages ----> stage() --> steps{} --> stage() --> steps{} --> ...
 
@@ -12,10 +12,43 @@ apt or yum are package managers where yum is used for amazon linux server and fo
 iii)
 pipeline uses groovy language
 
+iv) why we can install jdk/jre directly but not jenkins?
+OpenJDK is available in the default Ubuntu repositories/server whereas jenkins is not available in default ubuntu repo.
 
+That means sudo apt install jenkins won’t work unless you first add Jenkins’s official repository.
+We use wget to download Jenkins’s GPG key and add its repository:
+cmd  :-  wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee ...
 
+v) 
+Note :- while writing a script u will see at bottom "pipeline syntax"  click that so u will get proper syntax u want so copy paste this 
+eg:-    pipeline syntax --> sample step --> git --> add github details --> will create github syntax
 
+vi)
+8080==> jenkins
+8090 ==> java
 
+vi) 
+how to run pipeline every single minute?
+-->
+Dashboard --> trigger --> build periodically --> add * * * * *
+
+How to run pipelinee every single minute to check any commit happens in main or not ; if yes then will run a pipeline otherwise not but it will keep checking every minute
+-->
+Dashboard --> trigger --> scm poll --> add * * * * *
+
+vii) 
+docker ps                  ==> to see running container 
+docker ps -a               ==> To see stopped container
+docker rmi <image>         ==> To remove particular image
+docker rm <container_name> ==> To remove particular container 
+docker container prune     ==> To remove all stopped container
+
+viii) What is kubernetes ?
+--> 
+it is addon to dockers
+will manage docker containers like start ,stop, loadbalancing 
+
+ix) can send email noti while build/pipeline success or failedd
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -105,7 +138,7 @@ Each stage contains steps {} where the actual actions are performed.
 
 Jenkins Server Setup in Linux VM
 
-Step - 1 : Create Linux VM in AWS
+$$ Step - 1 : Create Linux VM in AWS and configure security group for 8080 port
 
 using ubuntu server not amazon linux this time so while choosing AMI select ubuntu...
 
@@ -114,7 +147,7 @@ Create Ubuntu VM using AWS EC2 (t2.medium, because jenkins require minimum 4gb R
 Note: Enable 8080 Port Number in Security Group Inbound Rules
 
 
-Step-2 : Install Java using below commands
+$$ Step-2 : Install Java using below commands
 
 sudo apt update
 sudo apt install fontconfig openjdk-17-jre
@@ -123,7 +156,7 @@ java -version
 Note:- we installing only jre bcoz jdk would have install other unnecessary things as well
        java is compulsory for jenkins to run bcoz jenkins is built using java only
 
-Step-3 : To Install Jenkins use the below commands
+$$ Step-3 : To Install Jenkins use the below commands
 
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
   https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
@@ -134,29 +167,55 @@ sudo apt-get update
 sudo apt-get install jenkins
 
 where ,
-Step a: Get Jenkins’ security key (for trust).
-Step b: Tell your system where to find Jenkins.
-Step c: Update your system’s package list.
-Step d: Install Jenkins.
+✅ 1. Download Jenkins GPG key:
 
-Step-4 : Start Jenkins services using below commands
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+➡️Downloads Jenkins's official security key and saves it in your system.
+This key is used to verify the authenticity of Jenkins packages.
+
+🔒 Why this is needed:
+APT (Ubuntu's package manager) needs to trust the packages it installs. The GPG key acts like a digital signature that confirms:
+"Yes, this Jenkins package really comes from the official Jenkins team and hasn't been tampered with."
+
+By saving this key, you're telling your system:
+"Packages from Jenkins’s website are safe to install."
+
+✅ 2. Add Jenkins repository to APT sources:
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+➡️ Tells your system where to find Jenkins packages for installation.
+🗂️ Adds Jenkins's repo to APT so apt install jenkins can work.
+
+✅ 3. Update the package list:
+
+sudo apt-get update
+➡️ Refreshes APT so it recognizes the new Jenkins repo.
+
+✅ 4. Install Jenkins:
+
+sudo apt-get install jenkins
+➡️ Installs Jenkins using the newly added repo.
+
+// To see jenkins version =======================> jenkins --version
+
+$$ Step-4 : Start Jenkins services using below commands
 
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
 
-Step-5 : Verify Jenkins setup
+$$ Step-5 : Verify Jenkins setup
 
 sudo systemctl status jenkins
 
-Step-6 : Open jenkins server in browser using VM public ip of linux vm
+$$ Step-6 : Open jenkins server in browser using VM public ip of linux vm
 
 http://public-ip:8080/
 
-Step-7 : Copy jenkins admin pwd
+$$ Step-7 : Copy jenkins admin pwd
 
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
-Step-8 : Create Admin Account & Install Required Plugins in Jenkins
+$$ Step-8 : Create Admin Account & Install Required Plugins in Jenkins
 ____________________________________________________________________
 
 --------------------------------------------------------------------------
@@ -164,22 +223,219 @@ ____________________________________________________________________
 My Notes :::====
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
- 
+
+** How to create a new pipeline/jobs ?
 Now after 8th step you should click --> create a job/ new item  ---> enter name --> choose pipeline --> ok
 after that script blank tab will be there click apply ---> save (will create a pipeline/job) 
 click ---> dashboard --> u will see list of pipelines
 
-To write script and run first build:- 
+** To write script and run/build first pipeline program hello world:- 
 select one pipeline from dashboard --> click configure ==>pipeline --> write code  ==> right side drop down list---> select hello world --> apply and save --> build now ==> you will see first hello wolrd got builded using jenkins
 
-To see output :- 
+Note :- inside definition there are 2 options :- pipeline script OR  pipeline script from SCM [ means it will pick up script from github directly ]
+
+** To see output :- 
 click on stages/below build u will see ---> console output
 
-To set poll/schedule task when to run jenkins pipeline:- 
+** To set poll/schedule task when to run jenkins pipeline:-   ( triggers -> poll scm)
 select one pipeline from dashboard --> click configure --> triggers ==> click poll scm --> add now anything wanted
+
+** How to download plugins ?
+-->
+Dashboard  ===> plugins ==> search and add any plugin u want
+
+** how to see tools ?
+Dashboard ==> tools
 
 --------------------------------------------------------------------------
 -------------------------------------------------------------------------
+END OF LEC 1
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
+
+///////////////////////////// 2nd LECTURE ////////////////////////////////////////
+
+Note :- while writing a script u will see at bottom "pipeline syntax"  click that so u will get proper syntax u want so copy paste this 
+eg:-    pipeline syntax --> sample step --> git --> add github details --> will create github syntax
+
+First step for pipeline(git clone)  =====>
+
+pipeline {
+    agent any
+
+    stages {
+        stage('git clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/coderPVK2001/DockerProject1.git'
+            }
+        }
+    }
+}
+
+
+Second Step for maven build / generate jar file ============>
+
+configure the maven as jenkins dont know the location and version of maven:- 
+dashboard ==> tools ==> maven ==> select version ==> give name as same version name so it will add that particular maven version 
+name => 3.9.9
+
+Note :- 
+Don't forget to add and add name as given while configuring maven 
+     tools {
+        maven '3.9.9'  
+    }
+
+
+pipeline {
+    agent any
+    
+     tools {
+        maven '3.9.9'  
+    }
+
+    stages {
+        stage('git clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/coderPVK2001/DockerProject1.git'
+            }
+        }
+        stage('Maven Build') {
+            steps {
+                sh 'mvn clean test package'
+            }
+        }
+    }
+}
+
+Third step for building docker image 
+Note:- after installing if not works then restart linux server in gitbash
+See image created or not after successful build in jenkins ?
+--> docker images <== type command in ubuntu and see
+
+We can download plugin of docker in jenkins as well but we are installing docker in linux server/ubuntu bcoz if we use ansible later so it will be easy to configure .
+install commands:- 
+curl -fsSL get.docker.com | /bin/bash
+sudo usermod -aG docker jenkins
+sudo usermod -aG docker ubuntu
+sudo systemctl restart jenkins
+sudo docker version
+
+pipeline {
+    agent any
+    
+     tools {
+        maven '3.9.9'  
+    }
+
+    stages {
+        stage('git clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/coderPVK2001/DockerProject1.git'
+            }
+        }
+        stage('Maven Build') {
+            steps {
+                sh 'mvn clean test package'
+            }
+        }
+        stage('Docker Build image') {
+            steps{
+                sh 'docker build -t pvk1036/demo1 .'
+            }
+        }
+    }
+}
+
+
+Fourth step to Run/Deploy the image 
+
+
+pipeline {
+    agent any
+    
+     tools {
+        maven '3.9.9'  
+    }
+
+    stages {
+        stage('git clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/coderPVK2001/DockerProject1.git'
+            }
+        }
+        stage('Maven Build') {
+            steps {
+                sh 'mvn clean test package'
+            }
+        }
+        stage('Docker Build image') {
+            steps{
+                sh 'docker build -t pvk1036/demo1 .'
+            }
+        }
+         stage('deployment'){
+            steps{
+                sh 'docker run -d -p 8090:8090 --name cont1 pvk1036/demo1'
+            }
+        }
+    }
+}
+
+Note :
+--name will give name to the container
+
+**you will get below error if you try to run pipeline multiple times bcoz of container name
+docker: Error response from daemon: Conflict. The container name "/cont1" is already in use by container 
+
+So to tackle this stop and remove the container first
+
+eg:- 
+
+pipeline {
+    agent any
+    
+     tools {
+        maven '3.9.9'  
+    }
+
+    stages {
+        stage('git clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/coderPVK2001/DockerProject1.git'
+            }
+        }
+        stage('Maven Build') {
+            steps {
+                sh 'mvn clean test package'
+            }
+        }
+        stage('Docker Build image') {
+            steps{
+                sh 'docker build -t pvk1036/demo1 .'
+            }
+        }
+        stage('deployment'){
+            steps{
+                sh 'docker stop cont1'
+                sh 'docker rm cont1'
+                sh 'docker run -d -p 8090:8090 --name cont1 pvk1036/demo1'
+            }
+        }
+    }
+}
+
+
+=========================================================================================================================================
+====================END OF LEC 2 ========================================================================================================
+=========================================================================================================================================
+
+
+
+
+
+
+
+
+
+
 
