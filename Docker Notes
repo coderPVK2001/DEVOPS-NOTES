@@ -678,13 +678,13 @@ steps:-
 4.Add commands in Docker file
 
 FROM openjdk:17
-COPY target/travel-app.jar  /usr/app/
+COPY target/dockerproject1.jar  /usr/app/
 WORKDIR /usr/app/
 EXPOSE 8090
-ENTRYPOINT ["java", "-jar", "travel-app.jar"]
+ENTRYPOINT ["java", "-jar", "devops-app.jar"]
 
 where, below questions should raise in 10th step...
-ENTRYPOINT ["java", "-jar", "travel-app.jar"]
+ENTRYPOINT ["java", "-jar", "devops-app.jar"]
 
 why app doesnt start after build command?
 -The app doesn’t start during the docker build because:
@@ -717,7 +717,7 @@ git branch -M main   //-M → Forcefully rename the current branch (even if main
 git remote add origin https://github.com/coderPVK2001/TravelDocker.git
 git push -u origin main
 
-6. see git,docker,maven versions in linux VM? are they available or not in linux VM ?
+6. see git,docker,maven versions in linux VM? are they available or not in linux VM ?             ///main devops app building and running starts from HERE
    if not available so install the above softwares using command :-
    sudo yum install git -y 
    sudo yum install maven -y 
@@ -775,6 +775,10 @@ docker run -d -p 8090:8090 pvk2001/demo1:testing
 
 Note: docker run -p 8090:8090 pvk2001/demo1:testing  //first see application is working or not without using detach mode first
 
+docker ps    ===> for checking container running or not 
+docker ps -a ===> for checking the stopped containers 
+
+***********CHECK THE URL AS DOCKER IMMAGE IS RUNNING OR NOT :- http://13.232.209.255:8090/api/v1/getpvk
 
 //Till now we were running docker image locally but for all public should access then follow below points===>> 
 
