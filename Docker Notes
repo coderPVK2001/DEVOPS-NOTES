@@ -71,6 +71,13 @@ Naming convention of docker image  :- "username/repository-name"
 During docker build → App is not started. Docker just prepares everything.
 During docker run → Docker uses the ENTRYPOINT to actually start the app.
 
+17)
+docker ps                  ==> to see running container 
+docker ps -a               ==> To see stopped container
+docker rmi <image>         ==> To remove particular image
+docker rm <container_name> ==> To remove particular container 
+docker container prune     ==> To remove all stopped container
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
