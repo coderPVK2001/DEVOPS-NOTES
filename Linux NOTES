@@ -1,5 +1,25 @@
 <====================== LINUX  NOTES ==========================>
 
+Note:- 
+
+To see list of groups -->
+cat /etc/group
+
+To seelist of users-->
+cat /etc/passwd
+
+
+1. Find a File by Name
+
+sudo find 'path' -name 'file name' 
+
+eg:- 
+sudo find /home -name "f1.txt"
+✅ Effect: Searches for f1.txt inside the /home directory.
+
+±+++++++++……..........
+
+
 For practising in linux ways:-
 i)	Insatall linux OS 
 ii)	Use oracle virtual box on chrome 
