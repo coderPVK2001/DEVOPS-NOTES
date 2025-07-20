@@ -1,0 +1,241 @@
+<=================== K8 IMP commands ==========>
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+###CREATION OF POD / DEPLOYMENTS / SERVICE  ####
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Execute manifest yml
+-->
+kubectl apply -f <manifest-yml-file>
+
+Create the service/deployment/pod using the YAML
+-->
+kubectl apply -f "xyz.yml"
+
+where , -f ==> file
+
+###GETTING CREATION/LIST OF POD / DEPLOYMENTS / SERVICE /NODES/LOGS  ####
+
+Check pods
+-->
+kubectl get pods
+
+Check pod logs
+-->
+kubectl logs <pod-name>
+
+Get all worker nodes
+-->
+kubectl get nodes
+
+Check existing services
+-->
+kubectl get svc
+
+Check existing deployments
+-->
+kubectl get deployments
+
+### DELETION OF POD / DEPLOYMENTS / SERVICE /NODES /replicaset ####
+
+pod 
+--->
+kubectl delete pod testpod
+
+service
+-->
+kubectl delete svc testpod-service
+
+replicaset
+-->
+kubectl delete rs <replicaset-name>
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+###DETAILED INFO OF POD / DEPLOYMENTS / SERVICE  ####
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Details about pods
+-->
+kubectl describe pod <pod-name>
+
+Details about service.
+-->
+kubectl describe svc "service name"
+
+Details about deployments.
+-->
+kubectl describe deployments "deployment name"
+
+Details about namespace .
+-->
+kubectl describe ns "namespace-name"
+
+
+
+### TO SEE YAML FILE OF POD / DEPLOYMENTS / SERVICE  ####
+
+***** For getting yaml file for any service
+-->
+kubectl get svc "service-name" -o yaml
+
+***** For getting yaml file for any pod
+-->
+kubectl get pod "pod-name" -o yaml
+
+***** For getting yaml file for any deployments
+-->
+kubectl get deployments "deployment-name" -o yaml
+
+To keep server on continuosly
+-->
+watch -n 5 date   //will show date time in every 5 secs
+
+
+#####################
+To see all resources running                     ----------> IMP
+####################
+
+-> kubectl get all
+//will get all resouces like pods, deployments, services, replicaset
+
+Note:- you will see status, restarts, age for above resources
+
+
+In  replicaset you will see below as well 
+
+NAME                                                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/apm-server-575b6cbf8d                               1         1        1       129d
+replicaset.apps/apm-server-5dd5f67c47                               0         0        0       129d
+replicaset.apps/document-store-master-6d854778b                     0         0        0       129d
+replicaset.apps/document-store-master-6df64c7776                    1         1        1       131d
+replicaset.apps/document-store-volume-5666dc589c                    0         0        0       129d
+replicaset.apps/document-store-volume-64f987ff7f                    0         0        0       131d
+replicaset.apps/document-store-volume-67c965f675                    1         1        1       131d
+replicaset.apps/frontend-555bf9bfbd                                 0         0        0       2d23h
+replicaset.apps/frontend-58c67d68b                                  1         1        1       2d23h
+
+where,
+DESIRED	Number of replicas (pods) that you want (as per the deployment spec)
+CURRENT	Number of pods currently created by the deployment or replicaset
+READY	    Number of pods actually running and healthy (ready to serve traffic)
+
+Note : -
+Only when you change the spec of the deployment (like image, env vars, labels, etc.) Then only new replicaset is created.
+
+########################
+To delete all resources use
+########################
+-> kubectl delete all --all
+
+
+-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Rollout commands
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+kubectl rollout restart deployment <name>    # Restart pods
+kubectl rollout status deployment <name>     # Check rollout progress
+kubectl rollout undo deployment <name>       # Rollback to previous version
+kubectl rollout history deployment <name>    # View rollout history
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+🛠 6. Logs, Exec, and Debugging
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+kubectl logs <pod-name>                  # View logs
+kubectl logs -f <pod-name>              # Live logs
+kubectl exec -it <pod-name> -- /bin/sh  # Exec into pod shell
+kubectl top pod                         # View pod resource usage
+kubectl top node                        # View node resource usage
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+### RESTART ROLLOUT  ####
+
+To take restart rollout after image tag or after new image added into deployment.yaml
+-->
+kubectl rollout restart deployment <deployment-name>
+
+scenarios when to take restart rollout :-->
+i) You push a new version of myapp:latest to your image registry.
+ii) eg:- new image tagged to that deployment
+iii) If you update a ConfigMap or Secret that’s mounted into a pod (but not as env vars), Kubernetes won’t auto-restart the pod.
+
+
+###  NAMESPACE ###  do practical
+
+Get all resources belongs to backend-ns namespace
+-->
+kubectl get all -n backend-ns
+
+Get all pods in kube-system
+-->
+kubectl get pods -n kube-system
+
+Delete name space - All resource related to that name-space will be deleted
+-->
+kubectl delete ns "name"
+
+List all namespaces
+-->
+kubectl get ns
+	
+List pods in a specific namespace
+-->
+kubectl get pods -n <namespace>
+
+Show detailed info about a namespace
+-->
+kubectl describe ns <namespace>
+
+Create a new namespace
+-->
+kubectl create ns <namespace>	
+
+===========================================
+===========================================
+
+📌 LIVE EDIT RESOURCES (🆕 NEW)
+
+Q. Edit deployment yaml
+-->
+kubectl edit deployment <deployment-name>
+
+📌 DELETE PODS BY LABEL (🆕 NEW)
+-->
+kubectl delete pod -l app=myapp
+
+📌 LIST RESOURCES BY LABEL (🆕 NEW)
+-->
+kubectl get pods -l app=myapp
+
+📌 VIEW K8S RESOURCE DEFINITIONS (🆕 NEW)
+-->
+kubectl explain deployment.spec   //Explains YAML structure (like docs inside terminal).
+
+📌 GET RESOURCE USAGE (🆕 NEW)
+-->
+kubectl top pod
+kubectl top node
+//Shows live CPU/memory usage
+
+📌 ROLLBACK A DEPLOYMENT (🆕 NEW)  //Interesting one
+-->
+kubectl rollout undo deployment <deployment-name>
+//Rollback to a previous working version.
+
+📌 CHECK SERVICE ENDPOINTS (🆕 NEW) //See which pods are tied to which services.
+-->
+kubectl get endpoints
+
+
+
+
+
