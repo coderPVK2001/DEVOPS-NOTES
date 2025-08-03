@@ -69,3 +69,25 @@ G) cloudwatch :-
 
 H) SNS (Simple Notification Service) :-
 -Pub/sub messaging service for sending notifications and messages between services.
+
+
+
+==================================================================================================================
+
+Practical 
+
+----------------------------------------
+2ND LEC
+1) 
+Before creating ec2 instance/VM for any OS port opening should be done first for ssh otherwise u will get connection timed out error.
+STEPS for creation of port :- security groups --> inbound rules --> add port and allow any ipv4 address
+Linux ssh :- 22 port 
+windows :-3389 -->u will get username and pass as well from which you should connect it
+
+one key pair can connect multiple servers/ec2 consoles.
+
+2) Every server/vm has 2 ips :- private and public
+pubilc IP gets changes every time server gets restart so to avoid this use "elastic IP" 
+STEPS :- 
+below security groups --> Elastic ip -->
+Associate the instance in elastic ip so you will see now public ip will remain static now
