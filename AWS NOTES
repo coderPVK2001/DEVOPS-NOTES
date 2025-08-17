@@ -1,4 +1,145 @@
+☁️ Cloud Service Models
+Cloud providers offer different levels of services depending on how much control and responsibility you want. These models are:
+
+IaaS – Infrastructure as a Service
+PaaS – Platform as a Service
+SaaS – Software as a Service
+
+
+🧱 What is IaaS (Infrastructure as a Service)?
+####################################################
+-> IaaS is a cloud service model where the cloud provider gives you raw infrastructure, and you build everything on top of it.
+
+🏗️ Think of it like:
+"You rent a fully functional empty building, and it’s your job to furnish it, decorate it, and use it however you want."
+
+✅ What the cloud provider gives you:
+---------------------------------------------
+🖥️ Virtual Machines (VMs)
+🌐 Networking (IP, firewall, load balancer)
+💾 Storage (hard drives, SSDs)
+⚙️ Virtualization, Servers, Data Center
+
+✅ What you (the customer) have to do:
+------------------------------------------------
+Install Operating System (e.g., Ubuntu, Windows)
+Install runtime environments (Java, Python, Node.js, etc.)
+Set up web servers (Apache, Nginx, Tomcat, etc.)
+Deploy and manage your application code
+Handle updates, patches, and security
+
+📦 Example Scenario
+----------------------------------
+Let’s say you want to host a Java web application.
+
+Using IaaS:
+------------
+You create a VM on AWS EC2
+Install Ubuntu
+Install Java, Tomcat, MySQL
+Deploy your .war file
+Configure your firewall, ports, etc.
+
+🔧 Common IaaS Providers
+Provider	     	Service Example
+AWS			          EC2, EBS, VPC
+Microsoft Azure		Virtual Machines
+Google Cloud		Compute Engine
+Oracle Cloud		OCI Compute
+DigitalOcean		Droplets
+
+------------------------------------------------------------------------------------------------
+
+⚙️ What is PaaS (Platform as a Service)?
+#############################################
+PaaS is a cloud service model where the cloud provider gives you a ready-made platform (runtime, OS, web server, etc.) so that you can directly deploy and run your application — without worrying about setting up servers or infrastructure.
+
+🎯 Key Idea:
+You focus only on developing and deploying your code, and the cloud provider takes care of the platform and infrastructure underneath.
+
+✅ What the cloud provider gives you:
+----------------------------------------
+Pre-installed OS
+Runtime environment (like Java, Node.js, Python)
+Web server (e.g., Apache, Tomcat)
+Auto-scaling, load balancing, and patching
+Built-in monitoring and logging
+
+✅ What you (the customer) need to do:
+----------------------------------------
+Write your application code
+Upload/deploy your app on the platform
+Manage your data, and maybe configure some settings
+
+You don’t need to:
+
+Install OS
+Set up web servers
+Configure runtime manually
+
+📦 Example Scenario
+------------------------
+Let’s say you want to deploy a Java Spring Boot application.
+
+Using PaaS:
+
+Choose a PaaS provider like Heroku or Google App Engine
+Push your code using Git
+
+The platform automatically:
+
+Sets up the Java environment
+Deploys your app
+Manages scaling and traffic
+You just monitor it and update the code when needed.
+
+☁️ Popular PaaS Providers
+Provider				          Service Example
+Heroku				          Easy app deployment (multi-language)
+Google App Engine		    Run apps without managing servers
+AWS Elastic Beanstalk		Deploy web apps in Java, .NET, PHP, etc.
+Microsoft Azure App     Service	Deploy and scale web apps easily
+
+-----------------------------------------------------------------------------------------------------
+
+💻 What is SaaS (Software as a Service)?
+####################################################
+SaaS is a cloud service model where the cloud provider gives you ready-to-use software, and you can access it through the internet — no installation, no setup, no servers.
+
+🎯 Key Idea:
+You simply use the software; everything else — like servers, updates, backups, and security — is managed by the cloud provider.
+
+✅ What the cloud provider handles:
+------------------------------------------
+Application software
+Servers and infrastructure
+Updates and bug fixes
+Data storage and backup
+
+Security and availability
+
+✅ What you (the customer) do:
+--------------------------------------------
+Just log in to the app (usually in a browser)
+
+Use it to manage your tasks, documents, communication, etc.
+
+Pay monthly/yearly (subscription)
+
+📌 No need to install, manage, or update anything.
+
+📦 Example SaaS Applications
+App				            	Purpose
+Zoom				          Video meetings and communication
+Google Drive / Docs		File storage, editing, collaboration
+Dropbox	Cloud 			  storage
+Microsoft 365 (Teams, Word)	Productivity & collaboration
+Jira				          Project management & issue tracking
+Salesforce			      Customer relationship management (CRM)
+
+
 <=======================================  AWS ============================================> 
+SUMMARY
 
 A) EC2 (Elastic Compute Cloud) ====>
 Virtual servers in the cloud.
@@ -48,18 +189,20 @@ Like your own little network with walls—you decide who gets in and out.
 
 🔐 Example: You run sensitive apps inside a VPC so the public can’t access them directly.
 
-G) elastic beanstalk:-
+G) elastic beanstalk:- (PAAS) 
 -use to automate the process like ec2 all configurations will be done
 -- billing will be continuos even if you are not using app at night. 
-=Think of it like a chef who cooks your app.
 =You just give your code (e.g., a Python or Java app), and Elastic Beanstalk sets everything up—servers, storage, scaling—for you.
+- aws beanstalk is free of charge but the resources inside beanstalk you are using you will get charged for that. Resources like :- ec2, s3 , rds ,...
 
 🧑‍🍳 Example: You upload your website code, and it runs on the internet without you touching servers.
 
 
 F) aws lambda:- 
-- similar to elastic'
+- similar to elasticbeanstalk but one advantage here is how much usage your service is doing only that much you have to pay
 - here, it is pay as you use ; for eg: - how much request you get in your server that much billling will be generated
+
+for eg:- if no one visits your website then also beanstalk will charge you on hourly basis but here if no one visits or no requests got hit then no service will get charge.
 
 G) cloudwatch :- 
 - if servers load get 90-95 % it will give alert to admin of app /user 
@@ -71,8 +214,29 @@ H) SNS (Simple Notification Service) :-
 -Pub/sub messaging service for sending notifications and messages between services.
 
 
+🗂️ EC2 Instance Instance types :-  (with Details)
+Code	Meaning & Use Case
+t	=>Burstable performance – Low-cost, good for light workloads like dev/test, blogs, small apps
+m =>	General purpose / Balanced – Good mix of CPU, memory, and network for web servers, app servers, small to mid-size DBs
+r / x / u	 => Memory-optimized – Best for large in-memory workloads, high-performance databases (PostgreSQL, SAP HANA, Redis), analytics
+c	 =>Compute-optimized – Ideal for CPU-bound tasks like batch processing, high-performance web apps, gaming, ML inference
+g / p / inf	=>Accelerated / GPU-based – Best for ML training (p), inference (inf), video rendering or graphics (g)
+i / d	=> Storage-optimized – Designed for fast SSD (NVMe) or large HDD use cases like NoSQL DBs, data lakes, logs, streaming apps
+hpc =>	High-performance computing – Built for tightly-coupled simulations, modeling, scientific computing, CFD, etc.
+z	=> High clock speed instances – For workloads that need high per-core performance (e.g., EDA tools, financial modeling, software licensing-based apps)
+
 
 ==================================================================================================================
+
+NOTE: - 
+
+EC2 :---->
+Images = AMI , AMI catalog
+Elastic Block Storage = volumes , snapshots , lifecycle manager
+Network & security = Security groups, Elastic IPs , Placement groups , Key Pairs , Network interfacesload
+Load balancing = load balancers , Target groups, Trust stores
+Auto scaling = Auto scaling groups
+
 
 Practical 
 
@@ -91,3 +255,362 @@ pubilc IP gets changes every time server gets restart so to avoid this use "elas
 STEPS :- 
 below security groups --> Elastic ip -->
 Associate the instance in elastic ip so you will see now public ip will remain static now
+
+
+3) Region and zone :- // can see region*Asia pacific(mumbai) in top of aws and zone in ec2 console alongside status u willl see availability zone :- 
+ap-south-1a
+ap-south-1b
+ap-south-1c
+
+region is like city and zone is address or buildings
+Note :- if you are using service of one zone so dont use another zone for other service 
+for eg:- if your server is in building a(zone) if if you are using service ebs of building b (zone b) not possible.
+
+4)Types of EBS -->  //Attach the additional volumes to your instance 
+
+2 Types of EBS:-  Root volumen and additional volume 
+Note :- root volume for linux bydefault is 8 gb and for windows it is 30 gb 
+
+✅ 1) General Purpose SSD (gp3 / gp2)
+Min: 1 GiB
+Max: 16,384 GiB (16 TB)
+Use Case: Best for everyday use, such as running your OS, boot volumes, and general workloads.
+
+💡 Good for:
+Web servers
+Small to medium databases
+Development and testing environments
+
+📌 gp3 is newer and offers better performance at a lower cost compared to gp2.
+
+✅ 2) Provisioned IOPS SSD (io1 / io2)
+io1: Min 4 GiB, Max 16,384 GiB
+io2: Min 4 GiB, Max 65,536 GiB (65 TB)
+Use Case: Best for high-performance databases and applications that need consistent and fast I/O.
+
+💡 Good for:
+Mission-critical databases (like Oracle, SQL Server, PostgreSQL)
+High-performance workloads (financial systems, analytics, etc.)
+
+🔧 You can provision the number of IOPS (input/output operations per second) for predictable performance.
+
+✅ 3) Cold HDD (sc1)
+Min: 125 GiB
+Max: 16,384 GiB
+Use Case: Designed for infrequently accessed data.
+
+💡 Good for:
+Backup storage
+Archival storage
+Large volumes of rarely accessed files
+
+✅ 4) Throughput Optimized HDD (st1)
+Min: 125 GiB
+Max: 16,384 GiB
+Use Case: Ideal for large, sequential workloads.
+
+💡 Good for:
+Big data
+Data warehouses
+Streaming log data
+Large-scale file systems
+
+📊 Focus is on throughput (MB/s), not IOPS.
+
+✅ 5) Magnetic (Standard) (legacy, rarely used now)
+Min: 1 GiB
+Max: 1,024 GiB (1 TB)
+Use Case: Old-generation storage type. Mostly used in the past for low-cost workloads.
+
+💡 Good for:
+Small, infrequent workloads
+Archival (only if legacy reasons force it)
+
+4) 1:06:48 (ebs additional storage) : -
+
+ebs additional storage can be added of same zone and same region 
+
+5) 44:00 :-->(snapshot) :- Backup of an EBS volume.  (immediate backup ) 
+
+-We can create snapshot from one region to other region or one zone to other zone
+- u can create a snapshot from volume and then create volume from snapshot 
+NOte: Volume  ➝  Snapshot  ➝  Volume
+-can schedule daily for backup and can keep only last 10 days backup restall will be deleted
+
+EG:- 
+in snapshot we can create a backup of zone A Region Mumbai into Zone B Region Hyderabad 
+
+1:06:48 ::: ebs additional storage adding and removing (mount /demount)
+
+6) LB :-  54:44 --> LB 
+
+- first create target group and add instances in target group
+- while creating instance in advance option run shell command given in psa notes so it will run automatically once instance is been created.
+- consider if u have microservices architecture  
+
+ALB --> Target group 1 --> 2/3/... instances [flight 1,2,3,...]  
+ |-----> Target group 2 --> 2/3/... instances [hotel 1,2,3,....]
+ 
+ Note :-   ;;;;; round robin happens here like eg:- 1st request will go to flight 1 2nd will go to flight 2       
+ |            then flight 3 then again flight 1 ......  likewise traffic is distributed
+
+
+7) 32:16 --> auto scaling ( create launch template first which comes under instances)
+
+Can create own AMI as well which will contains preconfigured or predefined softwares.
+Instances --> actions --> create image -->
+After creation :-
+While creating instance in my AMIs your image will be visible there so select it
+
+8) 27:16:- RDS 
+2 options public access :- yes or no
+Yes :- then we can access database locally from our workbench but it is not recommended for our production application as anyone can have public access.
+
+No :- use VPC here 
+Vpc is like network which helps our ec2 and database gets interconnected to reach other.
+
+Note :- Security groups acts as firewall
+
+After creating database in RDS --> settings in firewall as well 3306 port open --> workbench copy dns from Rds and paste in workbench new connection --> hostname (earlier it will be 127.0.0.../localhost) ,username and password which u set in RDS during creation --> you are connected now
+
+9)42:50:- S3 services:-
+
+Used for storing any type of files like PDF, Excel sheet, images, audio , videos
+NOTE:-But per file size should not exceed above 5TB
+
+-S3 Bucket name should be unique
+-Inside one bucket files are stored which are called as objects
+-While creating bucket there will be option of. ACL ( enable or disable) if disable then object access is not possible through url so keep it enabled to get access of file/image after hitting url
+
+Versioning :- if u enabled versioning and try to upload any object abc.png then if u again upload abc.png it will not override previous one ; we can see both abc.png file out there
+
+10) 36:54:-- Transfer acceleration
+
+Once bucket created --> properties --> transfer acceleration --> enable 
+
+21 se IAM role in AWS:-- we can give limited access to particular user
+
+For programatically login into awa cli/ java /terraform u need to do it with secret key and access. Key:- 
+Search iam --> create user --> 3 options (attach policy directly) -->user created successfully.
+ after creation go to users --> select one user --> create access key and private key
+Note:- can create access key for root as well but it is not recommended to do so 
+
+
+11)38:54:-  IAM  -->
+Access Management :- 
+User groups ,Users , Roles , Policies , Identity Providers, Account settings ,Root access management
+
+STEPS TO CREATE USER GROUP :- 
+
+i)
+create user group :- 
+for developers , devops, TL , everyone has other types of access so create user groups 
+
+for devops :- select poilcy --> AdministratorAccess (Full AWS services access)
+
+devops group created!!
+
+ii)
+create user --> add user details --> set permissions ( 3 options : Add user to group  / copy permissions / Attach policies directly) -->
+select Add user to group --> select group --> devops 
+
+----------
+ROLES:- 
+-For interacting EC2 with EKS we dont need policies to select instead roles should be created here
+- Restriciting ec2 instance with which services it can access.
+- AWS services interacting with any other services.
+
+STEPS for role creation:- 
+
+i) select trusted entity --> AWS service(multiple options present) & use case --> EC2 (multiple options present) -->
+ii) Add permissions --> AmazonEKSServicePolicy (multiple options present like AdministratorAccess,amazonRDS,..)
+iii) Name,review and create --> Name of role -->
+
+Role created succesfully !!
+
+---------------
+POLICIES :- (custom policies can be created ) 
+eg :- if we want to give region specific service like S3 service should be used with specific region mumbai ap south 1
+
+STEPS :-  (before creating policy for s3 bucket one bucket should be created 
+
+create policy --> 2 types ( visual/JSON) --> select JSON -->  choose service --> s3 full and select bucket as well  --> now select condition and add above mumabi ap south 1 --> JSON will be created 
+
+Policy created succesfully !!
+
+Now into user --> attach above policy --> so now user will be able to access only s3 bucket 
+
+12) 26:56 wala lec- ( AWS CLI) 
+
+we are using UI of aws but UI keeps changing so sometimes it becomes difficult to find something so AWS cli comes into picture
+u just need to use commands in CLI for using any particular service and that's it
+Note : -search AWS CLI documentation. :- docs.aws.amazon.com/cli/
+
+STEPS ::-
+go to profile --> security credentials --> create access key and secret key ( as this will be for root user ) 
+
+download AWS cli --> see documentation where u will get commands --> after downloading install it 
+
+Login steps and usage of AWS cli :- 
+--> open cmd as administrator -->  
+check command :-
+i) aws --version 
+ii) aws configure  --> add access key , secret key , region( ap-south-1) , output format :- (JSON) 
+iii)aws s3 mb s3://bucket-name   //for bucket creation 
+    aws s3 ls  //to see list of buckets
+iv) cls //for clear screen
+
+
+13) 46:00 :: cloud watch and Sns and revision from 30 .
+
+For SNS --> create topic --> create subscription --> add email ID 
+
+Create ec2 instance --> select action --> monitor and troubleshoot --> manage cloud watch alarm
+
+14) 44:20 :: Elastic Bean stalk
+
+-EBS is PAAS 
+-U will get platform u just need to deploy code
+-Ebs reduces load of adding rds,vpc, security group,autoscaling,ec2 instance....
+ 
+15) 1:05:56 :: Elastic bean stalk continue practical above also
+
+-IAM role create policies and add as mentioned in above lec.
+-While creating we will require policies and attach it into beanstalk
+
+9:55 se dekh
+
+vpc concept explained with ip addresses as well
+
+VPC: In AWS (Amazon Web Services), VPC stands for Virtual Private Cloud.
+-----------------------------------------------------------------------
+a. Amazon VPC is a logically isolated virtual network that you create in the AWS cloud. It is your own private network space in AWS
+b. Your VPC is like your own private data center within AWS.
+c. No other company can see or access your resources — unless you explicitly allow it.
+d. VPC is a free Service in AWS
+
+16) 1:10:08 ::
+
+VPC:-
+-isolated network
+-vpc sizing :- how many ip range needed (CIDR)
+
+CIDR --> defining reserved IP addressses
+subnets (sub networks) --> dividing large network into small networks (subnets has CIDR ranges) 
+
+why subnet ?
+-->
+to control traffic 
+for eg:- subnet 1 resources to keep private and subnet 2 to make public
+subnet 1 contains rds subnet 2 contains app  which is public 
+
+Note:- 
+-bydefault one vpc is created in aws  for eg:- 172.31.0.0/16 --> 65,536 ips (2^16)
+- 3 subnets by default --> 
+for eg:- 172.31.16.0/20 --> 2^12 --> 4096 but showing 4091 available in aws coz 5 ips used by aws for internal purpose 
+2 more are there ..
+
+
+18:45 se dekhna hain
+==================================================================
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Custom AMI creation ::- --
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1)Launch EC2 instance → choose any base AMI (Ubuntu, Amazon Linux, Windows). use security group :- launch wizard which is created by me (8080,8090,80 port present )
+2)Install & configure software you need (Java, MySQL, Nginx, etc.).
+3)In EC2 console → select instance → Actions → Image → Create Image.
+4)Give name + description → click Create.
+5)AWS will create your custom AMI (visible under AMIs in EC2  --> in MY AMIs).
+Now you can launch new EC2s using this AMI.
+
+* java and nginx creation steps :-  (port of 80 should be opened  :- type :- HTTP protocol:-TCP port range:-80) 
+
+kp --> praj_kp (present in c drive) 
+instance type -> t3.micro
+
+sudo yum install -y java-17-amazon-corretto
+sudo yum install -y nginx
+
+command to check java and nginx :-->
+java -version
+systemctl status nginx
+
+To start nginx :- 
+sudo systemctl enable nginx
+sudo systemctl daemon-reload
+sudo systemctl restart nginx
+sudo systemctl status nginx
+
+To see which port nginx is listening ?
+-->
+netstat -tulpn | grep nginx 
+t → TCP connections
+u → UDP connections
+l → Listening ports (services waiting for connections)
+p → Show the process name / PID using the port
+n → Show numeric addresses/ports (instead of hostnames/service names)
+
+Check url on browser :-  //u will se Welcome to nginx! page
+http://13.203.221.193/
+
+Note :- ssh -i "praj_kp.pem" ec2-user@ec2-43-204-228-173.ap-south-1.compute.amazonaws.com  //login with ec2-user instead of root 
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Additional Volume Creation ::- --
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+🔹 Create EBS Volume
+
+1)Go to EC2 Console → Elastic Block Store → Volumes.
+Click Create volume.
+
+2)Choose:
+Size (e.g., 10 GB).
+Volume type (gp3/gp2 for general purpose).
+Availability Zone (AZ) → must match the EC2 instance’s AZ. (if zone is ap-south-1b in ec2 then while creating volume also select same only)
+Click Create volume.
+
+3)Attach Volume to ec2 Instance :- 
+On volumes section --> Select the created volume → Actions → Attach volume.  --> Choose your EC2 instance.
+
+It gets attached as a device (e.g., /dev/sdf or /dev/xvdf).
+
+4) Inside ec2 instance when u type df -kh u will not see additional volume as u need to mount it using below commands :- 
+
+i>To Verify if the volume is attached -->
+lsblk  //This will list all block devices.
+
+You should see something like:
+
+nvme0n1   8:0    0    8G  0 disk
+├─nvme0n1p1
+└─nvme0n1p128
+nvme1n1   8:16   0   10G  0 disk   <-- your new volume
+
+ii> Create a filesystem on the new volume (only first time!)
+sudo mkfs -t xfs /dev/nvme1n1
+where ,
+sudo mkfs -t xfs /dev/nvme1n1
+sudo         → run as root (needs admin rights).
+mkfs         → “make file system” (formats the disk so Linux can use it).
+-t xfs       → type of filesystem = XFS (you could also use ext4).
+/dev/nvme1n1 → the raw new disk (your 10GB volume).
+
+👉 In short:
+This command formats your new empty disk with XFS filesystem, so you can later mount and store files in it.
+
+iii>Make a mount point
+sudo mkdir /data
+
+iv> Mount the volume
+sudo mount /dev/nvme1n1 /data
+
+v> Verify
+df -kh
+Now you should see your 10GB volume mounted at /data.
+
+
+
