@@ -100,6 +100,24 @@ pwd                                :- to  see current working directory
 df                                   :- to see disk space
 df -h                                :- to see disk space in human readable  format
 
+ip r     :-  to check current ip
+free -h :- for RAM storage 
+df -kh :-  for disk storage 
+lscpu  :- cores
+nproc  :- for logical cores 
+
+CURL command :- curl -kv http://IP:port 
+where,
+curl = tool to make HTTP requests
+-k = Ignore SSL certificate errors (used with HTTPS)
+-v = Verbose output (shows detailed request and response info)
+
+optional command for CURL :- nc -zv <ip> port 
+where ,
+nc = netcat (network utility to test connections)
+-z = Zero-I/O mode (don’t send data, just check if port is open)
+-v = Verbose output (show connection result)
+
 
 
 QQQ. what does one file includes ==========>
