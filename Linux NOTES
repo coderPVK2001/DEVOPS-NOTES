@@ -925,8 +925,25 @@ cat softlink.txt
 📌 Now the soft link is broken, because it pointed to the original.
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+ WINDOWS COMMANDS 
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-
+| Linux Command    | Windows (cmd) Equivalent | Windows (PowerShell) Equivalent |
+| ---------------- | ------------------------ | ------------------------------- |
+| `ls`             | `dir`                    | `ls` (alias of `Get-ChildItem`) |
+| `pwd`            | `cd`                     | `pwd`                           |
+| `cd / cd ..`     | `cd / cd ..`             | same                            |
+| `clear`          | `cls`                    | `cls`                           |
+| `cat file.txt`   | `type file.txt`          | `Get-Content file.txt`          |
+| `cp file1 file2` | `copy file1 file2`       | `Copy-Item file1 file2`         |
+| `mv file1 file2` | `move file1 file2`       | `Move-Item file1 file2`         |
+| `rm file.txt`    | `del file.txt`           | `Remove-Item file.txt`          |
+| `rmdir folder`   | `rmdir folder`           | `Remove-Item folder -Recurse`   |
+| `touch file.txt` | `type nul > file.txt`    | `New-Item file.txt`             |
+| `man`            | no direct (use `help`)   | `Get-Help`                      |
+| `whoami`         | `whoami`                 | `whoami`                        |
+| `ifconfig`       | `ipconfig`               | `ipconfig`                      |
 
 
 
