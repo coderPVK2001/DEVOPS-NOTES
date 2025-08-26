@@ -58,6 +58,31 @@ java -jar filename.jar
 CMD  <---> ENTRYPOINT
 COPY <---> ADD
 
+
+🔁 Quick Comparison BETWEEN CMD VS ENTRYPOINT:
+
+You write in Dockerfile	You run in terminal	What Docker actually runs
+
+DOCKER COMMNAND1          DOCKER COMMNAND2              OUTPUT
+CMD "hello"          	docker run my-img "hi"	  hi (your CMD overrides)
+ENTRYPOINT ["hello"]	docker run my-img "hi"	  hello hi (your input is added)
+
+✅ One-Line Summary:
+👉 CMD = can be replaced
+👉 ENTRYPOINT = always runs, your args are just added
+
+Note FOR RUN VS CMD:- 
+RUN HELLO1
+RUN HELLO2
+DOCKER RUN IMAGENAME
+CMD BYE1
+CMD BYE2
+
+OUTPUT :- 
+HELLO 1
+HELLO 2
+BYE 2
+
 13) 
 root file in java contains pom.xml,source,...
 
