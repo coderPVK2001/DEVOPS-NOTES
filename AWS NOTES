@@ -833,6 +833,9 @@ Name:   database-1.cjy20ce6uzqs.us-east-1.rds.amazonaws.com  //dns of sql rds
 Address: 10.0.2.248
 
 5) connect RDS using public ec2 instance but rds is inside private subnet :- 
+
+after creating database --> actions --> connect to ec2
+
 commands for ec2==>
 
 ✅ Install MySQL Client on Amazon Linux 2023
@@ -848,3 +851,5 @@ mysql Ver 15.1 Distrib 10.5.16-MariaDB ...
 
 🔹 Connect to RDS
 mysql -h <RDS-ENDPOINT> -u <username> -p
+
+Note :- see vpc dashboard and delte all which are created 
