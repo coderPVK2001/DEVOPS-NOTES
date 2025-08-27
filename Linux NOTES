@@ -74,7 +74,7 @@ Cd .. --> to take one folder back
 
 Clear 
 
-rmdir -rf "folder name"  ==> recursively forcabely remove folder even if content present in it
+rm -rf "folder name"  ==> recursively forcabely remove folder even if content present in it
 
 rm 'filename' ==> for deleting particular file
 
@@ -89,7 +89,8 @@ cd.. (to back file)
 mv (to rename or move file) -->   $ mv remark.tsx remarkchanged.tsx
 touch  (creates new file) ==> touch abc.txt
 mkdir: mkdir newfolder (creates a new directory called newfolder).
-rmdir: rmdir emptyfolder (removes the empty directory named emptyfolder)
+rmdir: rmdir emptyfolder (removes the empty directory named emptyfolder)1
+rm -rf "dir/folder name"  : remove folder with contents with recursively forceably. 
 
 cat abc.txt                        :- to see content inside
 head abc.txt                     :- to see first 5 lines of text
