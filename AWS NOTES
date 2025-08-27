@@ -175,6 +175,9 @@ B) s3 :- for storage --> images,video,
 C) RDS :- for mysql,PostgreSQL database
 
 D) Dynamo DB :- for NoSQL database
+   Document db :- mongodb
+
+   cloud9 :- ide for coding and debuggin
 
 E) IAM ( Identtity & Access management ):- 
 - create subaccounts with restrictions for users .
@@ -237,6 +240,19 @@ Network & security = Security groups, Elastic IPs , Placement groups , Key Pairs
 Load balancing = load balancers , Target groups, Trust stores
 Auto scaling = Auto scaling groups
 
+VPC :--> 
+Your VPCs
+Subnets
+Route tables
+Internet gateways
+Egress-only internet gateways
+Carrier gateways
+DHCP option sets
+Elastic IPs
+Managed prefix lists
+NAT gateways
+Peering connections
+Route servers
 
 Practical 
 
@@ -612,5 +628,19 @@ v> Verify
 df -kh
 Now you should see your 10GB volume mounted at /data.
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+VPC CREATION ::- --
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Note :- The CIDR block size must have a size between /16 and /28.
+
+1)VPC creation
+create vpc -->IPv4 CIDR block = select(IPv4 CIDR manual input) --> IPv4 CIDR =give range (10.0.0.0/16 ) --> IPv6 CIDR block = No IPv6 CIDR block -->
+
+2) subnet :- 
+create subnet --> choose vpc --> subnet created 
+for private subnet keep setting as it is but for public subnet if you want to create then :- 
+choose subnet --> actions --> Enable auto-assign public IPv4 address (tick it) 
+Note :- for private no need to enable auto assign
 
 
