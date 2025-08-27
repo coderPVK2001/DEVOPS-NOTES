@@ -530,7 +530,162 @@ for eg:- 172.31.16.0/20 --> 2^12 --> 4096 but showing 4091 available in aws coz 
 18:45 se dekhna hain
 ==================================================================
 
+VPC:-
+-isolated network
+-vpc sizing :- how many ip range needed (CIDR)
 
+CIDR --> defining reserved IP addressses
+subnets (sub networks) --> dividing large network into small networks (subnets has CIDR ranges) 
+
+
+🌐 What is a Subnet?
+--------------------------------
+-A subnet (short for subnetwork) is a smaller network segment created by dividing a larger network (like a VPC) into multiple, logically separated pieces.
+-To define which resources should be accessible privately and which to be accessed publically 
+reources :-- rds,ec2,s3,....
+
+why subnet ? 27:00 diagram copy 
+-->
+to control traffic 
+for eg:- subnet 1 resources to keep private and subnet 2 to make public
+subnet 1 contains rds subnet 2 contains app  which is public 
+
+Note for AWS subnet breakdown:- 
+-bydefault one vpc is created in aws  for eg:- 172.31.0.0/16 --> 65,536 ips (2^16)
+- 3 subnets by default --> 
+for eg:- 
+172.31.16.0/20 --> 2^12 --> 4096 but showing 4091 available in aws coz 5 ips used by aws for internal purpose 
+172.32.16.0/20 --> 2^12 --> 4096
+172.33.16.0/20 --> 2^12 --> 4096
+
+Route Table --> while u click subnet u will see route table section out there 
+-communication between one subnet to other subnet is being done by route table
+-Each subnet must be associated with a route table. However, traffic within the same subnet does not require routing via the route table—instances communicate directly. 
+-Route tables are used to route traffic between subnets within a VPC, between VPCs, and from subnets to outside networks
+
+Internet gateway -->
+-it defines whether subnet is private or public 
+-An Internet Gateway (IGW) is a VPC component that allows communication between your VPC and the internet.
+-Send traffic to the internet
+-Receive traffic from the internet
+eg :- 
+in route table section if IG is attached then subnet is public so it can be accessible within VPC and outside VPC as well 
+whereas if IG is not attached then subnet is private subnet and can make communication within VPC only
+
+NAT gateway :- 
+-NAT Gateway stands for Network Address Translation Gateway.
+-It allows instances in a private subnet to access the internet, but prevents the internet from initiating connections back to those instances.
+for eg:- 
+in private subnet rds is there and if we want to update rds latest version which is available online but due to private subnet we dont have access
+to internet so NAT helps to download the updates by sending request from private subnet to website and downloading the updates but it cannot take
+the response from client side like we can send requests only.
+
+
+44:06 :- 	PRACTICAL FULL VPC creation
+
+nOTES :-
+- ONE route table can connect to multiple subnets 
+- after your work, do delete your custom vpc so it will close IG,RT,subnet, ec2 so you dont need to close everything manually 
+
+create vpc 0/16 (65k IPs) ----> create 2 Route tables (private RT and public RT )  --> 2 subnets (private subnet and public subnet ) and attach route tables which created in previous step -->  create Internet gateway and in actions attach it to your VPC
+Now in public RT go to route section and add route --> 0.0.0.0/0 and add internet gateway which you created
+
+Now while creating new EC2 instance --> during network settings --> add custom vpc which we created and attach public subnet as well bcoz of this we can connect using ssh on local system 
+Note :- AUto assign public IP --> ENable during network settings --> created 2 instance one is private and public 
+O/P :- public getes connected through ssh but private don't
+
+
+17) 43:44 :- peering of vpc practical
+
+🔹 VPC Peering (Virtual Private Cloud Peering)
+
+VPC Peering is a networking connection between two VPCs (Virtual Private Clouds) that enables them to communicate privately as if they were on the same network.
+
+use peering connection 	
+	`
+Practical :- ec2 instance of default vm of one vpc should connect with custom vm present in other vpc   
+
+ec2-vpc1-vm(default) should communicate with ec2-vpc2-vm (custom created) 
+OUTPUT :- use ping command to check connectivity :- ping 10.0.0.14(custom ec2-vpc2-vm) 
+
+vpc-1 default range ==> 172.0.0.0/16
+vpc-2 range ==> 10.0.0.0/16
+
+edit in security group as well
+
+Note :- 
+Security groups are protecting our resources in ec2 instance 
+vpc is protecting our subnets 
+route table is protecting the subnets 	
+																													
+
+18) 41:26 :-  EFS (Elastic File System) 
+
+starting Network ACL little bit
+
+s3 vs  EFS :- 
+
+s3 -->
+-use whenever u are using apis to upload or download file/videos
+-returns URLs to access it 
+-used for Large files
+- Billing is effective compared to EFS
+
+EFS -->
+-can be used as shared file system bcoz we are sharing files from one instance to another instance eg: -  in EFS ,same config file is used in VM-1 and VM-2 if some file/video changes in VM-1 then it will reflect in VM-2 as well 
+- very costly for large file so prefer s3 for large files.
+
+
+practical :- create 2 instances A and  B so if any file is upload or modified in A then will reflect in B also
+
+create 2 instance -->intall efs in both instance  ->
+port open for 2049 in security goup -->
+
+19) 22:08 :--- cloud formation
+
+In template 3 options are there :- 
+Git, local upload and aws s3 url like upload yaml in s3 bucket and provide url
+
+Search from chatgpt:- Ec2 creation using yaml file 
+Note :- while saving from notepad save as 
+"Infra.yaml" otherwise it will save as .txt file instead of .yaml
+
+
+-------------------------
+
+20) 32:52 :: Terraform
+
+Install Terraform for windows 
+Add .exe path in system variable
+
+Steps :- in 43 architecture is there
+
+-in vs code create main.tf file for terraform
+-now for connecting cloud services like aws/google cloud first define provider block
+Note:- search in cpt provider block+ secret key + access key for aws --> Define IAM user as well and create role with admin access permissions --> will get access key and secret key
+- after writing code/hcl type below commands:- 
+*Terraform init // for installing packages written inside provider block and generates terraform.lock.hcl file which contains plugins details
+*Terraform validate // for validating configurations
+*Terraform fmt // for recorrecting format /indentations
+*Terraform plan //generates plan document
+Which contains project details stored in form of json inside terraform.hcl file
+*Terraform apply // generates JSON structure and genrates resources in aws
+
+28 :::
+
+Create a folder for each env uat,dev,prod
+In uat create provider.tf,.... 
+In prod same
+To access in terminal :-
+Right click to folder(uat) --> open in integrated terminal --> start typing commands
+
+Create input variable for passing values for Ami , instance type, ...
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+PRACTICAL ---------------------------------------------------------------------------
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Custom AMI creation ::- --
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
