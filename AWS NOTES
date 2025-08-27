@@ -581,21 +581,35 @@ to internet so NAT helps to download the updates by sending request from private
 the response from client side like we can send requests only.
 
 
-44:06 :- 	PRACTICAL FULL VPC creation
+17)44:06 :- 	PRACTICAL FULL VPC creation
 
 nOTES :-
 - ONE route table can connect to multiple subnets 
 - after your work, do delete your custom vpc so it will close IG,RT,subnet, ec2 so you dont need to close everything manually 
 
-create vpc 0/16 (65k IPs) ----> create 2 Route tables (private RT and public RT )  --> 2 subnets (private subnet and public subnet ) and attach route tables which created in previous step -->  create Internet gateway and in actions attach it to your VPC
-Now in public RT go to route section and add route --> 0.0.0.0/0 and add internet gateway which you created
+steps :- 
+
+a) create VPC :- assign CIDR ranges --> VPC created along with default ROute tables. (private-default-pvk)
+
+b)
+create vpc 0/16 (65k IPs) ----> create 2 more Route tables (private RT and public RT )  
+--> 2 subnets (private subnet and public subnet ) and attach route tables which created in previous step 
+-->  create Internet gateway and in actions attach it to your VPC
+-->  Now in public RT go to route section and add route --> 0.0.0.0/0 and add internet gateway which you created
+Note :- while adding route these are called as targets (IG /NAT/ Any IPs)
 
 Now while creating new EC2 instance --> during network settings --> add custom vpc which we created and attach public subnet as well bcoz of this we can connect using ssh on local system 
-Note :- AUto assign public IP --> ENable during network settings --> created 2 instance one is private and public 
-O/P :- public getes connected through ssh but private don't
+Note :- AUto assign public IP --> ENable during network settings --> edit network settings and auto assign --> created 2 instance one is private and public 
+--> in security group of ec2 --> inbound rule add type --> ssh --> port 22 --> source  (0.0.0.0/0)
+O/P :- public gates connected through ssh but private don't
 
+for public vm --> ping google.com
+u can see in networking section of vm-public --> private dns ip:- 10.0.0.144
 
-17) 43:44 :- peering of vpc practical
+IGW + Route Table = road to internet.
+Security Group Inbound Rule = gate to your house (you must open it for SSH).
+
+18) 43:44 :- peering of vpc practical
 
 🔹 VPC Peering (Virtual Private Cloud Peering)
 
@@ -619,7 +633,7 @@ vpc is protecting our subnets
 route table is protecting the subnets 	
 																													
 
-18) 41:26 :-  EFS (Elastic File System) 
+19) 41:26 :-  EFS (Elastic File System) 
 
 starting Network ACL little bit
 
@@ -641,7 +655,7 @@ practical :- create 2 instances A and  B so if any file is upload or modified in
 create 2 instance -->intall efs in both instance  ->
 port open for 2049 in security goup -->
 
-19) 22:08 :--- cloud formation
+20) 22:08 :--- cloud formation
 
 In template 3 options are there :- 
 Git, local upload and aws s3 url like upload yaml in s3 bucket and provide url
@@ -653,7 +667,7 @@ Note :- while saving from notepad save as
 
 -------------------------
 
-20) 32:52 :: Terraform
+21) 32:52 :: Terraform
 
 Install Terraform for windows 
 Add .exe path in system variable
@@ -680,8 +694,6 @@ To access in terminal :-
 Right click to folder(uat) --> open in integrated terminal --> start typing commands
 
 Create input variable for passing values for Ami , instance type, ...
-
-
 
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -792,10 +804,47 @@ Note :- The CIDR block size must have a size between /16 and /28.
 1)VPC creation
 create vpc -->IPv4 CIDR block = select(IPv4 CIDR manual input) --> IPv4 CIDR =give range (10.0.0.0/16 ) --> IPv6 CIDR block = No IPv6 CIDR block -->
 
-2) subnet :- 
+2)create route table and internet gateway as well :-
+create vpc 0/16 (65k IPs) ----> create 2 more Route tables (private RT and public RT )  
+--> 2 subnets (private subnet and public subnet ) and attach route tables which created in previous step 
+-->  create Internet gateway and in actions attach it to your VPC
+-->  Now in public RT go to route section and add route --> 0.0.0.0/0 and add internet gateway which you created
+Note :- while adding route these are called as targets (IG /NAT/ Any IPs)
+
+3) subnet :- 
 create subnet --> choose vpc --> subnet created 
 for private subnet keep setting as it is but for public subnet if you want to create then :- 
 choose subnet --> actions --> Enable auto-assign public IPv4 address (tick it) 
 Note :- for private no need to enable auto assign
 
+4) EC2 insstance :- 
 
+Now while creating new EC2 instance --> during network settings --> add custom vpc which we created and attach public subnet as well bcoz of this we can connect using ssh on local system 
+Note :- AUto assign public IP --> ENable during network settings --> edit network settings and auto assign --> created 2 instance one is private and public 
+--> in security group of ec2 --> inbound rule add type --> ssh --> port 22 --> source  (0.0.0.0/0)
+O/P :- public gates connected through ssh but private don't
+
+private vm :-10.0.1.109
+public vm :- 10.0.0.141
+
+as private subnet is useful for rds so created rds using private subnet :- it requires subnet in diff availablity zone then only it will create otherwise not
+eg :- 
+Name:   database-1.cjy20ce6uzqs.us-east-1.rds.amazonaws.com  //dns of sql rds
+Address: 10.0.2.248
+
+5) connect RDS using public ec2 instance but rds is inside private subnet :- 
+commands for ec2==>
+
+✅ Install MySQL Client on Amazon Linux 2023
+sudo dnf install mariadb105 -y
+
+👉 Even though the name says mariadb105, it actually provides the mysql client command (mysql CLI tool).
+
+🔹 Verify Installation
+mysql --version
+
+You should see something like:
+mysql Ver 15.1 Distrib 10.5.16-MariaDB ...
+
+🔹 Connect to RDS
+mysql -h <RDS-ENDPOINT> -u <username> -p
