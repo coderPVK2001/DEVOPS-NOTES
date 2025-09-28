@@ -35,6 +35,11 @@ Note:- can create access key for root as well but it is not recommended to do so
 
 IAM user :- username :- test-user password :- test@pvk
 
+Note :- 
+IAM we can directly create and attach a policy to user 
+create a policy and attach to user group and attach it to user 
+
+
 
 
 
