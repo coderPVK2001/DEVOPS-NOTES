@@ -1,3 +1,37 @@
+========================================================================================================================================================
+==================================================               IMP POINTS              ===============================================================
+========================================================================================================================================================
+
+1)Before creating ec2 instance/VM for any OS port opening should be done first for ssh otherwise u will get connection timed out error.
+STEPS for creation of port :- security groups --> inbound rules --> add port and allow any ipv4 address
+Linux ssh :- 22 port 
+windows :-3389 -->u will get username and pass as well from which you should connect it
+
+one key pair can connect multiple servers/ec2 consoles.
+
+2) EBS --> 2 TYPES --> root and additional
+Note :- root volume for linux bydefault is 8 gb and for windows it is 30 gb 
+
+3) for zones & regions :- 
+to see zones  :- ec2 --> settings --> u will see list of zones for particular region 
+eg:- Asia Pacific(mumbai) region ---> zones are ap-south-1a,ap-south-1b,ap-south-1c
+Note :- 
+if u are using services of zone A then dont use services of other zones or regions 
+but in snapshots u can do it :- in snapshot we can create a backup of zone A Region Mumbai into Zone B Region Hyderabad 
+
+4) round robin means 1st request will go to flight 1 2nd will go to flight 2  and again flight 1 instance
+
+5) for IAM custom policy steps . :- 38:54:-  IAM 
+create user groups --> create user and add that user into that group 
+create role and add that role to 
+
+6) AWS CLI imp. :- 26:56 wala lec- ( AWS CLI) 
+
+
+
+========================================================================================================================================================
+========================================================================================================================================================
+
 ☁️ Cloud Service Models
 Cloud providers offer different levels of services depending on how much control and responsibility you want. These models are:
 
