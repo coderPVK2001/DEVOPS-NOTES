@@ -33,6 +33,8 @@ Search iam --> create user --> 3 options (attach policy directly) -->user create
  after creation go to users --> select one user --> create access key and private key
 Note:- can create access key for root as well but it is not recommended to do so 
 
+IAM user :- username :- test-user password :- test@pvk
+
 
 
 
