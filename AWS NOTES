@@ -27,6 +27,13 @@ create role and add that role to
 
 6) AWS CLI imp. :- 26:56 wala lec- ( AWS CLI) 
 
+7)
+For programatically login into awa cli/ java /terraform u need to do it with secret key and access. Key:- 
+Search iam --> create user --> 3 options (attach policy directly) -->user created successfully.
+ after creation go to users --> select one user --> create access key and private key
+Note:- can create access key for root as well but it is not recommended to do so 
+
+
 
 
 ========================================================================================================================================================
@@ -887,3 +894,88 @@ mysql Ver 15.1 Distrib 10.5.16-MariaDB ...
 mysql -h <RDS-ENDPOINT> -u <username> -p
 
 Note :- see vpc dashboard and delte all which are created 
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+IAM usage ::- --
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Q1 .Create an IAM User with giving s3 readonly policy to that user
+
+users  --> create user --> create password automatically 
+
+4 steps while creation:- 
+1)specify user details
+2)set permissions  :- ( 3 options :- Add user to group ,Copy permissions,Attach policies directly)
+used last option and added "AmazonS3ReadOnlyAccess" policy  
+3)review and create :- AmazonS3ReadOnlyAccess & IAMUserChangePassword (2 policies attached here )
+4)retrieve password :- //u will see url and poassword here
+
+Console sign-in URL :
+https://637423187767.signin.aws.amazon.com/console
+
+User name : test-user
+Console password :xO8@2m)t
+
+//
+after creation click url and sign in and use old pass and create new pass using special char caps ,...
+
+once login u can see only buckets which are created already but dont have access to create new one or any other services
+
+Q2.Custom Inline Policy
+
+Write an inline JSON policy that allows:
+Full access(read/write) to one specific S3 bucket (e.g., pvk123).
+Deny access to all other S3 buckets. 
+Attach it to test-user.
+soln:-
+
+IAM --> policies --> create policy --> (2 types visual/JSON) --> choose json and select what u want to add and create policies
+
+json select service --> s3 --> now select -> ListBucket --> add resource --> select resource type --> define bucket name /object name here 
+will generate JSON !!!
+
+JSON :- 
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "Onlypvk123bucketpermission",
+			"Effect": "Allow",
+			"Action": [
+				"s3:ListBucket"
+			],
+			"Resource": [
+				"arn:aws:s3:::pvk123"
+			]
+		},
+		{
+			"Sid": "modificationObjectPermissions",
+			"Effect": "Allow",
+			"Action": [
+				"s3:GetObject",
+				"s3:PutObject",
+				"s3:DeleteObject"
+			],
+			"Resource": [
+				"arn:aws:s3:::pvk123/*"
+			]
+		},
+		{
+			"Sid": "listingAllBuckets",
+			"Effect": "Allow",
+			"Action": [
+				"s3:ListAllMyBuckets"
+			],
+			"Resource": [
+				"*"
+			]
+		}
+	]
+}
+
+where,
+Statement 1 → lets them see bucket list.
+Statement 2 → lets them list objects in pvk123.
+Statement 3 → lets them work with objects.
+
+
