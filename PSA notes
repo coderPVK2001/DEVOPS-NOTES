@@ -14,10 +14,21 @@ iv) Terraform --> automates creation of ec2 /server
 
 v) Grafanana and prometheous : used for monitoring of hardware 
 
+Prometheus: Collects & stores metrics data & Grafana: Displays that data with beautiful dashboards.
+Prometheus captures metrics data like:
+-CPU usage
+-Memory usage
+-Request counts
+-Error rates
+-Application-specific metrics (e.g., order count in an e-commerce app)
+-It scrapes metrics from applications exposing metrics via HTTP endpoints (like /metrics).
+
 vi) ELK (Elastic search , Logstash , Kibana)  used for monitoring of software logs
 
 vii) Kubernetes :- helps to manage docker images
 
-viii) docker
+viii) docker :- 
+
+
 
 
