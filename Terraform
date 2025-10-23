@@ -1,0 +1,99 @@
+
+
+Installation steps :- 
+
+1) Download AMD64 zip file will get downloaded 
+https://developer.hashicorp.com/terraform/install#windows 
+
+2) extract and add path in env variables
+
+3) see terraform -version
+-->
+Terraform v1.13.4
+
+
+=============================================================================================
+
+32:52 :: Terraform
+
+Why Terraform used? 
+-->
+Suppose we want to create infra for testing server so we will make replica of Dev server , after that same replica for UAT , preprod and Prod.
+So by doing it manually we will use terraform where with only same script we can build full infra.
+If we want to build new Project then also it will be useful for full setup of infra we can build it with help of these previous scripts.
+
++++52:22 ::
+
+At 8 IAM creation
+
+At 33 create instance ec2 
+
+Steps :- in 43 architecture is there
+
+-in vs code create main.tf file for terraform
+
+-now for connecting cloud services like aws/google cloud first define provider block
+
+Note:- search in cpt provider block+ secret key + access key for aws --> Define IAM user as well and create role with admin access permissions --> will get access key and secret key
+
+
+IMP++++
+
+- after writing code/hcl type below commands:- 
+
+*1) for installing packages written inside provider block and generates terraform.lock.hcl file which contains plugins details ->
+Terraform init 
+
+*2) for validating configurations ->
+Terraform validate
+
+*3) for recorrecting format /indentations ->
+Terraform fmt 
+
+*4)Generating plan document  -->
+ Terraform plan
+//Which contains project details stored in form of json inside terraform.tfstate file
+
+*5) saves plan document in tplan file so u can use this same in other projects/env. 
+Terraform plan -out=tplan 
+
+*6)Generates JSON structure and genrates resources in aws ->
+Terraform apply 
+
++++ 28 ::: Practical
+
+1) Create a folder for each env uat,dev,prod
+
+In uat create provider.tf,.... 
+In prod same
+
+2) To access in terminal :-
+
+Right click to folder(uat) --> open in integrated terminal --> start typing commands
+Create input variable for passing values for Ami , instance type, ...
+
+Steps in short for terraform:- init(for starting plugin connection only) --> plan --> apply
+
+Note :- create diff files for diff thing 
+
+Eg:- 
+provider.tf for plugin,
+Input.tf for variable setting,
+main.tf for resources
+
+13 se dekh
+
+Tag name :- instance name if creating aws instance and in resources we are mentioning logical name to find it easily
+
+47:50 ::: practical till 20 
+
+Full terraform in one folder till 20 time 
+
+22 pe structure to create terraform in MNC
+
+
+======================================================================================================================
+PRACTICAL steps for uat,dev,...
+======================================================================================================================
+
+
