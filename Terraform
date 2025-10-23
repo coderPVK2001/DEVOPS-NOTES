@@ -12,6 +12,84 @@ https://developer.hashicorp.com/terraform/install#windows
 Terraform v1.13.4
 
 
+IMP NOTES ++++
+
+- after writing code/hcl type below commands:- 
+
+*1) for installing packages written inside provider block and generates terraform.lock.hcl file which contains plugins details ->
+Terraform init 
+
+*2) for validating configurations /Checks the configuration files for syntax and logical errors. ->
+Terraform validate
+
+*3) for recorrecting format /indentations ->
+Terraform fmt 
+
+*4)Generating plan document  /Creates an execution plan to show what changes Terraform will make.  -->
+ Terraform plan
+//Which contains project details stored in form of json inside terraform.tfstate file
+
+*5) saves plan document in tplan file so u can use this same in other projects/env. 
+Terraform plan -out=tplan 
+
+*6)Generates JSON structure and genrates resources in aws /Applies the planned changes to create/update resources. ->
+Terraform apply 
+
+*7) To destroy created resources.
+Terraform destroy
+
+
+
+##### What is Terraform ?
+
+-> It is IAAC (Infrastructure As A Code)
+-> We use HCL as language
+-> Work with most of the Cloud platforms like AWS, GCP, Azure etc
+-> Install Terrfaorm
+-> Install VS Code
+
+Why Terraform used? 
+-->
+Suppose we want to create infra for testing server so we will make replica of Dev server , after that same replica for UAT , preprod and Prod.
+So by doing it manually we will use terraform where with only same script we can build full infra.
+If we want to build new Project then also it will be useful for full setup of infra we can build it with help of these previous scripts.
+
+
+HCL Syntax:
+
+Blocks - 
+
+blocks {
+
+	key= value ( value can be string, number, boolean, list, map )
+
+
+}
+
+____________________________
+Practical Example Script:
+____________________________
+
+provider "aws" {
+	
+	region = "ap-south-1"
+	access_key = ""
+	secret_key = ""
+}
+
+resource "aws_instance" "vm_1" {  //here vm_1 is logical name if in somewhere files we are using it then use vm_1 //simple terms it is variable name like in java
+	
+	ami = "ami-id"
+	instance_type = "t2.micro"
+	key_name = "devopssession"
+	security_groups = ["default"]
+	tags = {
+		Name = "LinuxVM"                 //this is name of instance from which it will gets created
+	}
+}
+
+=============================================================================================
+========================================TIMESTAMP============================================
 =============================================================================================
 
 32:52 :: Terraform
@@ -96,4 +174,8 @@ Full terraform in one folder till 20 time
 PRACTICAL steps for uat,dev,...
 ======================================================================================================================
 
-
+1) create IAM user and attach policy admin access 
+2) create access key for particular user --> local code .
+user :- terraform-user
+acces key :-  /impdoc
+secret key :- /impdoc
