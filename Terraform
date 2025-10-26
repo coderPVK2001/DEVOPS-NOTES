@@ -88,6 +88,21 @@ resource "aws_instance" "vm_1" {  //here vm_1 is logical name if in somewhere fi
 	}
 }
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+KEYWORDS IN TERRAFORM HCL LANGUAGE
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1️⃣ provider → Defines which cloud (e.g., AWS, Azure, GCP) Terraform will use.
+2️⃣ resource → Used to create and manage actual infrastructure (like EC2, S3).
+3️⃣ variable → Declares inputs to make configurations reusable.
+4️⃣ output → Displays or exports values after applying (like instance IP).
+5️⃣ data → Reads existing resources without creating new ones.
+6️⃣ module → Groups multiple resources into reusable components.
+7️⃣ locals → Stores temporary or computed values.
+8️⃣ depends_on → Ensures one resource is created before another.
+9️⃣ lifecycle → Controls behavior (e.g., prevent_destroy, create_before_destroy).
+🔟 provisioner → Runs commands/scripts after a resource is created.
+
 =============================================================================================
 ========================================TIMESTAMP============================================
 =============================================================================================
@@ -138,6 +153,9 @@ Terraform plan -out=tplan
 *6)Generates JSON structure and genrates resources in aws ->
 Terraform apply 
 
+*7) To destroy all resources ->
+Terraform destroy
+
 +++ 28 ::: Practical
 
 1) Create a folder for each env uat,dev,prod
@@ -171,7 +189,7 @@ Full terraform in one folder till 20 time
 
 
 ======================================================================================================================
-PRACTICAL steps for uat,dev,...
+PRACTICAL steps for uat,dev,... simple demo PRACTICAL
 ======================================================================================================================
 
 1) create IAM user and attach policy admin access 
@@ -179,3 +197,67 @@ PRACTICAL steps for uat,dev,...
 user :- terraform-user
 acces key :-  /impdoc
 secret key :- /impdoc
+3) terraform init --> terraform validate --> terraform fmt --> terraform plan --> terraform apply
+
+======================================================================================================================
+PRACTICAL steps for Modules wise,... PRACTICAL
+======================================================================================================================
+Modules In Terraform (Project) will help developer organize the code for easy maintability of project
+______________________________________________________________________________________________________
+
+Step-1 : Create Project directory
+
+        Ex: tcs
+
+Step-2 : Create "modules" directory inside project directory tcs
+
+        Ex: tcs
+                - modules
+
+Step-3 : Create "ec2" and "s3" directories inside (modules) directory
+
+        Ex :   -tcs
+                 - modules
+                     - ec2
+                     - s3
+
+Step-4 : Create terraform scripts inside "ec2" directory
+
+            inputs.tf
+            main.tf
+            outputs.tf         
+
+Step-5 : Create terraform scripts inside "s3" directory
+
+            inputs.tf
+            main.tf
+            outputs.tf          
+
+
+Step-6 : create "provider.tf" file in root module tcs
+
+
+Step-7 : create "main.tf" file in root module and invoke child modules from root module using the following
+
+module "my_ec2"{
+    source = "./modules/ec2"
+}
+
+module "my_s3" {
+    source = "./modules/s3"
+}
+
+
+Step-8: Create "ouputs.tf" in project root module and access child modules related outputs.
+
+output "test_vm_public_ip"{
+    value = module.my_ec2.a1
+}
+
+output "test_vm_private_ip" {
+    value = module.my_ec2.a2
+}
+
+Note: here a1 and a2 are ouput variables declared in ec2 module ouputs.tf file
+
+
