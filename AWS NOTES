@@ -39,6 +39,49 @@ Note :-
 IAM we can directly create and attach a policy to user 
 create a policy and attach to user group and attach it to user 
 
+8)# AWS Networking Quick Notes
+
+## A. Internet Gateway (IGW)
+- Connects VPC to the **internet**.  
+- Used by **public subnets / EC2 with public IP**.  
+- Allows **inbound + outbound** traffic (if SG permits).  
+- Route example: `0.0.0.0/0 → igw-xxxx`
+
+---
+
+## B. NAT Gateway
+- Used by **private subnets (no public IP)**.  
+- Allows **only outbound** internet access (e.g., updates, API calls).  
+- **Blocks inbound** traffic from the internet.  
+- Private EC2 → NAT (in public subnet) → Internet.  
+- Route example: `0.0.0.0/0 → nat-xxxx`
+
+---
+
+## C. Difference: IGW vs NAT
+
+| Feature        | Internet Gateway | NAT Gateway |
+|----------      |------------------|--------------|
+| Used for       | Public EC2       | Private EC2 |
+| Inbound        | ✅ Allowed       | ❌ Blocked |
+| Outbound       | ✅ Allowed       | ✅ Allowed |
+| Public IPneeded| Yes              | No          |
+| Typical use    | Host website     | Download packages securely |
+
+---
+
+## D. Security Group vs IGW
+- **Security Group** = Permission (who can go in/out).  
+- **IGW** = Internet connection (actual door).  
+- Both needed: SG allows it, IGW provides the path.
+
+---
+
+## E. API Gateway
+- Public entry point for your **backend APIs**.  
+- Can connect to **Lambda**, **EC2**, or **internal services**.  
+- Adds **security**, **authentication**, and **rate limiting**.  
+- Used to expose **private EC2s** safely to the internet.
 
 
 
