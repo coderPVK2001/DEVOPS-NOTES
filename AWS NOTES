@@ -83,8 +83,11 @@ create a policy and attach to user group and attach it to user
 - Adds **security**, **authentication**, and **rate limiting**.  
 - Used to expose **private EC2s** safely to the internet.
 
-
-
+9)
+Note :- 
+Security groups are protecting our resources in ec2 instance 
+vpc is protecting our subnets 
+route table is protecting the subnets 	
 
 ========================================================================================================================================================
 ========================================================================================================================================================
