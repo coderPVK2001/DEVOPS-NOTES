@@ -88,6 +88,73 @@ resource "aws_instance" "vm_1" {  //here vm_1 is logical name if in somewhere fi
 	}
 }
 
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+🧾 Terraform Folder Structures (Quick Notes)  ------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+1️⃣ Flat Structure (Basic)
+
+📁 Example:
+
+project/
+ ├── main.tf
+ ├── variables.tf
+ ├── outputs.tf
+ └── provider.tf
+
+
+✅ Best for: Small or demo projects
+🟢 Pros: Simple to manage
+🔴 Cons: Hard to scale when project grows
+
+2️⃣ Modular Structure (Most Recommended ✅)
+
+📁 Example:
+
+project/
+ ├── main.tf        # calls modules
+ ├── variables.tf
+ ├── outputs.tf
+ ├── provider.tf
+ └── modules/
+      ├── ec2/
+      │   ├── main.tf
+      │   ├── variables.tf
+      │   └── outputs.tf
+      ├── s3/
+      └── rds/
+
+
+✅ Best for: Medium to large projects
+🟢 Pros: Reusable, clean, scalable
+🔴 Cons: Slightly more setup
+
+3️⃣ Environment-Based Structure
+
+📁 Example:
+
+project/
+ ├── envs/
+ │    ├── dev/
+ │    ├── test/
+ │    └── prod/
+ └── modules/
+      ├── ec2/
+      ├── s3/
+      └── rds/
+
+
+✅ Best for: Multi-environment projects
+🟢 Pros: Separate configs for each env
+🔴 Cons: Bit more complex to manage
+
+🏁 Best Practice
+
+👉 Use Modular Structure (2️⃣) for most real-world and interview projects.
+👉 Later, add Environment-Based setup for advanced multi-env projects.
+
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 KEYWORDS IN TERRAFORM HCL LANGUAGE
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
