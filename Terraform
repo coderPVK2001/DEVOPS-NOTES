@@ -103,6 +103,125 @@ KEYWORDS IN TERRAFORM HCL LANGUAGE
 9️⃣ lifecycle → Controls behavior (e.g., prevent_destroy, create_before_destroy).
 🔟 provisioner → Runs commands/scripts after a resource is created.
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+RESOURCES NAMES FOR AWS IN TERRAFORM HCL LANGUAGE
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1️⃣ aws_instance → EC2 virtual machine
+2️⃣ aws_s3_bucket → S3 storage bucket
+3️⃣ aws_vpc → Virtual Private Cloud network
+4️⃣ aws_subnet → Subnetwork inside a VPC
+5️⃣ aws_security_group → Firewall rules for EC2/VPC
+6️⃣ aws_internet_gateway → Connects VPC to the internet
+7️⃣ aws_route_table → Manages routing in VPC
+8️⃣ aws_key_pair → SSH key for EC2 access
+9️⃣ aws_iam_role → IAM role for permissions
+🔟 aws_iam_user → IAM user account
+1️⃣1️⃣ aws_eip → Elastic IP (static public IP)
+1️⃣2️⃣ aws_lambda_function → Lambda serverless function
+1️⃣3️⃣ aws_dynamodb_table → NoSQL database table
+1️⃣4️⃣ aws_rds_instance → Relational database (MySQL, Postgres, etc.)
+1️⃣5️⃣ aws_autoscaling_group → Automatically manages EC2 scaling
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+RESOURCES NAMES AND THEIR ARGUMENTS FOR AWS IN TERRAFORM HCL LANGUAGE
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+🖥️ 1️⃣ aws_instance (EC2)
+
+Used for: Creating virtual servers
+Important arguments:
+
+ami → OS image ID
+
+instance_type → Type of instance (e.g., t2.micro)
+
+key_name → SSH key pair name
+
+security_groups → Attach security groups
+
+tags → Name or labels
+
+☁️ 2️⃣ aws_s3_bucket
+
+Used for: Creating S3 storage buckets
+Important arguments:
+
+bucket → Bucket name
+
+acl → Access type (e.g., private, public-read)
+
+versioning → Enable version control
+
+tags → Bucket labels
+
+🌐 3️⃣ aws_vpc
+
+Used for: Creating a virtual private cloud
+Important arguments:
+
+cidr_block → IP range for the VPC
+
+enable_dns_support → DNS enable/disable
+
+tags → Name or labels
+
+🕸️ 4️⃣ aws_subnet
+
+Used for: Creating a subnet inside a VPC
+Important arguments:
+
+vpc_id → Associated VPC
+
+cidr_block → Subnet IP range
+
+availability_zone → Region zone
+
+tags → Labels
+
+🔐 5️⃣ aws_security_group
+
+Used for: Managing firewall rules
+Important arguments:
+
+vpc_id → Associated VPC
+
+ingress → Inbound rules
+
+egress → Outbound rules
+
+tags → Name or labels
+
+🌍 6️⃣ aws_internet_gateway
+
+Used for: Giving VPC access to the internet
+Important arguments:
+
+vpc_id → VPC to attach
+
+tags → Labels
+
+📋 7️⃣ aws_route_table
+
+Used for: Defining routes in a VPC
+Important arguments:
+
+vpc_id → Associated VPC
+
+route → Route configuration
+
+tags → Labels
+
+🔑 8️⃣ aws_key_pair
+
+Used for: Creating SSH key for EC2 access
+Important arguments:
+
+key_name → Name of key
+
+public_key → Public key value
+
 =============================================================================================
 ========================================TIMESTAMP============================================
 =============================================================================================
