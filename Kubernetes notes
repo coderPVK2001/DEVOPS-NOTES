@@ -103,7 +103,76 @@ xii) Namespace vs label name
       Namespace:- 	A Kubernetes resource that acts as a virtual cluster/partition inside the main cluster	
 	  label name :-  A key-value pair attached to resources (like Pods) to categorize and organize them
 	  
+xiii) kubernetes flow in short :- eg:-
 
+🧭 Imagine this setup
+
+You have a frontend web app deployed in Kubernetes.
+You want users on the internet to reach it using a URL — like https://myapp.com.
+
+---
+
+🧱 Flow step by step
+
+1️⃣ User (Browser)
+
+A user opens https://myapp.com → request goes out to the internet.
+
+2️⃣ Ingress / Route
+
+Ingress (or Route in OpenShift) is like a doorman.
+
+It receives traffic coming from outside the cluster.
+
+It checks rules:
+“If someone calls myapp.com, send to frontend-service.”
+
+
+➡️ Ingress = entry point to the cluster.
+
+3️⃣ Service
+
+The Service is like a load balancer inside the cluster.
+
+It sends traffic evenly to one of the running Pods.
+
+
+➡️ Service = connects traffic to Pods.
+
+4️⃣ Pod
+
+Pod runs your container (app).
+
+The Pod processes the request and sends back a response.
+
+
+➡️ Pod = where your app actually lives.
+
+
+---
+
+💡 Visual flow (easy mental picture)
+
+User (Browser)
+     ↓
+[ Ingress / Route ]
+     ↓
+[ Service (ClusterIP / NodePort) ]
+     ↓
+[ Pod 1 ]   [ Pod 2 ]   [ Pod 3 ]
+    ↖️    load balanced   ↗️
+
+
+---
+
+⚙️ Types of Service (how they expose apps)
+
+Type	Where it's reachable	Used for
+
+ClusterIP	Inside cluster only	Internal services
+NodePort	Accessible on node IP + port	Basic external access
+LoadBalancer	External IP (via cloud)	Public access
+Ingress / Route	Domain-based routing	Production frontend URLs
 
 ##################################
 Docker & Kubernetes Overview
