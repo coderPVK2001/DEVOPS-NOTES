@@ -167,12 +167,12 @@ User (Browser)
 
 ⚙️ Types of Service (how they expose apps)
 
-Type	Where it's reachable	Used for
+Type.           	Where it's reachable	    Used for
 
-ClusterIP	Inside cluster only	Internal services
-NodePort	Accessible on node IP + port	Basic external access
-LoadBalancer	External IP (via cloud)	Public access
-Ingress / Route	Domain-based routing	Production frontend URLs
+ClusterIP  	       Inside cluster only	     Internal services
+NodePort	  Accessible on node IP + port	 Basic external access
+LoadBalancer	External IP (via cloud).    	Public access
+Ingress/Route	Domain-based routing	     Production frontend URLs
 
 ##################################
 Docker & Kubernetes Overview
