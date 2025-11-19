@@ -162,6 +162,37 @@ User (Browser)
 [ Pod 1 ]   [ Pod 2 ]   [ Pod 3 ]
     ↖️    load balanced   ↗️
 
+xiv)  ✅ Kubernetes RBAC — Quick Notes (role vs rolebindings vs serviceaccount) 
+
+1️⃣ ServiceAccount
+
+-Identity of a pod
+-Works like a user for applications inside the cluster
+-Pods use it to talk to Kubernetes API
+
+👉 Who am I?
+
+2️⃣ Role / ClusterRole (2 types of roles are there) 
+
+-Defines permissions (like “list pods”, “watch replicasets”)
+
+Role        = namespace-level
+ClusterRole = cluster-wide
+
+👉 What actions are allowed?
+
+3️⃣ RoleBinding / ClusterRoleBinding
+
+Connects a Role/ClusterRole to a ServiceAccount
+Grants the permissions to that identity
+
+👉 Give these permissions to this ServiceAccount
+
+📌 ********  Summary (1 line each)
+
+ServiceAccount = identity
+Role / ClusterRole = permissions
+RoleBinding / ClusterRoleBinding = assignment of permissions
 
 ---
 
@@ -173,6 +204,9 @@ ClusterIP  	       Inside cluster only	     Internal services
 NodePort	  Accessible on node IP + port	 Basic external access
 LoadBalancer	External IP (via cloud).    	Public access
 Ingress/Route	Domain-based routing	     Production frontend URLs
+
+
+
 
 ##################################
 Docker & Kubernetes Overview
