@@ -89,7 +89,58 @@ ____________________________
 		1) Declarative Pipeline
 		2) Scripted Pipeline (groovy)
 
-Jenkins Declarative Pipeline Explained
+✅ Declarative vs Scripted — SIMPLE NOTES
+1️⃣ Declarative Pipeline (BEST for most cases)
+
+Structure: Fixed format → safer
+Learning curve: Easy
+Use case: Normal CI/CD pipelines
+Pros:
+-Jenkins validates it → fewer errors
+-Cleaner & predictable
+-Teams understand it easily
+-Better built-in features (post, stages, environment, options, etc.)
+
+Example (Declarative)
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        echo "Building..."
+      }
+    }
+  }
+}
+
+2️⃣ Scripted Pipeline (Advanced)
+
+-Structure: Freestyle Groovy code → very flexible
+-Learning curve: Hard
+-Use case: Complex logic, loops, dynamic stages
+P
+ros:
+-Full Groovy programming power
+-You can write custom logic, conditions, loops, try/catch
+
+Example (Scripted)
+node {
+  stage('Build') {
+    echo "Building..."
+  }
+}
+
+🔥 KEY DIFFERENCES (MEMORIZE THESE)
+Feature             	Declarative	         Scripted
+Structure	           Strict, YAML-like	Groovy code
+Easy to maintain	      ✅ Yes	         ❌ Harder
+Suitable for teams	      ✅ Yes	       ⚠️ Only experts
+Flexibility           	Moderate	         Very High
+Error checking         	Very good         	Limited
+Recommended by Jenkins  	Yes	               No
+
+
+##Jenkins Declarative Pipeline Explained
 
 A Jenkins Declarative Pipeline is a structured way to define a CI/CD pipeline using Groovy-based syntax. Let's break down your pipeline step by step.
 
