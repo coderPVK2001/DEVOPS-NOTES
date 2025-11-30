@@ -29,6 +29,69 @@ vii) Kubernetes :- helps to manage docker images
 
 viii) docker :- 
 
+=========================================================================================================================================
+
+ix) NGINX :- 
+NGINX is open source software that powers web servers and enables reverse proxying, caching, load balancing, and media streaming. 
+It was originally designed as a web server with high performance and reliability.
+
+In one line:
+👉 It receives requests from users and forwards them to your application efficiently.
+
+🧠 Simple Example: Ticket Counter
+Without NGINX  =======>
+
+Everyone directly crowds your Spring Boot app.
+Your app = 1 ticket counter → gets overloaded → slow or crashes.
+
+With NGINX  ==============>
+
+NGINX = smart security guard who:
+
+Organizes the line
+Sends people one by one
+Blocks bad requests
+Caches repeated answers
+Handles static files (images, JS, CSS)
+Distributes load to multiple app instances
+Your app now handles only the real work.
+
+⭐ Key Benefits in 1 Line Each
+✔ 1. Caching
+If 100 users ask the same thing → NGINX replies instantly from cache → your app handles only 1 request instead of 100.
+
+✔ 2. Load balancing
+NGINX can send requests to multiple Spring Boot instances → more users supported.
+
+✔ 3. Security
+Blocks strange, slow, or malicious requests before they hit your Spring app.
+
+✔ 4. Static files
+NGINX serves CSS/JS/images 10x faster than Spring Boot.
+
+✔ 5. Reverse Proxy
+Makes your app hide behind port 80 → user-friendly URL:
 
 
+http://yourserver
+
+instead of:
+http://yourserver:8080
+
+⭐ Final Simple Line
+
+          User
+           |
+           v
+     +------------+
+     |   NGINX    |   <-- (Security guard + Load balancer + Cache)
+     +------------+
+           |
+           v
+ +---------------------+
+ | Spring Boot App     |
+ | (port 8080)         |
+ +---------------------+
+
+=========================================================================================================================================
 
