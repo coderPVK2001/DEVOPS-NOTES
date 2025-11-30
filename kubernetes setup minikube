@@ -1,0 +1,52 @@
+
+refer url for installation :- https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download
+
+prerequisite for minikube :- docker desktop 
+
+1) download .exe and then install it . 
+path C:\Program Files\Kubernetes\Minikube  //by default gets installed here after installing from clicking .exe
+
+check version :- minikube version --> minikube version: v1.37.0
+
+2) open powershell and run as administrator and type below command :
+minikube start
+
+minikube cluster gets created with all controller manager, api server,...
+
+3) Type below commands now:- 
+minikube kubectl -- get pods -A   //it will install latest kubectl which is already inside minkube
+
+OR
+
+kubectl get pods -A
+
+It runs kubectl (built into Minikube) and shows all pods.
+
+output :- 
+NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
+kube-system   coredns-66bc5c9577-clssm           1/1     Running   0          3m45s
+kube-system   etcd-minikube                      1/1     Running   0          3m49s
+kube-system   kube-apiserver-minikube            1/1     Running   0          3m49s
+kube-system   kube-controller-manager-minikube   1/1     Running   0          3m51s
+kube-system   kube-proxy-2btvd                   1/1     Running   0          3m45s
+kube-system   kube-scheduler-minikube            1/1     Running   0          3m49s
+kube-system   storage-provisioner                1/1     Running   0          3m48s
+
+4) To see worker nodes:- 
+kubectl get nodes
+
+5) 
+1️⃣ Stop the Minikube cluster
+minikube stop
+
+Why?
+This shuts down the Kubernetes VM/container so it stops using CPU/RAM.
+
+2️⃣ (Optional) Completely delete the cluster
+minikube delete
+
+6) minikube dashboard creation :- 
+--->
+minikube dashboard
+
+
