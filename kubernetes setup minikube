@@ -3,6 +3,8 @@ refer url for installation :- https://minikube.sigs.k8s.io/docs/start/?arch=%2Fw
 
 prerequisite for minikube :- docker desktop 
 
+Note :- once done installing if u want to start minikube first login to your docker desktop and then minikube start then only your cluster will gets started ...
+
 1) download .exe and then install it . 
 path C:\Program Files\Kubernetes\Minikube  //by default gets installed here after installing from clicking .exe
 
@@ -34,6 +36,9 @@ kube-system   storage-provisioner                1/1     Running   0          3m
 
 4) To see worker nodes:- 
 kubectl get nodes
+
+NAME       STATUS   ROLES           AGE     VERSION
+minikube   Ready    control-plane   3d10h   v1.34.0
 
 5) 
 1️⃣ Stop the Minikube cluster
