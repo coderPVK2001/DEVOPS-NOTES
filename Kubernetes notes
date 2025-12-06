@@ -1,8 +1,35 @@
-730
+kubernetes flow -->
+
+ Note eg :- Frontend have multiple pods which have multiple ips so frontend service will be created which will give static ip but for 
+            multiple services like backend(1,2,3) ,frontend all should come under one ip which will exposed and used by users 
+            so Ingress comes into picture here ...
+                ┌─────────────────────────┐
+                │     Ingress (1 IP)      │
+                │  https://app.company.com│
+                └─────────────┬───────────┘
+                              │
+       ┌──────────────────────┴─────────────────────┐
+       │                                            │
+  /orders route                               /users route
+       │                                            │
+ ┌─────▼───────┐                              ┌─────▼───────┐
+ │ Service A   │                              │ Service B   │
+ │ ClusterIP   │                              │ ClusterIP   │
+ └─────┬───────┘                              └─────┬───────┘
+       │                                            │
+   (Pod labels)                                (Pod labels)
+       │                                            │
+ ┌─────▼─────┐                            ┌────────▼──────────┐
+ │  Pod A1   │                            │     Pod B1        │
+ │  Pod A2   │                            │     Pod B2        │
+ └───────────┘                            └───────────────────┘
+
+
 
 =============================
 IMP NOTES:-  34:08
 ============================
+
 i) cluster :- group of machines/servers/worker nodes
 
 kubertnete vs docker :
@@ -92,7 +119,7 @@ In your example: app: dempapp
 Here, app is the label key.
          dempapp is the label value.
 
-Labels are not names; they’re used for organizing, grouping, and selecting resources.
+Labels are not names; they’re used for organizing, grouping, and selecting resources in particular namespace.
 
 Note:- metadata name is name given to the pod
 
@@ -102,6 +129,8 @@ xi)Namespace :-  They help logically group and isolate resources. Just like how 
 xii) Namespace vs label name
       Namespace:- 	A Kubernetes resource that acts as a virtual cluster/partition inside the main cluster	
 	  label name :-  A key-value pair attached to resources (like Pods) to categorize and organize them
+
+labels are used in services , deployments , pods , HPA ,...etc
 	  
 xiii) kubernetes flow in short :- eg:-
 
