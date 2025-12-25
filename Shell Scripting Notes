@@ -1,3 +1,89 @@
+<================================ IMPORTANT NOTES ===================================================>
+Notes :- Shell scripting is a powerful way to automate tasks
+
+1) To execute a script, use one of the following commands:
+
+$ bash task.sh   # Execute using Bash
+$ ./task.sh      # Execute directly (if executable permission is set)
+
+2)  if we dont use :-   No shebang = system uses the active/default shell of the Linux user || bash is the most commonly used shell in Linux.
+for eg :- echo $SHELL  //u will see default shell in terminal it can be any of below 
+Types of shell :- 
+1️⃣ sh (Bourne Shell)
+• Basic, older shell
+• Shebang: #!/bin/sh
+
+2️⃣ bash (Bourne Again Shell)
+• Most popular shell, more features than sh
+• Shebang: #!/bin/bash
+
+3️⃣ zsh (Z Shell)
+• Advanced, user-friendly, powerful customization
+• Shebang: #!/bin/zsh
+
+5️⃣ fish (Friendly Interactive Shell)
+• Modern, auto-suggestions, easy to use
+• Shebang: #!/usr/bin/env fish
+
+6️⃣ csh (C Shell)
+• C programming style syntax
+• Shebang: #!/bin/csh
+
+3) Assign var and number in below format :
+
+valid_name="John"
+_valid_name="Doe"
+VALID_AGE=25
+
+Variable names must start with a letter or underscore (_), not a number.
+
+4) Unsetting a Variable:
+
+Use unset to remove a variable:
+
+my_var="Hello"  //Setting env variable 
+unset my_var    //unset
+echo $my_var  # No output, variable is deleted
+
+5)Types of Variables in Linux :- 
+
+        i) System Variables (Environment Variables) :- 
+        -> They store essential system information such as current user, shell path, and executable directories.
+        -> System variables are usually written in UPPERCASE.
+           
+            Examples of System Variables
+            Run these commands in the terminal to check system variables:
+            
+            echo $SHELL    # Shows the current shell being used (e.g., /bin/bash)
+            echo $USER     # Displays the current logged-in user
+            echo $PATH     # Lists directories where system searches for executable files
+        
+        📌 To view all system variables, use:
+        env
+        
+        ii) User-Defined Variables:- 
+        -> These are custom variables created by users to store values for their scripts or tasks.
+        -> By convention, they are written in lowercase.
+
+            Example of User-Defined Variables
+            
+            name=Pankaj
+            id=101
+            age=25
+            gender=male
+
+            To access these variables, use:
+            
+            echo $name    # Output: pankaj
+            echo $id      # Output: 101
+            echo $age     # Output: 25
+
+6) 
+To make environment variables persistent, we store them in the .bashrc file. This ensures the variables are available even after restarting the terminal or system.
+
+
+#######################################################################################
+#######################################################################################
 Definition:
 #######################################################################################
 Scripting refers to writing a set of commands in a file to be executed sequentially.
