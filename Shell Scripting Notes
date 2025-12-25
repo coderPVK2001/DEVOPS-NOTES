@@ -79,8 +79,10 @@ echo $my_var  # No output, variable is deleted
             echo $age     # Output: 25
 
 6) 
-To make environment variables persistent, we store them in the .bashrc file. This ensures the variables are available even after restarting the terminal or system.
+- To make environment variables persistent, we store them in the .bashrc file. This ensures the variables are available even after restarting the terminal or system.
 
+- By default, variables set in .bashrc are user-specific. However, to make variables available system-wide (for all users), you need to define them in 
+  global configuration files such as /etc/profile or /etc/environment.
 
 #######################################################################################
 #######################################################################################
