@@ -84,6 +84,91 @@ echo $my_var  # No output, variable is deleted
 - By default, variables set in .bashrc are user-specific. However, to make variables available system-wide (for all users), you need to define them in 
   global configuration files such as /etc/profile or /etc/environment.
 
+        Key Points
+        -> Every user has their own .bashrc file in their home directory (/home/username/.bashrc).
+        -> Changes in .bashrc apply only to that user.
+
+eg:- 
+command :-  find / -name .bashrc
+/etc/skel/.bashrc
+/home/ec2-user/.bashrc
+/home/pvk/.bashrc
+/root/.bashrc
+
+
+7) search ==> How to Set Variables for All Users in Linux?  //see the steps 
+
+By default, variables set in .bashrc are user-specific. However, to make variables available system-wide (for all users), you need to define them in global configuration files such as /etc/profile or /etc/environment.
+
+/etc/profile is a global shell configuration file executed for all users when they log in.
+
+8) $(( ... )): This syntax tells Bash to evaluate the mathematical expression inside the parentheses.
+
+eg :- 
+$((20+10)) ==> 30
+
+Wrong one :- echo 10+20 or echo "10+20"
+
+#####################################################
+Complete List of Relational Operators in Bash (used for numbers only)            <=== search this
+#####################################################
+Operator	    Description	                    Example
+-eq	            Equal to	                    [ 5 -eq 5 ] → true
+-ne	            Not equal to	                [ 5 -ne 3 ] → true
+-gt	            Greater than	                [ 10 -gt 5 ] → true
+-lt	            Less than	                    [ 3 -lt 8 ] → true
+-ge	            Greater than or equal to	    [ 10 -ge 10 ] → true
+-le	            Less than or equal to	        [ 4 -le 7 ] → true
+
+9)  In Bash, when using the if condition, there must be spaces around the square brackets [ ].
+
+-------------------------------------
+❌ Incorrect:
+if [$NUM-gt10 ]; then
+----------------------------------------
+--------------------------------------
+✅ Correct:
+if [ "$NUM" -gt 10 ]; then
+--------------------------------------
+
+TWO Ways to write conditions: 
+🧪 Example 1: Using (( ... )) — Arithmetic Style (Modern & Clean)  ( bash arithmetic context)
+🧪 Example 2: Using [ ... ] — Classic Style (More Compatible)
+
+Note: ❌ You CANNOT use -ge (or -gt, -lt, etc.) inside (( ... ))
+
+And also
+-> (( i < 10 )) #valid
+-> (( $i < 10 ))   # also valid but $ is optional
+-> ❗ In [ ... ] — You MUST use $ with variables
+
+10) 
+BASH NUMERIC CHECK - SHORT NOTES
+--------------------------------
+
+[ ... ]  → Classic Test (limited arithmetic)
+• Use: -eq -ne -gt -lt -ge -le
+• Needs spaces around [ ]
+• Example: [ "$a" -gt 10 ]
+
+(( ... )) → Arithmetic Context (full math support)
+• Supports: > < == % ++ --
+• No quotes needed
+• Example: (( a % 5 == 0 ))
+
+Rule:
+• Use (( ... )) for math
+• Use [ ... ] for basic number comparisons
+
+11) syntax for for if while :- 
+for do done
+if then fi
+while do done
+
+#######################################################################################
+#######################################################################################
+MAIN SHELL NOTES START FROM HERE ----------------------------------------------------->
+#######################################################################################
 #######################################################################################
 #######################################################################################
 Definition:
