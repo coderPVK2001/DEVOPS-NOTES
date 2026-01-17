@@ -109,6 +109,8 @@ $((20+10)) ==> 30
 
 Wrong one :- echo 10+20 or echo "10+20"
 
+$((i++)) ==> for incrementation as i++ will not work directly inside for while loop .
+
 #####################################################
 Complete List of Relational Operators in Bash (used for numbers only)            <=== search this
 #####################################################
