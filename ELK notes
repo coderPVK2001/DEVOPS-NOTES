@@ -1,0 +1,429 @@
+
+Download elasticsearch and kibana on windows 
+
+To run the elastic search node -->
+inside elastic search folder click on bat file of Elasticsearch and kibana to get started the server.
+
+3rd lec.
+
+1 node = elasticsearch instance
+
+Document = json + metadata
+Whatever keys in json startswith underscore.
+
+Documents are rows in sql
+Fields are columns in sql
+_Index are table name in sql 
+source contains main data 
+
+
+# 4th lec ----> calling API through devtools in kibana 
+
+Key takeaways from the video:
+Methods of Data Retrieval (1:00): You can retrieve data from Elasticsearch in two ways: by directly running queries or by using the exposed REST APIs. The video focuses on the latter, showing how the REST APIs work behind the scenes.
+Anatomy of an API Call (1:29): An API call in the Kibana console typically consists of:
+An HTTP method (e.g., `GET`, `POST`, `PUT`, `DELETE`) (1:29).
+The API name, which usually starts with an underscore (e.g., `cluster`, `nodes`, `_cat`) (1:43).
+Optional commands or parameters (2:08).
+Examples of API Calls:
+
+`GET _cluster/health` (2:11): This command retrieves the health status of your Elasticsearch cluster, providing information like cluster name and status (2:28).
+
+`GET _cat/nodes` (3:37): This command provides details about the nodes in your Elasticsearch cluster in a human-readable format (3:48). 
+
+`GET cat/indices?v&expandwildcards=all` (5:19): This command lists all indices in the cluster, including hidden ones, in a verbose and human-readable format (5:30). Indices are described as groups of documents, similar to tables in SQL (6:25).
+
+# 5th lec. --> calling API through cmd by connecting Elasticsearch api
+
+3:20 --> see api heath check query
+
+# 6th lec. --->
+This video explains sharding in Elasticsearch and how it helps manage large amounts of data.
+
+Note :- 
+Each index has by default one shard. After some time it gets increased.
+
+Here's a breakdown of the key concepts:
+
+Sharding for Different Document Types (2:37-3:22): Sharding is also useful when you have different types of documents, such as students and teachers, and their combined size exceeds a single node's capacity. The process of splitting these documents across nodes is called sharding.
+
+Breaking Down Large Data (3:47-4:19): Sharding allows you to break down large indices (like 800GB of student data) into smaller, manageable shards (e.g., two 400GB shards) and distribute them across nodes.
+
+Shards on the Same Node (5:46-6:04): It's possible for multiple shards of the same index to reside on the same node; they don't necessarily have to be on different nodes.
+
+Performance Improvement (6:34-7:32): Sharding improves performance by enabling parallel execution of queries. When an index is broken into multiple shards, queries can run simultaneously on these shards, significantly speeding up data retrieval.
+
+Overcoming Document Limits (8:03-9:06): Each shard has a limit of 2 billion documents. If you have more documents than this limit (e.g., 10 million documents in an index), sharding allows you to split the data across multiple shards to overcome this constraint.
+
+Splitting and Shrinking Shards (9:31-9:42): The video briefly mentions that you can increase the number of shards using "split" and decrease them using "shrink."
+
+
+#7 th lec :- replication in elastic search 
+
+Replication of shards can be created in same node or other node as well 
+
+Other node is useful if one node gets down 
+
+Create index :-
+Devtool --> PUT/fruits // new index created
+Cat 
+
+GET cat/indices?v // to check created index health u will see primary shard count, replication count , health (green/ yellow)
+Yellow means replication is not being sent to other node
+
+#8 th lec ---> creating replication node to store replica shards on different node.
+
+In Elasticsearch, when you create an index, by default, it will create one primary shard and one replica shard for that index (3:21-3:35). If you only have a single node in your cluster, this replica shard will be unassigned (4:00-4:08). This unassigned replica is why the cluster health turns to "yellow" (3:36-3:41), as it indicates that your data is at risk if that single node goes down (6:27-6:47).
+
+This video provides a guide on setting up and managing multiple Elasticsearch nodes on a single machine to create a cluster.
+
+The process involves:
+
+Duplicating Node Files: Start by extracting the Elasticsearch zip file for the first node, and then copy its contents to create additional node folders (e.g., Node 2, Node 3). This copy-paste method is only viable if the initial node hasn't been run yet.
+Configuring Node Names: Edit the `elasticsearch.yml` file within each node's configuration to assign a unique name (e.g., "Node 1", "Node 2").
+
+Starting Nodes and Kibana: Launch the first Elasticsearch node and then Kibana. You'll use an enrollment token from the first node's output to configure Kibana.
+Monitoring Cluster Health: Initially, a single node cluster will show a "green" health status. However, after creating an index (which automatically generates replica shards), the status will turn "yellow." This "yellow" status signifies that replica shards are unassigned due to a lack of additional nodes, indicating a data risk.
+
+Adding More Nodes: To resolve the "yellow" status and ensure data redundancy, generate a node-specific enrollment token from the running first node. Use this token to start the subsequent nodes.
+
+Achieving Green Health: Once a second node is successfully added, the cluster health will automatically turn "green" as the unassigned replica shards are now assigned to the new node, providing data redundancy.
+
+Considerations for Multiple Nodes: While you can add more nodes, remember that for a cluster with three nodes, at least two nodes must be running for the cluster to start and elect a master node. If only one is active, the master cannot be selected.
+
+Dynamic Health Updates: The video demonstrates that shutting down a node will immediately revert the cluster health to "yellow," highlighting the dynamic nature of cluster health based on node availability.
+
+
+#9 th lec.  Node roles with config
+
+This video explains Elasticsearch node roles: Master for cluster management, Data for storing data, Ingest for document pre-processing, Machine Learning for ML tasks, Coordinating for load balancing, and Voting-Only for master elections
+
+Check roles in data view node role means master or not 
+I means ingest role is given or not
+
+#10 th lec crud operation in devtool
+
+This video provides a comprehensive guide on performing CRUD (Create, Read, Update, Delete) operations in Elasticsearch.
+
+Here's a breakdown of the key topics covered:
+
+Creating an Index (0:29): The video begins by demonstrating how to create an index in Elasticsearch. It covers both creating an index with default settings and customizing settings like the number of shards and replicas (1:39).
+
+Indexing Documents (Create) (3:52): Learn how to add documents to an index. The video shows how to let Elasticsearch auto-generate document IDs (4:37) and how to specify your own custom IDs (5:12).
+Deleting Documents (5:40): The process of deleting a specific document from an index using its ID is explained.
+
+Retrieving Documents (Read) (6:05): The video demonstrates how to retrieve individual documents from an index.
+Updating Documents (7:28): This section covers updating existing documents. It differentiates between partially updating a document by adding new fields or modifying existing ones (7:34) and using script updates for more complex modifications, including incrementing values or removing fields (9:53).
+
+Upserting Documents (14:35): The concept of "upsert," which either updates a document if it exists or inserts it if it doesn't, is explained and demonstrated.
+Replacing Documents (17:10): The video also briefly touches on how to completely replace an existing document with new data.
+
+Examples -->
+
+Here are the Elasticsearch queries for CRUD operations as demonstrated in the video:
+
+Create Index (0:32, 1:57)
+Simple Create:
+        
+        PUT /student
+        
+        This creates an index named `student` with default settings.
+Create with Custom Settings (Shards and Replicas):
+        
+        PUT /student_2
+        {
+          "settings": {
+            "numberofshards": 2,
+            "numberofreplicas": 2
+          }
+        }
+        
+        This creates an index named `student_2` with 2 primary shards and 2 replicas.
+
+Index Document (Create) (4:09, 5:20)
+Auto-generated ID:
+        
+        POST /student/_doc
+        {
+          "name": "Rahul",
+          "age": 32
+        }
+        
+        This adds a document to the `student` index, and Elasticsearch automatically generates an ID for it.
+Custom ID:
+        
+        POST /student/_doc/123
+        {
+          "name": "Rahul",
+          "age": 32
+        }
+        
+        This adds a document with the specified ID `123` to the `student` index.
+
+Delete Document (5:47)
+    
+    DELETE /student/_doc/1
+    
+    This deletes the document with ID `1` from the `student` index.
+
+Get Document (Read) (6:08)
+    
+    GET /student/_doc/1
+    
+    This retrieves the document with ID `1` from the `student` index.
+
+Update Document (Partial Update) (8:11)
+    
+    POST /student/_update/AVzS0Y4X0k-q80r47R8g
+    {
+      "doc": {
+        "age": 5,
+        "lastName": "Sharma"
+      }
+    }
+    
+    This updates the document with the specified ID. It modifies the `age` field and adds a new `lastName` field.
+
+Update Document (Script Update) (10:33, 13:00)
+Increment Age:
+        
+        POST /student/_update/AVzS0Y4X0k-q80r47R8g
+        {
+          "script": {
+            "source": "ctx._source.age += params.count",
+            "params": {
+              "count": 5
+            }
+          }
+        }
+        
+        This updates the document by incrementing the `age` field by 5 using a script.
+Conditional Update (Remove Field):
+        
+        POST /student/_update/AVzS0Y4X0k-q80r47R8g
+        {
+          "script": {
+            "source": "if (ctx.source.age < 10) { ctx.source.remove('lastName') } else { ctx._source.age -= 10 }"
+          }
+        }
+        
+        This script conditionally removes the `lastName` field if the age is less than 10, otherwise it decrements the age by 10.
+
+Upsert Document (15:00)
+    
+    POST /student/_update/123
+    {
+      "script": {
+        "source": "ctx._source.age += params.count",
+        "params": {
+          "count": 5
+        }
+      },
+      "upsert": {
+        "name": "Rahul",
+        "age": 32
+      }
+    }
+    
+    If the document with ID `123` exists, its age is updated. If it does not exist, a new document with the specified `upsert` data is created.
+
+Replace Document (17:16)
+    
+    PUT /student/_doc/1
+    {
+      "name": "New Name",
+      "age": 40
+    }
+    
+    This completely replaces the document with ID `1` with the new data provided.
+
+#11 th lec  :- elastic search routing
+
+Elasticsearch routing determines where documents are stored and retrieved. It uses a formula --
+Shard num = `hash(id) % numberofprimaryshards`
+
+If 3 shards then 188290%3 = 2 nd shard document will be stored
+
+ to assign documents to specific shards, ensuring that both indexing and searching operations efficiently target the correct shard (3:11). A crucial point is that the number of primary shards cannot be changed once documents are indexed (5:17), as this would break the routing mechanism and make documents unfindable
+
+#12 th lec  -- how elasticsearch reads data
+
+# 13 - how writes
+
+# 14 - primary term and sequence number
+
+# 15 - optimistic concurrency control
+
+Acc balance = 100
+If a decrease account balance by 1 rs 
+Then b also tried to decrease by 1 rs then it should be 98 but showing 99
+
+So by using primary term and sequence number b cannot able to update account balance 
+
+# 16 - update by query 
+
+Update all documents at once. By using one index and inside that 
+
+Here is an example of an `updatebyquery` from the video (2:24-3:03):
+
+POST customer/updateby_query
+{
+  "query": {
+    "match_all": {}
+  },
+  "script": {
+    "source": "ctx._source.age++"
+  }
+}
+
+
+This query updates all documents in the `customer` index by incrementing their `age` field by one.
+
+#17 Bulk api update all doc at once
+
+# 18 analyser in elastic search :-
+
+How tokenization works and how words get split into tokens --> filtering 
+
+# 19  index explanation
+
+Inverted Index: (0:32, 5:06)
+Explanation: This is like a traditional book index. Instead of reading the whole book to find a word, you look up the word in the index, and it tells you exactly which pages (documents) contain that word. It maps words to documents. This is super efficient for searching for specific terms.
+Example: You want to find every document that mentions "dog." The Inverted Index quickly tells you "Dog is in Document 1, Document 3, and Document 5."
+
+Forward Index: (5:25, 5:46)
+Explanation: This is like a library's shelf. Each document (book) has a unique ID, and the index simply points to the physical location of that entire document. You know the ID of the document, and you can retrieve the whole thing. It maps documents to their content/location. This is efficient if you already know which document you want to retrieve by its ID.
+Example: You have "Document ID 123." The Forward Index tells you "Document ID 123 is located at shelf A, position 7." You then go directly to that location to get the entire document.
+
+#20 how does doc value data structure works
+
+Name :-
+ data type -- text
+ Data structure -- inverted index
+ Storage type -- text
+
+Age :-
+Data type -- integer
+Data structure -- doc value
+Storage type -- numeric
+
+The video explains that Elasticsearch uses inverted indexes for full-text search on text fields and docvalues for numerical fields, date fields, and keyword fields to enable efficient sorting, range queries, and aggregations (0:02-0:26, 5:42-6:16). Essentially, inverted indexes map words to documents, while docvalues map documents to values for specific fields, acting like a forward index (4:12-4:52).
+
+#21 Elasticsearch mapping 
+
+Elasticsearch index mapping is like creating a schema for your data (0:26).
+
+Why use it?
+Data Consistency: Ensures fields always have the expected data type. For example, if you define an 'age' field as an `integer`, Elasticsearch will prevent non-numeric values from being indexed (4:05).
+Search Optimization: When you pre-define types, Elasticsearch doesn't waste resources "guessing" the data type, leading to faster indexing and searching (4:40).
+Control Data Ingestion:
+Set `dynamic: false` (10:38) if you want to index a document but ignore any unexpected fields that aren't in your mapping (e.g., if a user accidentally includes an 'address' field in a 'student' document where only 'name' and 'age' are expected, the 'address' field won't be mapped or searchable).
+Set `dynamic: strict` (12:54) if you want Elasticsearch to reject any document that contains fields not explicitly defined in your mapping, ensuring a very strict data structure.
+
+Here's a small example of an Elasticsearch mapping query:
+
+This query creates an index named `students` with a defined mapping for the `name` as `text` and `age` as `integer`:
+
+PUT /students
+{
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "text"
+      },
+      "age": {
+        "type": "integer"
+      }
+    }
+  }
+}
+
+This syntax specifies the `mappings` and `properties` of your document fields (1:51-2:00, 8:02-8:22). This way, Elasticsearch knows exactly how to store and index 'name' and 'age' data
+
+
+#22 .Reindex api in elk ; like old index copy and paste in new index if require add modification as well using script painless
+
+Imagine you have an old list of student data (students) where "age" is stored as a long number, but you realize it would be better as a smaller integer (4:08). You also want to add a new "ID" field based on their name and age (6:12).
+
+Since you can't directly change how the old list stores "age," you use the Reindex API (0:19) like a "copy-paste with a twist" feature:
+1.  Create a new, empty list (students_new) (4:31) with the correct "age" type (integer) and ready for the new "ID" field.
+2.  Tell Elasticsearch to copy all students from the old list (source: students) to the new list (destination: students_new) (5:50).
+3.  Add a small script (5:50) that, as each student is copied, creates the new "ID" field by combining their name and age (6:12).
+
+This way, all your student data is now in the new list, optimized, and with the added "ID" field (7:04), while the old list remains untouched.
+
+Eg:- 
+POST /_reindex
+{
+  "source": {
+    "index": "students"
+  },
+  "dest": {
+    "index": "students_new"
+  },
+  "script": {
+    "source": "ctx.source.ID = ctx.source.Name + ctx._source.Age"
+  }
+}
+
+`script` (6:08) defines a simple operation: it takes the `Name` and `Age` from the original document (`ctx._source`) and combines them to create a new `ID` field in the copied document.
+
+
+#23. Coersion 
+
+If you are trying to add data like "30" to int or long data type then elasticsearch will do it automatically die to coersion is by default true but cannot Covert it for this:- "11 year"
+
+You can apply coersion as false for particular field or global level of document as well
+
+This video explains Elasticsearch coercion (0:04), the automatic data type conversion during indexing and searching. It demonstrates how Elasticsearch handles type mismatches (1:01), when coercion fails (3:13), and how to control it at field (4:16) and global levels (5:37).
+
+# 24 mastering data types
+
+You will see how data type mapped to fields
+Every data type you will see here
+
+#25 index templates
+
+Elasticsearch Index Templates (0:08), which are blueprints (0:31) that automatically apply predefined settings and data structures (mappings) to new indices matching a specific name pattern (0:15). This helps ensure data consistency (6:18) and automates index setup (1:06), with examples of creating, applying, and managing these templates.
+
+Like one index template :- student-*
+Multiple Indexes can be mapped to this index template :- student-class1 ,student-class2,...
+
+Eg:- 
+PUT indextemplate/student_template
+{
+  "indexpatterns": ["studentclass_*"],
+  "template": {
+    "settings": {
+      "numberofshards": 2,
+      "numberofreplicas": 1
+    },
+    "mappings": {
+      "properties": {
+        "name": {
+          "type": "text"
+        },
+        "id": {
+          "type": "keyword"
+        },
+        "dob": {
+          "type": "date"
+        }
+      }
+    }
+  }
+}
+
+Eg of adding document to new index which will be under index template from above which created
+
+PUT studentclass1/_doc/1
+{
+  "name": "Ram",
+  "id": "a12e",
+  "dob": "2000-01-01"
+}
+
+#26 aliases in elk
+
+
+
