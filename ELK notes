@@ -1,3 +1,25 @@
+IMP NOTES :- 
+
+A) Reindexing see #22
+Since you can't directly change how the old list stores "age," you use the Reindex API (0:19) like a "copy-paste with a twist" feature:
+1.  Create a new, empty list (students_new) (4:31) with the correct "age" type (integer) and ready for the new "ID" field.
+2.  Tell Elasticsearch to copy all students from the old list (source: students) to the new list (destination: students_new) (5:50).
+3.  Add a small script (5:50) that, as each student is copied, creates the new "ID" field by combining their name and age (6:12).
+
+B) #20 index mapping :- [explicit mapping] 
+- Set `dynamic: false` (10:38) if you want to index a document but ignore any unexpected fields that aren't in your mapping 
+  (e.g., if a user accidentally includes an 'address' field in a 'student' document where only 'name' and 'age' are expected, the 'address' field won't be mapped or searchable).
+- Set `dynamic: strict` (12:54) if you want Elasticsearch to reject any document that contains fields not explicitly defined in your mapping, ensuring a very strict data structure.
+
+C)
+Type → what kind of data
+Structure → how ES finds it fast
+Storage → where ES reads it from
+
+Field	Data Type (what is it?)	     Data Structure (how ES searches it?)	         Storage (where kept?)
+name	text	                     Inverted Index (words → docs)	               _source + index segment
+age	integer	                     BKD Tree (range & numeric search)	                _source + segment
+city	keyword	                     Inverted Index + Doc Values (exact match, agg)	_source
 
 Download elasticsearch and kibana on windows 
 
@@ -288,12 +310,83 @@ How tokenization works and how words get split into tokens --> filtering
 # 19  index explanation
 
 Inverted Index: (0:32, 5:06)
-Explanation: This is like a traditional book index. Instead of reading the whole book to find a word, you look up the word in the index, and it tells you exactly which pages (documents) contain that word. It maps words to documents. This is super efficient for searching for specific terms.
+Explanation: This is like a traditional book index. Instead of reading the whole book to find a word, you look up the word in the index,
+and it tells you exactly which pages (documents) contain that word. It maps words to documents. This is super efficient for searching for specific terms.
 Example: You want to find every document that mentions "dog." The Inverted Index quickly tells you "Dog is in Document 1, Document 3, and Document 5."
 
 Forward Index: (5:25, 5:46)
-Explanation: This is like a library's shelf. Each document (book) has a unique ID, and the index simply points to the physical location of that entire document. You know the ID of the document, and you can retrieve the whole thing. It maps documents to their content/location. This is efficient if you already know which document you want to retrieve by its ID.
+Explanation: This is like a library's shelf. Each document (book) has a unique ID, and the index simply points to the physical location of that entire document.
+You know the ID of the document, and you can retrieve the whole thing. It maps documents to their content/location. This is efficient if you already know which document you want to retrieve by its ID.
 Example: You have "Document ID 123." The Forward Index tells you "Document ID 123 is located at shelf A, position 7." You then go directly to that location to get the entire document.
+
+Small Example (ELK-style) 
+
+Imagine you have 3 documents indexed in Elasticsearch:
+
+Documents
+Doc 1: "dog likes milk"
+Doc 2: "cat likes milk"
+Doc 3: "dog hates cat"
+
+1️⃣ Inverted Index (THIS is what Elasticsearch is famous for)
+
+Elasticsearch breaks text into terms and builds a map like this:
+
+dog   → [Doc 1, Doc 3]
+cat   → [Doc 2, Doc 3]
+likes → [Doc 1, Doc 2]
+milk  → [Doc 1, Doc 2]
+hates → [Doc 3]
+
+What this means
+
+You search: dog
+ES does NOT scan all documents
+
+It directly jumps to:
+dog → Doc 1, Doc 3
+
+
+⚡ Super fast searching
+⚡ Perfect for match, term, bool queries
+
+➡️ This is the core of ELK search
+
+2️⃣ Forward Index (conceptual, not emphasized in ES)
+
+Think of this as:
+
+Doc ID → Full document
+
+Doc 1 → "dog likes milk"
+Doc 2 → "cat likes milk"
+Doc 3 → "dog hates cat"
+
+What this means
+
+You already know: Doc ID = 2
+
+Elasticsearch retrieves the document from _source
+
+This is used when:
+Fetching a document by ID
+
+Returning search results after inverted index finds matches
+
+⚠️ Elasticsearch doesn’t call this a “forward index” officially
+It’s basically the document store / _source
+
+How BOTH work together in ELK (important!)
+Query:
+GET /animals/_search
+{
+  "query": {
+    "match": {
+      "text": "dog"
+    }
+  }
+}
+
 
 #20 how does doc value data structure works
 
@@ -314,8 +407,11 @@ The video explains that Elasticsearch uses inverted indexes for full-text search
 Elasticsearch index mapping is like creating a schema for your data (0:26).
 
 Why use it?
-Data Consistency: Ensures fields always have the expected data type. For example, if you define an 'age' field as an `integer`, Elasticsearch will prevent non-numeric values from being indexed (4:05).
+Data Consistency: Ensures fields always have the expected data type. 
+For example, if you define an 'age' field as an `integer`, Elasticsearch will prevent non-numeric values from being indexed (4:05).
+
 Search Optimization: When you pre-define types, Elasticsearch doesn't waste resources "guessing" the data type, leading to faster indexing and searching (4:40).
+
 Control Data Ingestion:
 Set `dynamic: false` (10:38) if you want to index a document but ignore any unexpected fields that aren't in your mapping (e.g., if a user accidentally includes an 'address' field in a 'student' document where only 'name' and 'age' are expected, the 'address' field won't be mapped or searchable).
 Set `dynamic: strict` (12:54) if you want Elasticsearch to reject any document that contains fields not explicitly defined in your mapping, ensuring a very strict data structure.
@@ -339,6 +435,9 @@ PUT /students
 }
 
 This syntax specifies the `mappings` and `properties` of your document fields (1:51-2:00, 8:02-8:22). This way, Elasticsearch knows exactly how to store and index 'name' and 'age' data
+
+To see the mapping of particular index :- GET /students/_mapping
+Get mapping for a specific field :- GET /students/_mapping/field/age
 
 
 #22 .Reindex api in elk ; like old index copy and paste in new index if require add modification as well using script painless
@@ -375,6 +474,25 @@ If you are trying to add data like "30" to int or long data type then elasticsea
 
 You can apply coersion as false for particular field or global level of document as well
 
+One-line summary 🧠
+
+coerce: true → "30" → 30 ✅
+coerce: false → "30" → ❌
+"11 year" → ❌ always
+
+eg:- 
+PUT students
+{
+  "mappings": {
+    "coerce": false,
+    "properties": {
+      "age": {
+        "type": "integer"
+      }
+    }
+  }
+}
+
 This video explains Elasticsearch coercion (0:04), the automatic data type conversion during indexing and searching. It demonstrates how Elasticsearch handles type mismatches (1:01), when coercion fails (3:13), and how to control it at field (4:16) and global levels (5:37).
 
 # 24 mastering data types
@@ -384,7 +502,8 @@ Every data type you will see here
 
 #25 index templates
 
-Elasticsearch Index Templates (0:08), which are blueprints (0:31) that automatically apply predefined settings and data structures (mappings) to new indices matching a specific name pattern (0:15). This helps ensure data consistency (6:18) and automates index setup (1:06), with examples of creating, applying, and managing these templates.
+Elasticsearch Index Templates (0:08), which are blueprints (0:31) that automatically apply predefined settings and data structures (mappings) to new indices matching a specific name pattern (0:15).
+This helps ensure data consistency (6:18) and automates index setup (1:06), with examples of creating, applying, and managing these templates.
 
 Like one index template :- student-*
 Multiple Indexes can be mapped to this index template :- student-class1 ,student-class2,...
@@ -426,4 +545,68 @@ PUT studentclass1/_doc/1
 #26 aliases in elk
 
 
+
+============================================================================================================================================================================================
+============================================================================================================================================================================================
+============================================================================================================================================================================================
+Example: Mapping data types to fields in Elasticsearch
+
+1) Create index with different data types
+PUT /products
+{
+  "mappings": {
+    "properties": {
+      "name":        { "type": "text" },
+      "category":    { "type": "keyword" },
+      "price":       { "type": "float" },
+      "quantity":    { "type": "integer" },
+      "available":   { "type": "boolean" },
+      "created_at":  { "type": "date" }
+    }
+  }
+}
+
+2) Index a document
+POST /products/_doc/1
+{
+  "name": "Apple iPhone",
+  "category": "mobile",
+  "price": 799.99,
+  "quantity": 10,
+  "available": true,
+  "created_at": "2025-01-01"
+}
+
+3) Text search :- 
+
+GET /products/_search
+{
+  "query": {
+    "match": {
+      "name": "iphone"
+    }
+  }
+}
+
+4) Keyword search :- 
+
+GET /products/_search
+{
+  "query": {
+    "term": {
+      "category": "mobile"
+    }
+  }
+}
+
+5) Date search by sorting:- 
+
+GET /products/_search
+{
+  "query": {
+    "range": {
+      "created_at": { "gte": "2024-01-01" }
+    }
+  }
+}
 
