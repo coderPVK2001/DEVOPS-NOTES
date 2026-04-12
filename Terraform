@@ -16,7 +16,7 @@ IMP NOTES ++++
 
 - after writing code/hcl type below commands:- 
 
-*1) for installing packages written inside provider block and generates terraform.lock.hcl file which contains plugins details ->
+*1) for installing packages written inside provider block(provider.tf) and generates terraform.lock.hcl file which contains plugins details ->
 Terraform init 
 
 *2) for validating configurations /Checks the configuration files for syntax and logical errors. ->
