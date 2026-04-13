@@ -38,6 +38,52 @@ Terraform apply
 *7) To destroy created resources.
 Terraform destroy
 
+*8) if u have issues while pushing to github. 
+-->
+create .gitignore file :- 
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+
+git commit -m "Removed .terraform folder"
+git commit -m "Removed .terraform folder"
+git push -u origin main
+
+Now secretkey and accesskey issue and (large file issue also bcoz 824 mb is larger than 100mb github has limit of 100mb):- 
+
+//Remove secret file from history //Removes provider.tf (with AWS keys) from ALL old commits
+git filter-branch --force --index-filter "git rm --cached --ignore-unmatch provider.tf" --prune-empty --tag-name-filter cat -- --all
+
+//Deletes backup of old commits (Git keeps them by default)
+Remove-Item -Recurse -Force .git/refs/original/
+
+//Removes references to old commits (so Git forgets them)
+git reflog expire --expire=now --all
+
+//Deletes unused data (like your 824MB file + secrets)
+git gc --prune=now --aggressive
+
+Now create and add new provider file with blank access and secret key
+
+*9) (large file issue also bcoz 824 mb is larger than 100mb github has limit of 100mb) in github push issue :- 
+
+//Remove secret file from history //Removes provider.tf (with AWS keys) from ALL old commits
+git filter-branch --force --index-filter "git rm -r --cached --ignore-unmatch .terraform" --prune-empty --tag-name-filter cat -- --all
+
+//Deletes backup of old commits (Git keeps them by default)
+Remove-Item -Recurse -Force .git/refs/original/
+
+//Removes references to old commits (so Git forgets them)
+git reflog expire --expire=now --all
+
+//Deletes unused data (like your 824MB file + secrets)
+git gc --prune=now --aggressive
+
+//forcely push to main branch
+git push origin main --force
+
+*10) 
 
 
 ##### What is Terraform ?
@@ -144,6 +190,39 @@ project/
       ├── ec2/
       ├── s3/
       └── rds/
+eg:-
+my-terraform-project/
+├── modules/
+│   ├── ec2/
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   └── s3/
+│       ├── main.tf
+│       ├── variables.tf
+│       └── outputs.tf
+└── environments/
+    ├── qa/
+    │   ├── provider.tf
+    │   ├── main.tf
+    │   └── terraform.tfvars
+    ├── uat/
+    │   ├── provider.tf
+    │   ├── main.tf
+    │   └── terraform.tfvars
+    └── prod/
+        ├── provider.tf
+        ├── main.tf
+        └── terraform.tfvars
+
+
+------------------------------------------------------------------------------------------------------------------
+
+One line summary of the whole flow of input values
+tfvars → env/variables.tf → env/main.tf → module/variables.tf → module/main.tf → AWS resource
+ value      declares it       passes it      receives it            uses it
+
+-----------------------------------------------------------------------------------------------------------------
 
 
 ✅ Best for: Multi-environment projects
