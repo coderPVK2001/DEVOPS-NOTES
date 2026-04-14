@@ -191,28 +191,37 @@ project/
       ├── s3/
       └── rds/
 eg:-
+
 my-terraform-project/
+│
 ├── modules/
 │   ├── ec2/
 │   │   ├── main.tf
 │   │   ├── variables.tf
 │   │   └── outputs.tf
+│   │
 │   └── s3/
 │       ├── main.tf
 │       ├── variables.tf
 │       └── outputs.tf
+│
 └── environments/
     ├── qa/
     │   ├── provider.tf
     │   ├── main.tf
+    │   ├── variables.tf
     │   └── terraform.tfvars
+    │
     ├── uat/
     │   ├── provider.tf
     │   ├── main.tf
+    │   ├── variables.tf
     │   └── terraform.tfvars
+    │
     └── prod/
         ├── provider.tf
         ├── main.tf
+        ├── variables.tf
         └── terraform.tfvars
 
 
@@ -326,7 +335,7 @@ availability_zone → Region zone
 
 tags → Labels
 
-🔐 5️⃣ aws_security_group
+🔐 5️⃣ aws_security_group   //used in terraform environment based project in uat environment
 
 Used for: Managing firewall rules
 Important arguments:
@@ -420,6 +429,9 @@ Terraform apply
 
 *7) To destroy all resources ->
 Terraform destroy
+
+*8) once apply done and some minor changes done then simply run below commands :-
+terraform appply and terraform plan .
 
 +++ 28 ::: Practical
 
