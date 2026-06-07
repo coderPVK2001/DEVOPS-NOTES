@@ -14,7 +14,9 @@ Note :- root volume for linux bydefault is 8 gb and for windows it is 30 gb
 
 3) for zones & regions :- 
 to see zones  :- ec2 --> settings --> u will see list of zones for particular region 
-eg:- Asia Pacific(mumbai) region ---> zones are ap-south-1a,ap-south-1b,ap-south-1c
+eg:- 
+Asia Pacific(mumbai) region ---> zones are ap-south-1a,ap-south-1b,ap-south-1c
+Asia Pacific (Hyderabad) region --> Zonaer are ap-south-2a, ap-south-2b, ap-south-2c
 Note :- 
 if u are using services of zone A then dont use services of other zones or regions 
 but in snapshots u can do it :- in snapshot we can create a backup of zone A Region Mumbai into Zone B Region Hyderabad 
