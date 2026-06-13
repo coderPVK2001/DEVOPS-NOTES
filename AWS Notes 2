@@ -132,3 +132,72 @@ Statement 3 → lets them work with objects.
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+VPC --> DAY 4 ==============================================================================================>
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+VPC: In AWS (Amazon Web Services), VPC stands for Virtual Private Cloud.
+-----------------------------------------------------------------------
+a. Amazon VPC is a logically isolated virtual network that you create in the AWS cloud. It is your own private network space in AWS
+b. Your VPC is like your own private data center within AWS.
+c. No other company can see or access your resources — unless you explicitly allow it.
+d. VPC is a free Service in AWS
+
+VPC:-
+-isolated network
+-vpc sizing :- how many ip range needed (CIDR)
+
+CIDR --> defining reserved IP addressses
+subnets (sub networks) --> dividing large network into small networks (subnets has CIDR ranges) 
+
+==================================================================
+
+🌐 What is a Subnet?
+--------------------------------
+-A subnet (short for subnetwork) is a smaller network segment created by dividing a larger network (like a VPC) into multiple, logically separated pieces.
+-To define which resources should be accessible privately and which to be accessed publically 
+reources :-- rds,ec2,s3,....
+
+why subnet ? 
+-->
+to control traffic 
+for eg:- subnet 1 resources to keep private and subnet 2 to make public
+subnet 1 contains rds subnet 2 contains app  which is public 
+
+Note for AWS subnet breakdown:- 
+-bydefault one vpc is created in aws  for eg:- 172.31.0.0/16 --> 65,536 ips (2^16)
+- 3 subnets by default --> 
+for eg:- 
+172.31.16.0/20 --> 2^12 --> 4096 but showing 4091 available in aws coz 5 ips used by aws for internal purpose 
+172.32.16.0/20 --> 2^12 --> 4096
+172.33.16.0/20 --> 2^12 --> 4096
+
+Route Table --> (while u click subnet u will see route table section out there)
+-The "traffic police" or navigation system that directs network packets to their destination.
+-communication between one subnet to other subnet is being done by route table
+-Each subnet must be associated with a route table. However, traffic within the same subnet does not require routing via the route table—instances communicate directly. 
+-Route tables are used to route traffic between subnets within a VPC, between VPCs, and from subnets to outside networks
+
+Internet gateway -->
+- The main security gate that allows traffic to enter or leave your VPC.
+-it defines whether subnet is private or public 
+-An Internet Gateway (IGW) is a VPC component that allows communication between your VPC and the internet.
+-Send traffic to the internet
+-Receive traffic from the internet
+eg :- 
+in route table section if IG is attached then subnet is public so it can be accessible within VPC and outside VPC as well 
+whereas if IG is not attached then subnet is private subnet and can make communication within VPC only
+
+NAT gateway :- 
+-NAT Gateway stands for Network Address Translation Gateway.
+-It allows instances in a private subnet to access the internet, but prevents the internet from initiating connections back to those instances.
+for eg:- 
+in private subnet rds is there and if we want to update rds latest version which is available online but due to private subnet we dont have access
+to internet so NAT helps to download the updates by sending request from private subnet to website and downloading the updates but it cannot take
+the response from client side like we can send requests only.
+
+Abhishek notes :-->
+If anyone want to access the application in subnet 1 then ,
+user A --> IG --> VPC --> ELB --> route table --> subnet --> application 
+
+
