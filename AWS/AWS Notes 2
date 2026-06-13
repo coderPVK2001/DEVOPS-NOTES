@@ -200,4 +200,44 @@ Abhishek notes :-->
 If anyone want to access the application in subnet 1 then ,
 user A --> IG --> VPC --> ELB --> route table --> subnet --> application 
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+VPC NACL --> DAY 5 continue ==============================================================================================>
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+VPC by default created with our aws account and in ec2 instance by default all outbound traffic is allowed except port 25 and all inbound traffic are blocked. 
+
+    Security Groups:
+        Security Groups act as virtual firewalls for Amazon EC2 instances (virtual servers) at the instance level. They control inbound and outbound traffic by allowing or denying specific protocols, ports, and IP addresses.
+        Each EC2 instance can be associated with one or more security groups, and each security group consists of inbound and outbound rules.
+        Inbound rules determine the traffic that is allowed to reach the EC2 instance, whereas outbound rules control the traffic leaving the instance.
+        Security Groups can be configured using IP addresses, CIDR blocks, security group IDs, or DNS names to specify the source or destination of the traffic.
+        They operate at the instance level and evaluate the rules before allowing traffic to reach the instance.
+        Security Groups are stateful, meaning that if an inbound rule allows traffic, the corresponding outbound traffic is automatically allowed, and vice versa.
+        Changes made to security group rules take effect immediately.
+
+    Network Access Control Lists (NACLs):
+        NACLs are an additional layer of security that operates at the subnet level. They act as stateless traffic filters for inbound and outbound traffic at the subnet boundary.
+        Unlike Security Groups, NACLs are associated with subnets, and each subnet can have only one NACL. However, multiple subnets can share the same NACL.
+        NACLs consist of a numbered list of rules (numbered in ascending order) that are evaluated in order from lowest to highest.
+        Each rule in the NACL includes a rule number, protocol, rule action (allow or deny), source or destination IP address range, port range, and ICMP (Internet Control Message Protocol) type.
+        NACL rules can be configured to allow or deny specific types of traffic based on the defined criteria.
+
+For eg := when NACL is used ;
+if someone wants to view the application then they just hit our application and port no which is configured at ec2 instance level SG but you want
+to block particular port or IP at subnet level then modify it in NACL so SG wont work as NACL rules will be work here as it is applied on subnet level.
+
+## Creation of simple Application using python server on 8080 port and access it once and block it once at nacl level.
+
+steps :-
+create vpc --> vpc and more --> define cidr 0/24 -->  all keep default only and create new vpc
+now go to vpc and see map or flow of it !!
+2 zones public and private subnets will be out there so total 4 subnets .
+
+Steps for creating ec2 instance and python installation :- 
+create ec2 instance --> ubuntu --> in network settings choose custom VPC which u created --> select public subnet --> create instance 
+now log into instance --> sudo apt update ---> python3 -m http.server 8080 --> update the inbound rule of sg for instance and access the url --> publicip:8080
+
+now block this using nacl :- 
+Go to vpc --> Nacl --> now u will see rules it works in lower order first like if rule no 100 200 ... is there then 100 will be applied first and then 200
+--> so 100 rule no add custom tcp 8080 and all ips should be blocked..
