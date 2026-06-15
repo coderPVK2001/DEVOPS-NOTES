@@ -283,6 +283,21 @@ If a server becomes unresponsive, it can route traffic to healthy endpoints, imp
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Route 53 (DNS resolver)  --> DAY 7 continue ==============================================================================================>
+PRACTICAL  --> DAY 7 continue ==============================================================================================>
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+REFER DIAGRAM/ARCHITECTURE BEFORE BUILDING PROJECT 
+
+4 SUBNET 4 SERVER 
+2 SERVERS IN PRIVATE SUBNET WHERE APP WILL BE RUNNING 
+2 SERVERS(bASTION HOST/JUMP SERVER) IN PUBLIC SUBNET THESE WOULD REQUIRE TO CONNECT TO SERVERS IN PRIVATE SUBNET. 
+ALL SERVER SHOULD BE IN SAME VPC 
+AUTOSCALING SHOULD BE APPLIED TO BOTH 2 SERVERS IN PRIVATE SUBNET AS TRAFFIC INCREASES THEN THEY SHOULD BE USED
+
+FIRST CREATE TARGET GROUP AND THEN ONLY IN LB WHICH IS INSIDE EC2 COMPONENTS CAN BE USED
+
+HOW TO CONNECT TO PRIVATE EC2 INSTANCE OR APP??
+==>
+USER LOCAL SYSTEM ==> JUMP SERVER ==> PRIVAET EC2 APP
+KEY PAIR COPY FROM LOCAL INSIDE JUMP SERVER AND FROM THEIR KEY PAIR WE COONECT TO PROD APP IN PRIVATE EC2.
 
