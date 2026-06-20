@@ -38,4 +38,53 @@ STEPS :-
 
 1) CREATE VPC :
 
+- default cidr
+- 2 AZ and NAT at each zone
+- 2 private 2 public subnet 
+- keep all other options as it is.
+
+2) CREATE Autoscaling group :-   // should be created for app servers in 2 private subnet if cpu utlization got above 80 percent then instances should be increasedd.
+
+- but before creating autoscaling you needs to create launch template where instance related configs are defined.
+
+- in laucnh template , use ubuntu AMI , instance type free tier t2 micro , create key value pair,  Add SG where ssh should be allowed for everyone
+  tcp port 8000 also all traffic should be allowed so here in 8000 we will run python app
+Note :- select VPC recent one which got created  . 
+
+- Now once again create autoscaling group with above launch template name --> in choose instance select 2 private subnets of our VPC --> group sizing and limit select desired capacity as 2 instances
+  min capacity 1 and max 4 . 
+
+Now after creation check ec2 instances got created or not and check subnets of it as different availablity zone should be assigned to each instance. 
+u can see public address will not be there for both so to access this app servers bastion host or jump server should be used which should be in public subnet.
+
+3) Create BASTION host or jump server :- To keep app server secured no one can login into private instances directly so bastion host should be used to do so.
+
+While creating host make sure vpc should be ours only not default one and public subnet assign while creation.
+Keep all setting as it is for creating new instance like allow only ssh from all traffic.
+From this user will ssh to bastion host and bastion host will ssh to private instance .
+
+in gitbash add below command to share the private key to ubuntu server :- 
+scp -i /c/Users/Prajwal/OneDrive/Desktop/programs/AWS-new-projects/pvk-aws.pem /c/Users/Prajwal/OneDrive/Desktop/programs/AWS-new-projects/pvk-aws.pem ubuntu@3.110.219.3:/home/ubuntu/
+
+on ubuntu bastion host :- /home/ubuntu
+chmod 400 "pvk-aws.pem"
+ssh -i "pvk-aws.pem" ubuntu@10.0.130.163
+
+u are now connected on private ec2 instance !!
+
+Now after connection run python on 8000 port on server :- 
+
+
+4) Create LB . client --> VPC --> IG --> LB --> private IP 
+
+- Go to ec2 --> LB --> create LB  --> application LB
+- like for autoscaling group  launch teamplate was compulsory , now here for LB target groups are important while creating LB
+
+
+
+
+
+
+
+
 
