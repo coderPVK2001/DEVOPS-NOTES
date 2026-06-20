@@ -1,8 +1,13 @@
 Note :- 
-Quick Rule
+1) how to know which subnet is private and which is public one ?
 IGW in route table → Public Subnet
 NAT Gateway in route table → Private Subnet
 No internet route → Private Subnet
+
+2) Elastic IP :- 
+static IP for ec2 instance if particular instance gets deleted then if new instance created then private ip address changes 
+so elastic comes into picture and keeps static address
+
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 IAM  -->
@@ -284,24 +289,4 @@ If a server becomes unresponsive, it can route traffic to healthy endpoints, imp
 *   In a typical setup, a request from a user hits **Route 53**. 
 *   Route 53 checks the configured **Hosted Zone** to resolve the domain name to the correct **Load Balancer** IP address.
 *   The request is then forwarded to the load balancer, which distributes traffic to your application in private subnets.
-
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-PRACTICAL  --> DAY 7 continue ==============================================================================================>
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-REFER DIAGRAM/ARCHITECTURE BEFORE BUILDING PROJECT 
-
-4 SUBNET 4 SERVER 
-2 SERVERS IN PRIVATE SUBNET WHERE APP WILL BE RUNNING 
-2 SERVERS(bASTION HOST/JUMP SERVER) IN PUBLIC SUBNET THESE WOULD REQUIRE TO CONNECT TO SERVERS IN PRIVATE SUBNET. 
-ALL SERVER SHOULD BE IN SAME VPC 
-AUTOSCALING SHOULD BE APPLIED TO BOTH 2 SERVERS IN PRIVATE SUBNET AS TRAFFIC INCREASES THEN THEY SHOULD BE USED
-
-FIRST CREATE TARGET GROUP AND THEN ONLY IN LB WHICH IS INSIDE EC2 COMPONENTS CAN BE USED
-
-HOW TO CONNECT TO PRIVATE EC2 INSTANCE OR APP??
-==>
-USER LOCAL SYSTEM ==> JUMP SERVER ==> PRIVAET EC2 APP
-KEY PAIR COPY FROM LOCAL INSIDE JUMP SERVER AND FROM THEIR KEY PAIR WE COONECT TO PROD APP IN PRIVATE EC2.
 
