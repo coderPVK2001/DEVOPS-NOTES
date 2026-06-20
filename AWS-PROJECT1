@@ -1,0 +1,41 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+PRACTICAL  --> DAY 7 continue ==============================================================================================>
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+REFER DIAGRAM/ARCHITECTURE BEFORE BUILDING PROJECT :-  
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-example-private-subnets-nat.html
+
+4 SUBNET 4 SERVER 
+VPC has public subnets and private subnets in 2 availability zones. 
+2 SERVERS IN PRIVATE SUBNET WHERE APP WILL BE RUNNING. 
+2 SERVERS(bASTION HOST/JUMP SERVER) IN PUBLIC SUBNET THESE WOULD REQUIRE TO CONNECT TO SERVERS IN PRIVATE SUBNET. 
+ALL SERVER SHOULD BE IN SAME VPC
+AUTOSCALING SHOULD BE APPLIED TO BOTH 2 SERVERS IN PRIVATE SUBNET AS TRAFFIC INCREASES THEN THEY SHOULD BE USED
+
+FIRST CREATE TARGET GROUP AND THEN ONLY IN LB WHICH IS INSIDE EC2 COMPONENTS CAN BE USED
+
+About Project :-->
+This project includes how to create VPC in prod environment . 
+To improve resiliency you deploy servers in two avalibality zones,by using Autoscaling group and
+application LB.
+for additional security , you deploy servers in private subnet.
+Servers receive request from LB , servers can connect to internet by using NAT gateway,
+To imporve resliency NAT gateway deployed in both availability zones. 
+
+Why NAT gateway used ?
+-->
+NAT gateway is used in public subnet coz if application from private subnet wants to access something from internet then private IP should not be exposed.
+so private ip gets masked with NAT IP in public subnet and then content will be accessed .
+
+HOW TO CONNECT TO PRIVATE EC2 INSTANCE OR APP??
+==>
+USER LOCAL SYSTEM (with private key) ==> JUMP SERVER (configur private key in this server as well)  ==> PRIVATE EC2 APP
+KEY PAIR COPY FROM LOCAL INSIDE JUMP SERVER AND FROM THEIR KEY PAIR WE CONNECT TO PROD APP IN PRIVATE EC2.
+
+
+STEPS :- 
+
+1) CREATE VPC :
+
+
