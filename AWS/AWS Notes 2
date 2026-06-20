@@ -1,4 +1,8 @@
-
+Note :- 
+Quick Rule
+IGW in route table → Public Subnet
+NAT Gateway in route table → Private Subnet
+No internet route → Private Subnet
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 IAM  -->
