@@ -8,6 +8,13 @@ No internet route → Private Subnet
 static IP for ec2 instance if particular instance gets deleted then if new instance created then private ip address changes 
 so elastic comes into picture and keeps static address
 
+3)"If ALB handles traffic, why do we need an Elastic IP?"
+
+A short interview answer would be:
+Elastic IP → Used when you have one EC2 and need a fixed public IP.
+ALB → Used when you have multiple EC2 instances. It distributes traffic and has its own DNS name, so you don't need an Elastic IP on each EC2.
+
+
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 IAM  -->
@@ -289,4 +296,12 @@ If a server becomes unresponsive, it can route traffic to healthy endpoints, imp
 *   In a typical setup, a request from a user hits **Route 53**. 
 *   Route 53 checks the configured **Hosted Zone** to resolve the domain name to the correct **Load Balancer** IP address.
 *   The request is then forwarded to the load balancer, which distributes traffic to your application in private subnets.
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+s3 buckets  --> DAY 9 continue ==============================================================================================>
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 
