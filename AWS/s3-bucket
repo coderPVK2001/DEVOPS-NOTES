@@ -1,9 +1,24 @@
 # AWS S3 Interview Notes
 
+** can apply bucket level policy as well.
+if in some organization other projects are also there but we need to restrict that project members to particular bucket then we should apply bucket level 
+policy to them in json format using aws json format generator and only admin of that bucket can access that bucket. 
+
+
 1. What is S3?
 - Amazon S3 (Simple Storage Service) is an object storage service.
 - Used to store files like images, videos, PDFs, logs, backups, etc.
 - Highly scalable, secure, and durable (99.999999999%).
+
+Why use S3 buckets?
+-->
+S3 buckets provide a reliable and highly scalable storage solution for various use cases. 
+They are commonly used for backup and restore, data archiving, content storage for websites, and as a data source for big data analytics.
+
+Creating an S3 bucket
+-->
+To create an S3 bucket, you can use the AWS Management Console, AWS CLI (Command Line Interface), or AWS SDKs (Software Development Kits).
+You need to specify a globally unique bucket name and select the region where you want to create the bucket.
 
 2. Bucket
 - A bucket is a container that stores objects.
