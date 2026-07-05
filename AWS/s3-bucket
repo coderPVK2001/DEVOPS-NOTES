@@ -4,6 +4,34 @@
 if in some organization other projects are also there but we need to restrict that project members to particular bucket then we should apply bucket level 
 policy to them in json format using aws json format generator and only admin of that bucket can access that bucket. 
 
+Note :- If u are getting accesss denied after url being accessed 
+Add below policy as well after disabling public access for to access the url after object is being uploaded.
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicRead",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::your-bucket-name/*"
+    }
+  ]
+}
+
+Assign policy in bucket policy demo see in resource u will see /* is not there so add it -->  select add action --> s3 --> all permissions ===> add resource --> add bucket name 
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": "arn:aws:s3:::pvk-s3-demobucket"
+        }
+    ]
+}
 
 1. What is S3?
 - Amazon S3 (Simple Storage Service) is an object storage service.
