@@ -1,0 +1,147 @@
+# AWS S3 Interview Notes
+
+1. What is S3?
+- Amazon S3 (Simple Storage Service) is an object storage service.
+- Used to store files like images, videos, PDFs, logs, backups, etc.
+- Highly scalable, secure, and durable (99.999999999%).
+
+2. Bucket
+- A bucket is a container that stores objects.
+- Bucket names must be globally unique.
+- Each bucket belongs to one AWS Region.
+
+3. Object
+- An object is a file stored inside a bucket.
+- An object consists of:
+  - Data
+  - Metadata
+  - Object Key
+
+4. Object Key
+- Unique name/path of an object.
+- Example:
+  images/profile.jpg
+
+5. Versioning
+Purpose:
+- Recover deleted files.
+- Recover overwritten files.
+- Maintain multiple versions of an object.
+
+Example:
+resume.pdf → v1 → v2 → v3
+
+6. Encryption
+Purpose:
+- Protect data stored in S3.
+
+Types:
+- SSE-S3 (AWS manages keys)
+- SSE-KMS (AWS KMS manages keys)
+- SSE-C (Customer manages keys)
+
+7. Storage Classes
+- Standard → Frequently accessed data.
+- Intelligent-Tiering → AWS automatically moves data.
+- Standard-IA → Infrequently accessed data.
+- One Zone-IA → Cheap, stored in one AZ.
+- Glacier Instant Retrieval → Archived data with quick retrieval.
+- Glacier Flexible Retrieval → Archive, retrieval in minutes/hours.
+- Glacier Deep Archive → Cheapest archive, retrieval takes hours.
+
+8. Lifecycle Policy
+Purpose:
+- Automatically move objects to cheaper storage.
+- Automatically delete old objects.
+
+Example:
+30 Days → Standard-IA
+90 Days → Glacier
+365 Days → Delete
+
+9. Replication
+Purpose:
+- Automatically copy data.
+
+Types:
+- CRR (Cross Region Replication)
+- SRR (Same Region Replication)
+
+10. Multipart Upload
+Purpose:
+- Upload large files faster.
+- Resume uploads if interrupted.
+- Upload parts in parallel.
+
+11. Bucket Policy
+Purpose:
+- Control access to a bucket.
+
+12. IAM
+Purpose:
+- Control user/service permissions to S3.
+
+13. Event Notifications
+Purpose:
+- Trigger AWS services on events.
+
+Can trigger:
+- Lambda
+- SNS
+- SQS
+
+14. Static Website Hosting
+Purpose:
+- Host HTML, CSS, and JavaScript websites.
+
+15. Monitoring
+- CloudWatch → Metrics and alarms.
+- CloudTrail → API auditing.
+- S3 Access Logs → Access logging.
+
+16. Security Best Practices
+- Enable Versioning.
+- Enable Encryption.
+- Block Public Access.
+- Use IAM Roles.
+- Use Bucket Policies.
+- Enable Logging.
+
+17. Common Use Cases
+- Backup
+- Log Storage
+- Static Website Hosting
+- Image Storage
+- Video Storage
+- Data Lake
+- Disaster Recovery
+- Archive Storage
+
+18. Services Commonly Used with S3
+- EC2
+- IAM
+- CloudFront
+- Lambda
+- CloudWatch
+- CloudTrail
+- KMS
+- SNS
+- SQS
+
+19. Interview Revision
+- S3 = Object Storage
+- Bucket = Container
+- Object = File
+- Versioning = Multiple Versions
+- Lifecycle = Auto Move/Delete
+- Storage Class = Cost Optimization
+- CRR = Different Region
+- SRR = Same Region
+- Multipart Upload = Large File Upload
+- Bucket Policy = Bucket-level permissions
+- IAM = User/Role permissions
+- SSE-KMS = Encryption
+- Lambda = Trigger on upload
+- CloudFront = CDN
+- CloudWatch = Monitoring
+- CloudTrail = Auditing
