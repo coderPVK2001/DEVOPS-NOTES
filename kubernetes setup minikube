@@ -4,6 +4,15 @@ refer url for installation :- https://minikube.sigs.k8s.io/docs/start/?arch=%2Fw
 prerequisite for minikube :- docker desktop 
 
 Note :- once done installing if u want to start minikube first login to your docker desktop and then minikube start then only your cluster will gets started ...
+Minikube needs a driver to run its Kubernetes node, either inside a container or a virtual machine.”
+Minikube needs a place to run its Kubernetes node.
+🐳 Container: Docker runs the Minikube node as a container.
+Example: Minikube → Docker → Kubernetes Node
+💻 VM: VirtualBox/Hyper-V creates a virtual machine, and Kubernetes runs inside that VM.
+Example: Minikube → VirtualBox → VM → Kubernetes Node
+
+👉 Short note:
+“Minikube uses a driver to provide the environment (container or VM) where its Kubernetes node runs.”
 
 1) download .exe and then install it . 
 path C:\Program Files\Kubernetes\Minikube  //by default gets installed here after installing from clicking .exe
