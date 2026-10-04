@@ -190,33 +190,57 @@ for eg:-
 172.32.16.0/20 --> 2^12 --> 4096
 172.33.16.0/20 --> 2^12 --> 4096
 
-Route Table --> (while u click subnet u will see route table section out there)
--The "traffic police" or navigation system that directs network packets to their destination.
--communication between one subnet to other subnet is being done by route table
--Each subnet must be associated with a route table. However, traffic within the same subnet does not require routing via the route table—instances communicate directly. 
--Route tables are used to route traffic between subnets within a VPC, between VPCs, and from subnets to outside networks
+Route Table
 
-Internet gateway -->
-- The main security gate that allows traffic to enter or leave your VPC.
--it defines whether subnet is private or public 
--An Internet Gateway (IGW) is a VPC component that allows communication between your VPC and the internet.
--Send traffic to the internet
--Receive traffic from the internet
-eg :- 
-in route table section if IG is attached then subnet is public so it can be accessible within VPC and outside VPC as well 
-whereas if IG is not attached then subnet is private subnet and can make communication within VPC only
+→ (while you click subnet, you will see the Route Table section there)
 
-NAT gateway :- 
--NAT Gateway stands for Network Address Translation Gateway.
--It allows instances in a private subnet to access the internet, but prevents the internet from initiating connections back to those instances.
-for eg:- 
-in private subnet rds is there and if we want to update rds latest version which is available online but due to private subnet we dont have access
-to internet so NAT helps to download the updates by sending request from private subnet to website and downloading the updates but it cannot take
-the response from client side like we can send requests only.
+- The "traffic police" or navigation system that directs network packets to their destination.
+- Communication between one subnet to another subnet can be controlled through route tables.
+- Each subnet is associated with a route table. However, traffic within the same subnet does not require routing via the route table — instances communicate directly.
+- Route tables are used to route traffic between subnets within a VPC, between VPCs, and from subnets to outside networks.
 
-Abhishek notes :-->
-If anyone want to access the application in subnet 1 then ,
-user A --> IG --> VPC --> ELB --> route table --> subnet --> application 
+---
+
+Internet Gateway (IGW)
+
+- The main gateway that allows traffic to enter or leave your VPC to/from the internet.
+- IGW is attached to the VPC, not directly to a subnet.
+- A subnet is considered Public if its route table has a route to the IGW.
+- An Internet Gateway (IGW) allows communication between your VPC and the internet.
+- Send traffic to the internet.
+- Receive traffic from the internet.
+
+Example:
+
+- If the subnet's route table has a route to IGW, the subnet is Public and resources can communicate with the internet if they have the required public IP/security rules.
+- If there is no direct route to IGW, the subnet is Private.
+
+---
+
+NAT Gateway
+
+- NAT Gateway stands for Network Address Translation Gateway.
+- It allows instances/resources in a private subnet to access the internet.
+- It allows outbound requests and their responses, but prevents the internet from initiating a new connection to those private resources.
+
+Example:
+
+- If a resource in a private subnet needs to download something from the internet, NAT Gateway allows it to send the request to the internet and receive the response.
+- Internet users cannot directly initiate a new connection to that private resource through NAT Gateway.
+
+Private Subnet → NAT Gateway → IGW → Internet
+
+---
+
+Abhishek's Notes → Corrected Flow
+
+If anyone wants to access an application in Private Subnet 1:
+
+User A → IGW → ALB → Private(internal) /public (if internet facing) Subnet → Application
+
+- ALB can be placed in a public subnet.
+- ALB receives the request from the internet and forwards it to the application in the private subnet.
+- The route table helps determine the network path. 
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
