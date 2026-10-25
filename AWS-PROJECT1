@@ -12,6 +12,8 @@ VPC has public subnets and private subnets in 2 availability zones.
 2 SERVERS(bASTION HOST/JUMP SERVER) IN PUBLIC SUBNET THESE WOULD REQUIRE TO CONNECT TO SERVERS IN PRIVATE SUBNET. 
 ALL SERVER SHOULD BE IN SAME VPC
 AUTOSCALING SHOULD BE APPLIED TO BOTH 2 SERVERS IN PRIVATE SUBNET AS TRAFFIC INCREASES THEN THEY SHOULD BE USED
+2 NATS used in public subnet 
+
 
 FIRST CREATE TARGET GROUP AND THEN ONLY IN LB WHICH IS INSIDE EC2 COMPONENTS CAN BE USED
 
@@ -27,12 +29,16 @@ Why NAT gateway used ?
 -->
 NAT gateway is used in public subnet coz if application from private subnet wants to access something from internet then private IP should not be exposed.
 so private ip gets masked with NAT IP in public subnet and then content will be accessed .
+NAT gateway uses the elastic IPs of private subnet ips.
 
 HOW TO CONNECT TO PRIVATE EC2 INSTANCE OR APP??
 ==>
 USER LOCAL SYSTEM (with private key) ==> JUMP SERVER (configur private key in this server as well)  ==> PRIVATE EC2 APP
 KEY PAIR COPY FROM LOCAL INSIDE JUMP SERVER AND FROM THEIR KEY PAIR WE CONNECT TO PROD APP IN PRIVATE EC2.
 
+why 2 AZ used ?
+--> 
+if one datacenter goes down then there will be one more which will be used .
 
 STEPS :- 
 
@@ -80,11 +86,16 @@ Now after connection run python on 8000 port on server :-
 - Go to ec2 --> LB --> create LB  --> application LB
 - like for autoscaling group  launch teamplate was compulsory , now here for LB target groups are important while creating LB
 
+User A → IGW → ALB → Private Subnet → Application
 
+NOTE :- 
+LB can be either public or private, depending on how you configure it.
 
-
-
-
+For your example:
+- Internet-facing ALB → Public Subnet
+- Internal ALB → Private Subnet
+Typical flow:
+Internet → IGW → Public ALB → Private Subnet → Application
 
 
 
