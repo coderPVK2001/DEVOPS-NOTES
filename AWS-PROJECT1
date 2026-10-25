@@ -3,6 +3,12 @@
 PRACTICAL  --> DAY 7 continue ==============================================================================================>
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+NOTE :- 
+- create any resources under same vpc only select manually created VPC . 
+- Target group required for LB and Launch template required for autoscaling 
+- Target group have health check as well so traffic goes to healthy instance   -- SG should contains inbound traffic 8000 22 and 80 from anywhere  
+- do one thing in 2 private instance run one instance saying hi prajwal and other instance with hi clover and run python server. 
+
 REFER DIAGRAM/ARCHITECTURE BEFORE BUILDING PROJECT :-  
 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-example-private-subnets-nat.html
 
