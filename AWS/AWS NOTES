@@ -324,6 +324,54 @@ i / d	=> Storage-optimized – Designed for fast SSD (NVMe) or large HDD use cas
 hpc =>	High-performance computing – Built for tightly-coupled simulations, modeling, scientific computing, CFD, etc.
 z	=> High clock speed instances – For workloads that need high per-core performance (e.g., EDA tools, financial modeling, software licensing-based apps)
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+### AWS EC2 Instance Types — Quick Reference
+
+## AWS EC2 Instance Types
+
+| Family | Purpose                                  | Example           | vCPU | RAM       |
+| ------ | ---------------------------------------- | ----------------- | ---- | --------- |
+| T      | Learning, testing, small applications    | `t3.micro`        | 2    | 1 GiB     |
+| M      | General-purpose applications             | `m7i.large`       | 2    | 8 GiB     |
+| C      | CPU-intensive applications               | `c7i.large`       | 2    | 4 GiB     |
+| R      | Memory-intensive applications, databases | `r7i.large`       | 2    | 16 GiB    |
+| X      | Very large memory requirements           | `x2iedn.xlarge`   | 4    | 128 GiB   |
+| U      | Extremely large memory workloads         | `u-6tb1.56xlarge` | 224  | 6,144 GiB |
+| I      | High-speed local storage, databases      | `i4i.large`       | 2    | 16 GiB    |
+| D      | Dense storage, data lakes                | `d3.xlarge`       | 4    | 32 GiB    |
+| Hpc    | Scientific computing, simulations        | `hpc7a.12xlarge`  | 24   | 768 GiB   |
+| G      | Graphics, GPU workloads                  | `g5.xlarge`       | 4    | 16 GiB    |
+| P      | GPU computing, AI training               | `p5.48xlarge`     | 192  | 2,048 GiB |
+| Inf    | AI model inference                       | `inf2.xlarge`     | 4    | 16 GiB    |
+| Trn    | AI model training                        | `trn1.2xlarge`    | 8    | 32 GiB    |
+| Mac    | macOS and iOS development                | `mac2.metal`      | 12   | 32 GiB    |
+| A      | Arm-based computing                      | `a1.large`        | 2    | 4 GiB     |
+| F      | FPGA-based computing                     | `f1.2xlarge`      | 8    | 122 GiB   |
+| VT     | Video transcoding                        | `vt1.3xlarge`     | 12   | 24 GiB    |
+| Z      | High-frequency CPU workloads             | `z1d.large`       | 2    | 16 GiB    |
+
+These are example configurations, not family maximums. AWS availability and specifications vary by generation and Region.
+
+**Note:** These are example configurations, not maximum sizes. Instance availability depends on the AWS Region.
+
+**Important:** These are example configurations, not the maximum sizes for each family. Availability depends on the AWS Region, and some older families may not be available for new launches.
+
+### Easy way to remember
+
+- **T** → Testing
+- **M** → Mixed/balanced resources
+- **C** → CPU
+- **R** → RAM
+- **I** → I/O and storage
+- **D** → Dense storage
+- **G / P** → Graphics and GPU computing
+- **Inf** → AI inference
+- **Trn** → AI training
+- **Mac** → macOS
+
+For your DevOps practice, focus mainly on **T, M, C, and R**.
+
+Official reference: [AWS EC2 Instance Types](https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-types.html?utm_source=chatgpt.com)
 
 ==================================================================================================================
 
