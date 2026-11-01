@@ -303,5 +303,28 @@ If a server becomes unresponsive, it can route traffic to healthy endpoints, imp
 s3 buckets  --> DAY 9 continue ==============================================================================================>
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+s3 bucket :- 
+- name should be unique across whole aws world, 
+- bucket can  be globally accessbile or can be restriced by blocking public access.
+- cannot store more than 5TB data in one object if more than 5 tb is being uploaded then choose multipart upload . 
+- it is very less cose for storing images, videos,db backups, ...
+- while creating bucket select nearest region so it will be stored very quickly due to less latency coz if we take far location 
+  request and response from datcenter will take more time but object will be accessible for everyone .
+- once object you upload iit will create more replicas in other zones as well so one region goes down then aslo u can access it thats why s3 bucket
+  is 99.9999 percent reliable. 
+- multi part upload is also there so your upload will not be broken due to power cut or intenret issue , 
+- availability, durable , secured. 
+- cost depends on storage class u select. 
 
+storage class types as cost depends on this only
+https://media.licdn.com/dms/image/v2/D4D12AQGHT4TMjqxKxA/article-cover_image-shrink_720_1280/B4DZzrW87UGsAI-/0/1773475191502?e=2147483647&v=beta&t=FxNdGVFD4kuQmh1BQz2SmQnfGD34mdHd8zUbhh7AXJY
+
+1. Standard – Frequently accessed data (e.g., website images). Cost: ~$0.025/GB/month. Retrieval: Immediate.
+2. Intelligent-Tiering – Automatically moves data between tiers based on access patterns. Cost: Depends on tier. Retrieval: Immediate in frequent/infrequent tiers.
+3. Standard-IA(Infrequent Access) – Rarely accessed data but requires quick access (e.g., monthly backups). Cost: ~$0.014/GB/month. Retrieval: Immediate.
+4. One Zone-IA – Rarely accessed, non-critical data stored in one AZ. Cost: Lower than Standard-IA. Retrieval: Immediate.
+5. Glacier Instant Retrieval – Archived data requiring immediate access. Cost: ~$0.005/GB/month. Retrieval: Milliseconds.
+6. Glacier Flexible Retrieval – Archived data where waiting is acceptable. Cost: ~$0.0045/GB/month. Retrieval: Minutes to hours.
+7. Glacier Deep Archive – Long-term archival data (e.g., 7–10 year records). Cost: ~$0.002/GB/month. Retrieval: Up to 12 hours.
+Note: Costs are approximate, region-dependent, and exclude additional request and retrieval charges.
 
