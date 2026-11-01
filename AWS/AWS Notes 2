@@ -1,3 +1,5 @@
+virtualbox see once for windows vm practise
+
 Note :- 
 1) how to know which subnet is private and which is public one ?
 IGW in route table → Public Subnet
@@ -14,7 +16,8 @@ A short interview answer would be:
 Elastic IP → Used when you have one EC2 and need a fixed public IP.
 ALB → Used when you have multiple EC2 instances. It distributes traffic and has its own DNS name, so you don't need an Elastic IP on each EC2.
 
-
+4) 
+Note :- access keys should be created for IAM user only in interview also say this . root user access key is ok for practising locally.
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 IAM  -->
@@ -63,7 +66,7 @@ select Add user to group --> select group --> devops
 
 ----------
 ROLES:- 
--For interacting EC2 with EKS we dont need policies to select instead roles should be created here
+- For interacting EC2 with EKS we dont need policies to select instead roles should be created here (for s3 also needs to create policy only) 
 - Restriciting ec2 instance with which services it can access.
 - AWS services interacting with any other services.
 
@@ -304,17 +307,17 @@ s3 buckets  --> DAY 9 continue =================================================
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 s3 bucket :- 
-- name should be unique across whole aws world, 
-- bucket can  be globally accessbile or can be restriced by blocking public access.
-- cannot store more than 5TB data in one object if more than 5 tb is being uploaded then choose multipart upload . 
-- it is very less cose for storing images, videos,db backups, ...
-- while creating bucket select nearest region so it will be stored very quickly due to less latency coz if we take far location 
-  request and response from datcenter will take more time but object will be accessible for everyone .
-- once object you upload iit will create more replicas in other zones as well so one region goes down then aslo u can access it thats why s3 bucket
-  is 99.9999 percent reliable. 
-- multi part upload is also there so your upload will not be broken due to power cut or intenret issue , 
-- availability, durable , secured. 
-- cost depends on storage class u select. 
+i) An S3 Bucket is a container used to store files (objects) such as images, videos, documents, and database backups.
+ii) Bucket names must be globally unique across all AWS accounts.
+iii) A bucket can be publicly accessible or private. AWS provides Block Public Access settings to restrict public access.
+iv) The maximum size of a single object is 5 TB. For large files, Multipart Upload can upload the file in smaller parts.
+v) S3 is a cost-effective storage service for storing images, videos, backups, and other files.
+vi) Choose a region close to your users or applications to reduce latency and improve access speed.
+Even if a bucket is created in one region, users from other locations can access its objects if they have the required permissions.
+vii) S3 automatically stores data redundantly across multiple Availability Zones (AZs) within the same AWS Region, helping provide high durability and availability.
+viii) Multipart Upload divides a large file into multiple parts. If one part fails or the upload is interrupted, you can retry the failed part instead of uploading the entire file again.
+ix) S3 provides high durability, availability, and security.
+x) The storage cost depends on the S3 Storage Class you choose, such as Standard, Standard-IA, or Glacier.
 
 storage class types as cost depends on this only
 https://media.licdn.com/dms/image/v2/D4D12AQGHT4TMjqxKxA/article-cover_image-shrink_720_1280/B4DZzrW87UGsAI-/0/1773475191502?e=2147483647&v=beta&t=FxNdGVFD4kuQmh1BQz2SmQnfGD34mdHd8zUbhh7AXJY
@@ -328,3 +331,67 @@ https://media.licdn.com/dms/image/v2/D4D12AQGHT4TMjqxKxA/article-cover_image-shr
 7. Glacier Deep Archive – Long-term archival data (e.g., 7–10 year records). Cost: ~$0.002/GB/month. Retrieval: Up to 12 hours.
 Note: Costs are approximate, region-dependent, and exclude additional request and retrieval charges.
 
+Note :- if in some organization other projects are also there but we need to restrict that project members to particular bucket then we should apply bucket level 
+policy to them in json format using aws json format generator and only admin of that bucket can access that bucket. 
+solution :- 
+in s3 bucket apply bucket level policy where u can mention group account id in condition where except that everyone will be blocked for that bucket access. 
+
+follow s3-bucket folder which is present in aws folder.
+
+Q) Steps to connect ec2 with s3 bucket for files uplaoding :- 
+Imagine you have an application running on an EC2 instance (server).
+
+Your application generates files such as:
+- Images uploaded by users.
+- PDF documents.
+- Database backup files.
+- Application logs.
+
+Instead of storing all these files on the EC2 server, you can store them in an S3 Bucket.  see above iam as well for undestanding s3 bucket policy
+  Step	What you do	Purpose
+	1	Create S3 bucket	Store files
+	2	Create IAM Role	Give permissions
+	3	Attach role to EC2	Allow EC2 to use those permissions
+	4	Install AWS CLI	Run AWS commands from EC2
+	5	Verify role	Check access
+	6	Create file	Prepare file
+	7	aws s3 cp	Upload file
+	8	Open S3	Verify uploaded file
+	9	aws s3 cp	Download file
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+AWS CLI  --> DAY 10 continue ==============================================================================================>
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+CLI acts as layer between user and AWS api. 
+
+suppose u need to create 15 ec2 instances, 50 different s3 buckets or some other things what should u do bcoz from UI manually it takes more time?
+1) u can use terraform for doing this purpose 
+2) use CFT.
+3) use AWS cli from their use already available apis.
+for eg :- 
+aws s3 mb s3://your-unique-bucket-name --region ap-south-1
+where ,
+mb = Make Bucket.
+aws s3 ls	List buckets
+aws s3 cp	Upload/download files
+aws s3 rb	Delete bucket
+
+
+Installation :- 23:35  //run command in gitbash
+
+search aws cli installer from documentation install it and prerequisite python is also required
+use commnad line installer for windows there are other options as well like GUI 
+
+aws --> run these command to see if aws cli is installed or not 
+aws --version 
+
+for login to your aws acocunt :- 
+aws configure --> enter access id, secret key, region name and output format 
+
+creation of access key :- 
+profile --> security credentials --> create access key (only 2 access keys is limited to one account) 
+Note :- access keys should be created for IAM user only in interview also say this . root user access key is ok for practising locally.
+Access key and secret key will be generated successfully !!
