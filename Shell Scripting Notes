@@ -167,6 +167,38 @@ for do done
 if then fi
 while do done
 
+12)  diff between bash and sh:-
+
+a) bash supports array storage whereas sh dont support
+using sh :
+#!/bin/sh
+if [ "$name" = "Prajwal" ]; then
+    echo "Hello $name"
+fi
+
+Using Bash:
+#!/bin/bash
+fruits=("Apple" "Mango")
+echo "${fruits[0]}"
+
+b) bash supports multiple conditions in one bracket [[]] whereas sh doesnt  
+
+Using [ ]: //used by sh and bash 
+if [ "$a" -gt 10 ] && [ "$b" -lt 20 ]; then
+    echo "Matched"
+fi
+
+Using [[ ]]:  //used by only bash
+if [[ $a -gt 10 && $b -lt 20 ]]; then
+    echo "Matched"
+fi
+
+using [[]] we do pattern match as well. 
+name="Prajwal"
+if [[ $name == Praj* ]]; then
+    echo "Username starts with Praj"
+fi
+
 #######################################################################################
 #######################################################################################
 MAIN SHELL NOTES START FROM HERE ----------------------------------------------------->
