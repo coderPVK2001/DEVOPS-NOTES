@@ -1,0 +1,140 @@
+
+Note :- 
+Important file checking operators in bash script if writing ?
+
+    Operator	Meaning
+        -f	Checks regular file exists
+        -d	Checks directory exists
+        -e	Checks whether file or directory exists
+        -r	Checks read permission
+        -w	Checks write permission
+        -x	Checks execute permission
+        -s	Checks file exists and is not empty
+
+ii)
+Left side of assignment → No $.
+
+eg :- for (( $num1=0; $num1<11; $num1++ ))  //wrong
+      for (( num1=0; num1<11; num1++ ))   //right 
+     
+
+Basic scripting questions
+1. Print Hello World.
+-->
+$ cat hello.sh
+
+#!/bin/sh
+
+echo "hello World"
+
+
+
+2. Check whether a number is even or odd.
+-->
+
+#!/bin/sh
+
+echo "entery any number :- "
+read num1
+
+if (( num1%2==0 )) ; then
+        echo " $num1 is even"
+else
+        echo " $num1 is odd "
+fi
+
+
+3. Find the largest of two numbers.
+-->
+
+#!/bin/sh
+
+echo "enter first mumber:- "
+read num1
+
+echo "enter second  mumber:- "
+read num2
+
+if (( $num1>$num2 )); then
+        echo " $num1 is greater "
+else
+        echo " $num2 is greater "
+fi
+
+
+4. Swap two variables.
+
+
+5. Check whether a file exists.
+-->
+
+@@ eg1 :- 
+
+#!/bin/sh
+
+file1=hello.sh
+
+if [ -f $file1 ];then
+        echo "given file exists :- $file1"
+else
+        echo "Don't exists "
+fi
+
+output :- given file exists :- hello.sh
+
+@@ eg2 :- 
+
+#!/bin/sh
+
+file1=/home/ecx/hello1.sh
+
+if [ -f $file1 ];then
+        echo "given file exists :- $file1"
+else
+        echo "Don't exists "
+fi
+
+
+6. Check whether a directory exists.
+-->
+$ cat directorycheck.sh
+
+#!/bin/sh
+
+dir1=directory1
+
+if [ -d $dir1 ];then
+        echo "given directory exists :- $dir1"
+else
+        echo "Don't exists "
+fi
+
+
+7. Print numbers from 1 to 10. (above note read)
+-->
+
+$ cat onetoten.sh
+#!/bin/sh
+
+for (( i=0 ; i<11 ; i++)) ; do
+        echo "$i"
+done
+
+@@eg2 :- 5 to 10 number 
+$ cat onetotenother.sh
+
+#!/bin/bash
+
+num1=5
+
+for ((  ; num1<11 ; num1++)) ; do
+        echo "$num1"
+done
+
+
+8. Find the factorial of a number.
+
+9. Reverse a string.
+
+
+10. Count the number of lines in a file.
