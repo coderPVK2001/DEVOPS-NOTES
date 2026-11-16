@@ -199,6 +199,23 @@ if [[ $name == Praj* ]]; then
     echo "Username starts with Praj"
 fi
 
+13) Important file checking operators in bash script if writing ?
+
+    Operator	Meaning
+        -f	Checks regular file exists
+        -d	Checks directory exists
+        -e	Checks whether file or directory exists
+        -r	Checks read permission
+        -w	Checks write permission
+        -x	Checks execute permission
+        -s	Checks file exists and is not empty
+eg := 
+
+if [ -f "/home/abc/hello.sh" ]; then
+    echo "File exists"
+
+
+
 #######################################################################################
 #######################################################################################
 MAIN SHELL NOTES START FROM HERE ----------------------------------------------------->
