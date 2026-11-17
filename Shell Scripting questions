@@ -16,6 +16,47 @@ Left side of assignment → No $.
 
 eg :- for (( $num1=0; $num1<11; $num1++ ))  //wrong
       for (( num1=0; num1<11; num1++ ))   //right 
+
+iii) 
+result=$(date)
+echo "$result"
+
+date  //will print date but above "$( ) is command substitution. It captures command output"
+
+Remember: $ is optional when reading variables inside (( )), but don't use it on the left side of an assignment.
+
+[[ ]] — Advanced conditions in Bash
+eg :- if [[ "$name" == P* ]]; then
+
+iv) 
+Quick revision table
+Syntax	Purpose	                       Example
+( )	Subshell	              (cd /tmp)
+$( )	Capture command output	      x=$(date)
+(( ))	Arithmetic	              (( a > b ))  ((a++))
+[ ]	Basic conditions	      [ -f file.txt ]
+[[ ]]	Advanced Bash conditions      [[ $name == P* ]]
+{ }	Group commands	             { echo hi; echo hello; }
+
+v) quick revision of wc :
+ 
+wc 'filename'     --> will give output in [lines] [words] [bytes/chars] filename
+
+wc -l 'filename'  --> to fetch only lines
+
+wc -w 'filename'  --> to fetch only words
+
+wc -m 'filename'  --> to fetch only chars/bytes
+
+vi)  if conditions 
+Syntax	Purpose
+if command; then	        Checks command exit status
+if [ condition ]; then	        Basic condition checking
+if [[ condition ]]; then	Advanced Bash condition
+if (( condition )); then	Arithmetic condition
+
+
+++++++++++++++++++++++++++++++++++
      
 
 Basic scripting questions
@@ -23,7 +64,7 @@ Basic scripting questions
 -->
 $ cat hello.sh
 
-#!/bin/sh
+#!/bin/bash
 
 echo "hello World"
 
@@ -32,7 +73,7 @@ echo "hello World"
 2. Check whether a number is even or odd.
 -->
 
-#!/bin/sh
+#!/bin/bash
 
 echo "entery any number :- "
 read num1
@@ -47,7 +88,7 @@ fi
 3. Find the largest of two numbers.
 -->
 
-#!/bin/sh
+#!/bin/bash
 
 echo "enter first mumber:- "
 read num1
@@ -70,7 +111,7 @@ fi
 
 @@ eg1 :- 
 
-#!/bin/sh
+#!/bin/bash
 
 file1=hello.sh
 
@@ -84,7 +125,7 @@ output :- given file exists :- hello.sh
 
 @@ eg2 :- 
 
-#!/bin/sh
+#!/bin/bash
 
 file1=/home/ecx/hello1.sh
 
@@ -99,7 +140,7 @@ fi
 -->
 $ cat directorycheck.sh
 
-#!/bin/sh
+#!/bin/bash
 
 dir1=directory1
 
@@ -114,7 +155,7 @@ fi
 -->
 
 $ cat onetoten.sh
-#!/bin/sh
+#!/bin/bash
 
 for (( i=0 ; i<11 ; i++)) ; do
         echo "$i"
@@ -134,7 +175,168 @@ done
 
 8. Find the factorial of a number.
 
-9. Reverse a string.
+9. Reverse a string. //below will work only in Linux vm
+-->
+$ cat stringrev.sh
+#!/bin/bash
+
+str="hello"
+
+echo "$str" | rev
+
 
 
 10. Count the number of lines in a file.
+-->
+$ cat linescount.sh
+#!/bin/bash
+
+file1=hello.sh
+
+#count=$(wc -l $file1);
+
+count=$(wc -l < "$file1")  
+
+echo "$count";
+
+
+++++++++++++++++++
+++++++++++++++
+DEVOPS QUESTIONS 
+++++++++++++++
++++++++++++++++++
+
+
+1) Check whether a service is running.
+-->
+
+@@eg1 :- 
+#!/bin/bash
+
+service1=nginx
+
+if systemctl is-active "$service1" ; then
+    echo "Running"
+else
+    echo "Not running"
+fi
+
+output :- 
+active
+Running
+
+@@eg2 :- with quiet it will not print active or not active 
+#!/bin/bash
+
+service1=nginx
+
+if systemctl is-active --quiet "$service1" ; then
+    echo "Running"
+else
+    echo "Not running"
+fi
+
+output :- 
+Running
+
+2) Check disk usage and alert if above 80%.
+-->
+
+#!/bin/bash
+
+usage=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
+
+if [ "$usage" -gt 80 ]; then
+    echo "Disk usage is high"
+else
+    echo "Disk usage is normal"
+fi
+
+>>>>>>>>
+
+Filesystem      Size  Used Avail Use%
+/dev/sda1        50G   40G   10G  80%
+where,
+NR → Current line number in AWK.
+NR==1 → First line (header).
+NR==2 → Second line (disk information).
+$5 → Fifth column (Use%).
+tr -d '%' → Removes %.
+
+
+3) Check CPU and memory utilization.
+-->
+#!/bin/bash
+
+echo "CPU Usage:"
+top -bn1 | grep "Cpu(s)"
+
+echo "Memory Usage:"
+free -h
+
+
+4) Find files older than 7 days.
+-->
+#!/bin/bash
+
+find /home/abc -type f -mtime +7
+
+
+5) Find ERROR entries in log files.
+-->
+#!/bin/bash
+
+grep "ERROR" /var/log/app.log
+
+
+6) Check whether a website URL is accessible.
+-->
+
+
+
+7) Take a backup of a directory.
+-->
+#!/bin/bash
+
+tar -czf backup.tar.gz /home/abc
+echo "Backup completed"
+
+
+where ,
+tar → Creates archive.
+-c → Create.
+-z → Compress.
+-f → Specify filename.
+
+
+8) Find and kill a particular process.
+-->
+#!/bin/bash
+
+pgrep nginx
+
+pkill nginx
+
+where ,
+pgrep → Finds process.
+pkill → Terminates process by name.
+
+
+9) Monitor a directory for file changes.
+-->
+
+
+
+10) Check whether a particular port is listening.
+-->
+
+#!/bin/bash
+
+if ss -tuln | grep -q ":8080"; then
+    echo "Port 8080 is listening"
+else
+    echo "Port 8080 is not listening"
+fi
+
+
+
