@@ -214,7 +214,15 @@ eg :=
 if [ -f "/home/abc/hello.sh" ]; then
     echo "File exists"
 
-
+14 ) when to use which operators
+Quick revision table
+Syntax	Purpose	                       Example
+( )	Subshell	              (cd /tmp)
+$( )	Capture command output	      x=$(date)
+(( ))	Arithmetic	              (( a > b ))  ((a++))
+[ ]	Basic conditions	      [ -f file.txt ]
+[[ ]]	Advanced Bash conditions      [[ $name == P* ]]
+{ }	Group commands	             { echo hi; echo hello; }
 
 #######################################################################################
 #######################################################################################
